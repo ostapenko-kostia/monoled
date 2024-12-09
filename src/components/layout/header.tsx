@@ -10,7 +10,8 @@ export function Header() {
 				<MenuButton />
 				<Link href='/'>
 					<Image
-						src='/logo.png'
+					className=''
+						src='/uploads/logo.avif'
 						alt='Monoled Logo'
 						height={18.13}
 						width={200}
