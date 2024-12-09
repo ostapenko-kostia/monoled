@@ -12,7 +12,7 @@ export function Header() {
 					<Image
 						src='/logo.png'
 						alt='Monoled Logo'
-						height={82}
+						height={18.13}
 						width={200}
 					/>
 				</Link>
