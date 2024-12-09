@@ -20,7 +20,7 @@ export function Home() {
 				speed={500}
 				creativeEffect={{
 					prev: {
-						translate: [0, "-0%", 0],	
+						translate: [0, '-0%', 0],
 						shadow: false
 					},
 					next: {
@@ -36,15 +36,31 @@ export function Home() {
 				{SLIDES.map((slide, index) => (
 					<SwiperSlide
 						key={index}
-						className='w-full h-full py-20'
-						style={{ background: `url(${slide.bgImg}) no-repeat center 55% / cover` }}
+						className='w-full h-full pt-20 pb-10 text-center'
+						style={{
+							backgroundImage: `url(${slide.bgImg})`,
+							backgroundRepeat: 'no-repeat',
+							backgroundSize: 'cover',
+							backgroundPosition: '30% center'
+						}}
 					>
-						<div className='w-full h-full px-8 flex flex-col items-start text-start justify-end gap-7'>
-							{slide.supTitle && <span className='uppercase text-xl font-medium'>{slide.supTitle}</span>}
-							<h2 className='text-6xl font-bold w-[600px]'>{slide.title}</h2>
-							<button className='bg-white rounded-md text-black font-medium border-2 border-transparent hover:border-black duration-200 transition-colors'>
-								<Link href={slide.url} className='w-full h-full block px-20 py-3'>Детальніше</Link>
-							</button>
+						<div className='w-full h-full px-8 max-sm:px-2 flex flex-col items-start text-start justify-end max-sm:text-center max-sm:items-center'>
+							<div className='border-2 rounded-md p-6 bg-[rgba(255,255,255,.7)] flex flex-col gap-7 items-start'>
+								{slide.supTitle && (
+									<span className='uppercase text-xl font-medium'>{slide.supTitle}</span>
+								)}
+								<h2 className='text-6xl font-bold max-2xl:text-5xl max-xl:text-4xl max-lg:text-3xl max-md:text-2xl max-sm:text-xl'>
+									{slide.title}
+								</h2>
+								<button className='bg-white rounded-md text-black font-medium border-2 border-black max-sm:mx-auto'>
+									<Link
+										href={slide.url}
+										className='w-full h-full block px-20 py-3 max-sm:px-14'
+									>
+										Детальніше
+									</Link>
+								</button>
+							</div>
 						</div>
 					</SwiperSlide>
 				))}
