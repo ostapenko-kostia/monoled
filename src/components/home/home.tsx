@@ -41,18 +41,17 @@ export function Home() {
 							backgroundImage: `url(${slide.bgImg})`,
 							backgroundRepeat: 'no-repeat',
 							backgroundSize: 'cover',
-							backgroundPosition: '30% center'
+							backgroundPosition: '30% 55%'
 						}}
 					>
-						<div className='w-full h-full px-8 max-sm:px-2 flex flex-col items-start text-start justify-end max-sm:text-center max-sm:items-center'>
-							<div className='border-2 rounded-md p-6 bg-[rgba(255,255,255,.7)] flex flex-col gap-7 items-start'>
+						<div className='w-full h-full px-8 max-sm:px-2 flex flex-col items-start text-start justify-end max-sm:text-center max-sm:items-center gap-7'>
 								{slide.supTitle && (
 									<span className='uppercase text-xl font-medium'>{slide.supTitle}</span>
 								)}
-								<h2 className='text-6xl font-bold max-2xl:text-5xl max-xl:text-4xl max-lg:text-3xl max-md:text-2xl max-sm:text-xl'>
+								<h2 className='text-6xl font-bold max-2xl:text-5xl max-xl:text-4xl max-sm:text-2xl w-[700px] max-md:w-full'>
 									{slide.title}
 								</h2>
-								<button className='bg-white rounded-md text-black font-medium border-2 border-black max-sm:mx-auto'>
+								<button className='bg-white rounded-md text-black font-medium border-2 border-transparent hover:border-black transition-colors duration-300 border-black max-sm:mx-auto'>
 									<Link
 										href={slide.url}
 										className='w-full h-full block px-20 py-3 max-sm:px-14'
@@ -61,7 +60,6 @@ export function Home() {
 									</Link>
 								</button>
 							</div>
-						</div>
 					</SwiperSlide>
 				))}
 			</Swiper>
