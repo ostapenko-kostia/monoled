@@ -9,10 +9,10 @@ interface Props {
 export function Footer({ className }: Props) {
 	return (
 		<footer
-			className={cn(className, 'bg-foreground text-background px-8 max-sm:px-2 w-ful h-full')}
+			className={cn(className, 'bg-foreground text-background px-8 max-sm:px-4 w-ful h-full')}
 		>
-			<div className='pt-48 flex flex-col items-start gap-28 w-full'>
-				<ul className='grid grid-cols-4 w-full font-medium text-lg'>
+			<div className='pt-48 flex flex-col items-start gap-28 w-full max-md:pt-0 max-md:h-full max-md:justify-center'>
+				<ul className='grid grid-cols-4 w-full font-medium text-lg max-md:grid-cols-2 gap-20 max-[450px]:grid-cols-[1fr_2fr] max-[400px]:gap-x-6'>
 					{FOOTER_LINKS.map(i => (
 						<div
 							className='flex flex-col items-start text-left gap-6'
@@ -36,7 +36,7 @@ export function Footer({ className }: Props) {
 						</div>
 					))}
 				</ul>
-				<div className='w-full flex flex-col'>
+				<div className='w-full flex flex-col max-md:hidden'>
 					<hr className='w-full h-[1px] border-none bg-white opacity-30' />
 					<div className='flex w-full items-center gap-10 mt-11 text-neutral-400 font-mediumr'>
 						<h2>Monoled ©2024</h2>
