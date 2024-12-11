@@ -35,12 +35,12 @@ export function Sheet({
 
 	const openSheet = () => {
 		setIsOpen(true)
-		if(document) document.body.style.overflow = 'hidden'
+		document.body.style.overflow = 'hidden'
 	}
 
 	const closeSheet = () => {
 		setIsOpen(false)
-		if(document) document.body.style.overflow = 'auto'
+		document.body.style.overflow = 'auto'
 	}
 
 	return (
@@ -54,7 +54,7 @@ export function Sheet({
 				>
 					{children}
 				</SheetContent>,
-				document?.body
+				document.body
 			)}
 		</SheetContext.Provider>
 	)
