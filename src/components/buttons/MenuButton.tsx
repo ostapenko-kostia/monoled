@@ -1,8 +1,7 @@
-'use client'
-
 import { MenuIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
-const Sheet = dynamic(() => import('../ui/sheet').then((mod) => mod.Sheet), { ssr: false });
+import { Menu } from '../layout/menu/menu'
+const Sheet = dynamic(() => import('../ui/sheet').then(mod => mod.Sheet), { ssr: false })
 
 export function MenuButton() {
 	return (
@@ -18,7 +17,7 @@ export function MenuButton() {
 				</button>
 			}
 		>
-			123
+			<Menu />
 		</Sheet>
 	)
 }

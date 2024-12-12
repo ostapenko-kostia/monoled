@@ -120,7 +120,8 @@ function SheetContent({
 							<X
 								className='cursor-pointer'
 								onClick={closeSheet}
-								size={40}
+								size={30}
+								color="#000"
 							/>
 						</div>
 						<div className={clsx('w-full h-full', className)}>{children}</div>
