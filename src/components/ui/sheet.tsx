@@ -3,6 +3,7 @@
 import clsx from 'clsx'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import {
 	cloneElement,
 	createContext,
@@ -13,13 +14,13 @@ import {
 } from 'react'
 import { createPortal } from 'react-dom'
 
-const SheetContext = createContext<{
+export const SheetContext = createContext<{
 	isOpen: boolean
 	openSheet: () => void
 	closeSheet: () => void
 } | null>(null)
 
-export function Sheet({
+function SheetComponent({
 	trigger,
 	side = 'right',
 	children,
@@ -35,12 +36,12 @@ export function Sheet({
 
 	const openSheet = () => {
 		setIsOpen(true)
-		document.body.style.overflow = 'hidden'
+		if(typeof window !== 'undefined') document.body.style.overflow = 'hidden'
 	}
 
 	const closeSheet = () => {
 		setIsOpen(false)
-		document.body.style.overflow = 'auto'
+		if(typeof window !== 'undefined') document.body.style.overflow = 'auto'
 	}
 
 	return (
@@ -59,6 +60,8 @@ export function Sheet({
 		</SheetContext.Provider>
 	)
 }
+
+export const Sheet = dynamic(() => Promise.resolve(SheetComponent), { ssr: false })
 
 function SheetContent({
 	children,

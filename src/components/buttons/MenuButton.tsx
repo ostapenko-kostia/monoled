@@ -1,7 +1,6 @@
 import { MenuIcon } from 'lucide-react'
-import dynamic from 'next/dynamic'
 import { Menu } from '../layout/menu/menu'
-const Sheet = dynamic(() => import('../ui/sheet').then(mod => mod.Sheet), { ssr: false })
+import { Sheet } from '../ui/sheet'
 
 export function MenuButton() {
 	return (

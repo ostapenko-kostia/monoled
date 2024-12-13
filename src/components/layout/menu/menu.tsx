@@ -1,33 +1,17 @@
-'use client'
+import { Accordion } from '@/components/ui/accordion'
+import { Category } from '@prisma/client'
+import { MenuList } from './menu-list'
+import { categoriesService } from '@/app/services/categories.service'
 
-import { Accordion } from '@/components/ui/accordion/accordion'
-import Link from 'next/link'
-import { MENU_CATEGORIES_LINKS } from './menu.data'
-import cn from 'clsx'
-import { useSearchParams } from 'next/navigation'
+export const revalidate = 180
 
-export function Menu() {
-	const params = useSearchParams()
+export async function Menu() {
+	const categories: Category[] = (await categoriesService.getAllCategories()).data
 
 	return (
 		<div className='w-full h-full text-foreground'>
-			<Accordion
-				title='Категорії'
-				defaultOpen
-			>
-				<ul className='flex flex-col gap-3'>
-					<li className={cn({ 'text-[rgb(10,120,191)]': !params.toString().includes('categories') || !params.get("categories")?.length })}>
-						<Link href='/shop'>- Всі категорії</Link>
-					</li>
-					{MENU_CATEGORIES_LINKS.map(i => (
-						<li
-							key={i.slug}
-							className={cn({ 'text-[rgb(10,120,191)]': params.toString().includes(i.slug) })}
-						>
-							<Link href={`/shop?categories=${i.slug}`}>- {i.title}</Link>
-						</li>
-					))}
-				</ul>
+			<Accordion title='Категорії'>
+				<MenuList categories={categories} />
 			</Accordion>
 		</div>
 	)

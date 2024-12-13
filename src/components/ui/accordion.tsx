@@ -1,10 +1,9 @@
 'use client'
 
-import styles from './accordion.module.scss'
 import { ChevronRightIcon } from 'lucide-react'
 import { PropsWithChildren, useState } from 'react'
 import cn from 'clsx'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 
 interface Props {
 	title: string
@@ -13,6 +12,11 @@ interface Props {
 
 export function Accordion({ title, children, defaultOpen = false }: PropsWithChildren<Props>) {
 	const [isOpen, setIsOpen] = useState<boolean>(defaultOpen)
+
+	const variants: Variants = {
+		hidden: { height: 0, padding: 0 },
+		visible: { height: 'auto' }
+	}
 
 	const toggleOpen = () => setIsOpen(prev => !prev)
 
@@ -28,19 +32,15 @@ export function Accordion({ title, children, defaultOpen = false }: PropsWithChi
 				/>
 				<span className='inline-block h-full'>{title}</span>
 			</button>
-			<AnimatePresence initial={false}>
-				{isOpen && (
-					<motion.div
-						className='overflow-hidden pl-10 pt-5'
-						initial={{ height: 0 }}
-						animate={{ height: 'auto' }}
-						exit={{ height: 0 }}
-						transition={{ duration: 0.3, ease: 'easeInOut' }}
-					>
-						{children}
-					</motion.div>
-				)}
-			</AnimatePresence>
+			<motion.div
+				className='overflow-hidden pl-10 pt-5'
+				variants={variants}
+				initial={{ height: 0 }}
+				animate={isOpen ? 'visible' : 'hidden'}
+				transition={{ duration: 0.2 }}
+			>
+				{children}
+			</motion.div>
 		</div>
 	)
 }

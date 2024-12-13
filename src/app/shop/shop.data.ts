@@ -14,3 +14,4 @@ export const SORTING_METHODS: ISortingMethod[] = [
 		name: 'Від дорожчих до дешевших'
 	}
 ]
+

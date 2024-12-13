@@ -1,13 +1,19 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
-import { ShopComponent } from './Shop'
+import { Shop } from './Shop'
+import { Category } from '@prisma/client'
+import { categoriesService } from '../services/categories.service'
 
 export const metadata: Metadata = {
 	title: 'Monoled - Каталог товарів'
 }
 
-const ShopPage: React.FC = () => {
+export const revalidate = 180
+
+const ShopPage: React.FC = async () => {
+	const categories: Category[] = (await categoriesService.getAllCategories()).data
+
 	return (
 		<section>
 			<header className='flex items-center justify-center py-36 w-full gap-2 flex-col relative text-white'>
@@ -36,7 +42,7 @@ const ShopPage: React.FC = () => {
 				</p>
 			</header>
 			<Suspense>
-				<ShopComponent />
+				<Shop allCategories={categories} />
 			</Suspense>
 		</section>
 	)
