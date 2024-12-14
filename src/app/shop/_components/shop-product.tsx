@@ -16,7 +16,7 @@ export function ShopProduct({ product, showMode }: Props) {
 		>
 			<div
 				className={cn('relative w-full aspect-square', {
-					'min-[500px]:h-[200px] 2xl:h-full': showMode === 'list'
+					'min-[500px]:h-[200px] 2xl:h-[250px] min-[500px]:w-auto': showMode === 'list'
 				})}
 			>
 				<Image
