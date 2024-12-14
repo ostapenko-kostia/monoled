@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
-import { Shop } from './Shop'
+import { Shop } from './_components/shop'
 import { Category, Product } from '@prisma/client'
 import { categoriesService } from '../services/categories.service'
 import { productsService } from '../services/products.service'

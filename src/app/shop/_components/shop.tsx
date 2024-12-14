@@ -1,11 +1,13 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { useShopStore } from './shop.store'
+import { useShopStore } from '../shop.store'
 import { Category, Product } from '@prisma/client'
-import { ShopSidebar } from './(components)/shop-sidebar'
-import { ShopHeader } from './(components)/shop-header'
-import { ShopProduct } from './(components)/shop-product'
+import { ShopSidebar } from './shop-sidebar'
+import { ShopHeader } from './shop-header'
+import { ShopProduct } from './shop-product'
+import useDebounce from '@/hooks/useDebounce'
+import { useFilterProducts } from '@/hooks/useFilterProducts'
 
 interface Props {
 	allCategories: Category[] | undefined
@@ -16,7 +18,14 @@ export function Shop({ allCategories, allProducts }: Props) {
 	const params = useSearchParams()
 
 	const currentCategories = params.get('categories') ?? ''
-	const { currentSortingId, productsPerPage, currentShowMode } = useShopStore()
+	const { currentSortingId, productsPerPage } = useShopStore()
+
+	const debouncedProductsPerPage = useDebounce(productsPerPage, 500)
+
+	const filteredProducts = useFilterProducts(allProducts, {
+		category: currentCategories,
+		sortingMethodId: currentSortingId
+	})
 
 	return (
 		<div className='container mx-auto max-sm:px-2 mt-12 pb-20'>
@@ -29,10 +38,13 @@ export function Shop({ allCategories, allProducts }: Props) {
 					</div>
 					<ShopHeader />
 					<main>
-						{allProducts ? (
+						{filteredProducts ? (
 							<div className='bg-white w-full border-r-[1px] border-b-[1px] grid grid-cols-4 p-5 gap-5'>
-								{allProducts.map(product => (
-									<ShopProduct product={product} key={product.id} />
+								{filteredProducts.map(product => (
+									<ShopProduct
+										product={product}
+										key={product.id}
+									/>
 								))}
 							</div>
 						) : (

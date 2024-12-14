@@ -3,7 +3,7 @@ import type { ISortingMethod } from './shop.types'
 export const SORTING_METHODS: ISortingMethod[] = [
 	{
 		id: 1,
-		name: 'За популярністю'
+		name: 'Найрелевантніші'
 	},
 	{
 		id: 2,
@@ -14,4 +14,3 @@ export const SORTING_METHODS: ISortingMethod[] = [
 		name: 'Від дорожчих до дешевших'
 	}
 ]
-
