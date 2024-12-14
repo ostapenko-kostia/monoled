@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export const revalidate = 180
 
 const ShopPage: React.FC = async () => {
-	const categories: Category[] = (await categoriesService.getAllCategories()).data
+	const categories: Category[] | undefined = (await categoriesService.getAllCategories())?.data
 
 	return (
 		<section>

@@ -12,7 +12,7 @@ import { Category } from '@prisma/client'
 import Link from 'next/link'
 
 interface Props {
-	allCategories: Category[]
+	allCategories: Category[] | undefined
 }
 
 function ShopComponent({ allCategories }: Props) {
@@ -50,37 +50,44 @@ function ShopComponent({ allCategories }: Props) {
 						Категорії
 					</header>
 					<ul className='flex flex-col gap-5 py-5 px-6 border-t-[1px]'>
-						<li
-							className={cn({
-								'text-[rgb(10,120,191)]':
-									(!params.toString().includes('categories') ||
-										!params.get('categories')?.length) &&
-									pathname.includes('shop')
-							})}
-						>
-							<Link href='/shop'>
-								{(!params.toString().includes('categories') || !params.get('categories')?.length) &&
-									pathname.includes('shop') &&
-									'-'}{' '}
-								Всі категорії
-							</Link>
-						</li>
-						{allCategories.map(i => {
-							const isCurrentSelected =
-								params.toString().includes(i.slug) && pathname.includes('shop')
-							return (
+						{allCategories ? (
+							<>
 								<li
-									key={i.slug}
 									className={cn({
-										'text-[rgb(10,120,191)]': isCurrentSelected
+										'text-[rgb(10,120,191)]':
+											(!params.toString().includes('categories') ||
+												!params.get('categories')?.length) &&
+											pathname.includes('shop')
 									})}
 								>
-									<Link href={`/shop?categories=${i.slug}`}>
-										{isCurrentSelected && '-'} {i.name}
+									<Link href='/shop'>
+										{(!params.toString().includes('categories') ||
+											!params.get('categories')?.length) &&
+											pathname.includes('shop') &&
+											'-'}{' '}
+										Всі категорії
 									</Link>
 								</li>
-							)
-						})}
+								{allCategories.map(i => {
+									const isCurrentSelected =
+										params.toString().includes(i.slug) && pathname.includes('shop')
+									return (
+										<li
+											key={i.slug}
+											className={cn({
+												'text-[rgb(10,120,191)]': isCurrentSelected
+											})}
+										>
+											<Link href={`/shop?categories=${i.slug}`}>
+												{isCurrentSelected && '-'} {i.name}
+											</Link>
+										</li>
+									)
+								})}
+							</>
+						) : (
+							<li>Помилка при завантаженні категорій, спробуйте оновити сторінку</li>
+						)}
 					</ul>
 				</aside>
 				<section className='w-full border-l-[1px]'>
