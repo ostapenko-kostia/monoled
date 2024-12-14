@@ -122,11 +122,11 @@ function SheetContent({
 						}}
 					>
 						<div className='w-full py-4 flex justify-between items-center mb-2'>
-							<h2 className='text-2xl font-bold text-black'>{title}</h2>
+							<h2 className='text-3xl font-bold text-black'>{title}</h2>
 							<X
 								className='cursor-pointer'
 								onClick={closeSheet}
-								size={30}
+								size={40}
 								color='#000'
 							/>
 						</div>

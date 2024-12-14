@@ -24,7 +24,7 @@ export function Accordion({ title, children, defaultOpen = false }: PropsWithChi
 		<div className='w-full p-3 rounded-md border-2 flex flex-col'>
 			<button
 				onClick={toggleOpen}
-				className='flex items-center gap-2 text-xl font-medium w-full'
+				className='flex items-center gap-2 text-[1.7rem] font-medium w-full'
 			>
 				<ChevronRightIcon
 					size={30}

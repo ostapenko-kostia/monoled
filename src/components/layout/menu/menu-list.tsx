@@ -18,7 +18,7 @@ export function MenuList({ categories }: Props) {
 	const sheetContext = useContext(SheetContext)
 
 	return (
-		<ul className='flex flex-col gap-3'>
+		<ul className='flex flex-col gap-3 text-xl'>
 			{categories ? (
 				<>
 					<li
