@@ -1,7 +1,7 @@
 'use client'
 
 import clsx from 'clsx'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, Variants } from 'framer-motion'
 import { X } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import {
@@ -36,12 +36,12 @@ function SheetComponent({
 
 	const openSheet = () => {
 		setIsOpen(true)
-		if(typeof window !== 'undefined') document.body.style.overflow = 'hidden'
+		if (typeof window !== 'undefined') document.body.style.overflow = 'hidden'
 	}
 
 	const closeSheet = () => {
 		setIsOpen(false)
-		if(typeof window !== 'undefined') document.body.style.overflow = 'auto'
+		if (typeof window !== 'undefined') document.body.style.overflow = 'auto'
 	}
 
 	return (
@@ -79,10 +79,9 @@ function SheetContent({
 
 	const { closeSheet, isOpen } = sheetContextValues
 
-	const sideVariants = {
-		hidden: { x: side === 'left' ? '-100%' : '100%' },
-		visible: { x: '0%' },
-		exit: { x: side === 'left' ? '-100%' : '100%' }
+	const sideVariants: Variants = {
+		hidden: { clipPath: 'inset(0 100% 0 0)' },
+		visible: { clipPath: 'inset(0 0% 0 0)' }
 	}
 
 	return (
@@ -99,24 +98,28 @@ function SheetContent({
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
-						transition={{ duration: 0.3 }}
+						transition={{ duration: 0.7 }}
 					/>
 
 					<motion.div
 						key='sheet-content'
 						id='sheet-content'
 						className={clsx(
-							'fixed top-0 p-4 pt-1 h-full bg-white z-[1000] w-[30rem] max-md:w-[25rem] max-sm:w-4/5',
+							'fixed top-1/2 left-7 rounded-lg p-4 h-[90vh] bg-white z-[1000] w-1/2',
 							{
 								'left-0': side === 'left',
 								'right-0': side === 'right'
 							}
 						)}
+						style={{ translateY: '-50%' }}
 						variants={sideVariants}
 						initial='hidden'
 						animate='visible'
-						exit='exit'
-						transition={{ duration: 0.3 }}
+						exit='hidden'
+						transition={{
+							duration: 0.6,
+							ease: [0.6, -0.05, 0.01, 0.99]
+						}}
 					>
 						<div className='w-full py-4 flex justify-between items-center mb-2'>
 							<h2 className='text-2xl font-bold text-black'>{title}</h2>
@@ -124,7 +127,7 @@ function SheetContent({
 								className='cursor-pointer'
 								onClick={closeSheet}
 								size={30}
-								color="#000"
+								color='#000'
 							/>
 						</div>
 						<div className={clsx('w-full h-full', className)}>{children}</div>

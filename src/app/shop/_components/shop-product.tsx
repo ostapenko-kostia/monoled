@@ -24,7 +24,7 @@ export function ShopProduct({ product, showMode }: Props) {
 					alt={product.name}
 					fill
 					sizes='100%, 100%'
-					className='object-cover'
+					className='object-cover rounded-lg'
 				/>
 			</div>
 			<div>
