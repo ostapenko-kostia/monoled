@@ -8,6 +8,7 @@ import { ShopHeader } from './shop-header'
 import { ShopProduct } from './shop-product'
 import useDebounce from '@/hooks/useDebounce'
 import { useFilterProducts } from '@/hooks/useFilterProducts'
+import { motion } from 'framer-motion'
 
 interface Props {
 	allCategories: Category[] | undefined
@@ -17,13 +18,13 @@ interface Props {
 export function Shop({ allCategories, allProducts }: Props) {
 	const params = useSearchParams()
 
-	const currentCategories = params.get('categories') ?? ''
+	const currentCategory = params.get('category') ?? ''
 	const { currentSortingId, productsPerPage } = useShopStore()
 
 	const debouncedProductsPerPage = useDebounce(productsPerPage, 500)
 
 	const filteredProducts = useFilterProducts(allProducts, {
-		category: currentCategories,
+		category: currentCategory,
 		sortingMethodId: currentSortingId
 	})
 
@@ -36,15 +37,26 @@ export function Shop({ allCategories, allProducts }: Props) {
 					<div className='w-full py-4 uppercase font-light tracking-wide bg-[#f0f1f3] flex items-center justify-center text-center text-xl'>
 						Товари
 					</div>
-					<ShopHeader />
+					<div className='h-[60px]'>
+						<ShopHeader />
+					</div>
 					<main>
 						{filteredProducts ? (
 							<div className='bg-white w-full border-r-[1px] border-b-[1px] grid grid-cols-4 p-5 gap-5'>
-								{filteredProducts.map(product => (
-									<ShopProduct
-										product={product}
+								{filteredProducts.map((product, index) => (
+									<motion.article
 										key={product.id}
-									/>
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										transition={{
+											duration: 0.6,
+											bounce: 0,
+											ease: 'easeInOut',
+											delay: (index ?? 1) * 0.2
+										}}
+									>
+										<ShopProduct product={product} />
+									</motion.article>
 								))}
 							</div>
 						) : (

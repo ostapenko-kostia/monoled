@@ -24,7 +24,7 @@ export function MenuList({ categories }: Props) {
 					<li
 						className={cn({
 							'text-[rgb(10,120,191)]':
-								(!params.toString().includes('categories') || !params.get('categories')?.length) &&
+								(!params.toString().includes('category') || !params.get('category')?.length) &&
 								pathname.includes('shop')
 						})}
 					>
@@ -44,7 +44,7 @@ export function MenuList({ categories }: Props) {
 							})}
 						>
 							<Link
-								href={`/shop?categories=${i.slug}`}
+								href={`/shop?category=${i.slug}`}
 								onClick={() => sheetContext?.closeSheet()}
 							>
 								- {i.name}
