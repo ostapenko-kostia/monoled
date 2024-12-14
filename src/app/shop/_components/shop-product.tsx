@@ -1,14 +1,24 @@
 import { Product } from '@prisma/client'
 import Image from 'next/image'
+import cn from 'clsx'
 
 interface Props {
 	product: Product
+	showMode: 'grid' | 'list'
 }
 
-export function ShopProduct({ product }: Props) {
+export function ShopProduct({ product, showMode }: Props) {
 	return (
-		<div className='flex flex-col w-full group cursor-pointer'>
-			<div className='relative w-full aspect-square'>
+		<div
+			className={cn('flex w-full flex-col group cursor-pointer', {
+				'min-[500px]:gap-10 min-[500px]:flex-row': showMode === 'list'
+			})}
+		>
+			<div
+				className={cn('relative w-full aspect-square', {
+					'min-[500px]:h-[200px] 2xl:h-full': showMode === 'list'
+				})}
+			>
 				<Image
 					src={product.images[0]}
 					alt={product.name}
@@ -17,10 +27,14 @@ export function ShopProduct({ product }: Props) {
 					className='object-cover'
 				/>
 			</div>
-			<p className='mt-5 text-lg group-hover:underline group-hover:text-blue-500 underline-offset-4 transition-colors duration-200'>
-				{product.name}
-			</p>
-			<p className='line-clamp-6 text-sm text-neutral-500 my-3'>{product.description}</p>
+			<div>
+				<p className='mt-5 text-lg group-hover:underline group-hover:text-blue-500 underline-offset-4 transition-colors duration-200 max-[500px]:text-base'>
+					{product.name}
+				</p>
+				<p className='line-clamp-6 text-sm text-neutral-500 my-3 max-[500px]:text-xs'>
+					{product.description}
+				</p>
+			</div>
 		</div>
 	)
 }

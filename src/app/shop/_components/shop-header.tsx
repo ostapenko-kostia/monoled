@@ -33,7 +33,7 @@ function ShopHeaderComponent() {
 
 	return (
 		<motion.header
-			className='border-[1px] border-l-0 bg-white px-4 py-2 flex items-center gap-5 h-[60px] max-lg:flex-col max-lg:h-auto max-lg:py-5'
+			className='border-[1px] border-l-0 bg-white px-4 py-2 flex items-center gap-5 h-full max-lg:flex-col max-lg:py-5'
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.3, bounce: 0, ease: 'easeInOut' }}
@@ -73,7 +73,7 @@ function ShopHeaderComponent() {
 				/>
 				шт.
 			</div>
-			<div className='ml-auto flex items-center gap-2 max-lg:mx-auto'>
+			<div className='ml-auto flex items-center gap-2 max-lg:mx-auto max-md:hidden'>
 				<button
 					className={cn(
 						'w-10 h-10 rounded-sm bg-[rgb(200,200,200)] flex items-center justify-center hover:bg-[rgb(100,100,100)] transition-colors duration-200',
