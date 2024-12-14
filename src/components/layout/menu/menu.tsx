@@ -6,7 +6,7 @@ import { categoriesService } from '@/app/services/categories.service'
 export const revalidate = 180
 
 export async function Menu() {
-	const categories: Category[] = (await categoriesService.getAllCategories()).data
+	const categories: Category[] | undefined = (await categoriesService.getAllCategories())?.data
 	return (
 		<div className='w-full h-full text-foreground'>
 			<Accordion title='Категорії'>

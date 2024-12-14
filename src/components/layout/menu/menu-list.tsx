@@ -8,7 +8,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { useContext, useEffect } from 'react'
 
 interface Props {
-	categories: Category[]
+	categories: Category[] | undefined
 }
 
 export function MenuList({ categories }: Props) {
@@ -19,36 +19,42 @@ export function MenuList({ categories }: Props) {
 
 	return (
 		<ul className='flex flex-col gap-3'>
-			<li
-				className={cn({
-					'text-[rgb(10,120,191)]':
-						(!params.toString().includes('categories') || !params.get('categories')?.length) &&
-						pathname.includes('shop')
-				})}
-			>
-				<Link
-					href='/shop'
-					onClick={() => sheetContext?.closeSheet()}
-				>
-					- Всі категорії
-				</Link>
-			</li>
-			{categories.map(i => (
-				<li
-					key={i.slug}
-					className={cn({
-						'text-[rgb(10,120,191)]':
-							params.toString().includes(i.slug) && pathname.includes('shop')
-					})}
-				>
-					<Link
-						href={`/shop?categories=${i.slug}`}
-						onClick={() => sheetContext?.closeSheet()}
+			{categories ? (
+				<>
+					<li
+						className={cn({
+							'text-[rgb(10,120,191)]':
+								(!params.toString().includes('categories') || !params.get('categories')?.length) &&
+								pathname.includes('shop')
+						})}
 					>
-						- {i.name}
-					</Link>
-				</li>
-			))}
+						<Link
+							href='/shop'
+							onClick={() => sheetContext?.closeSheet()}
+						>
+							- Всі категорії
+						</Link>
+					</li>
+					{categories.map(i => (
+						<li
+							key={i.slug}
+							className={cn({
+								'text-[rgb(10,120,191)]':
+									params.toString().includes(i.slug) && pathname.includes('shop')
+							})}
+						>
+							<Link
+								href={`/shop?categories=${i.slug}`}
+								onClick={() => sheetContext?.closeSheet()}
+							>
+								- {i.name}
+							</Link>
+						</li>
+					))}
+				</>
+			) : (
+				<li>Помилка при отриманні категорій, спробуйте оновити сторінку</li>
+			)}
 		</ul>
 	)
 }

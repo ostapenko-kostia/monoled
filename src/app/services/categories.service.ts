@@ -3,7 +3,11 @@ import { api } from './axios'
 
 class CategoriesService {
 	async getAllCategories() {
-		return await api.get<Category[]>('/categories/all')
+		try {
+			const res = await api.get<Category[]>('/categories/all')
+			if (res.status != 200) throw new Error('Помилка при отриманні категорій')
+			return res
+		} catch {}
 	}
 }
 
