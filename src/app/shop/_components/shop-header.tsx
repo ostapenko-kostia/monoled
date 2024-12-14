@@ -22,7 +22,7 @@ function ShopHeaderComponent() {
 	const handleProductsPerPageChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const value: number = Number(e.target.value)
 
-		if (value < 1) {
+		if (value < 0) {
 			setProductPerPage(1)
 		} else if (value > 100) {
 			setProductPerPage(100)
