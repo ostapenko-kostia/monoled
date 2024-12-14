@@ -45,7 +45,7 @@ export function Shop({ allCategories, allProducts }: Props) {
 						{filteredProducts ? (
 							<div
 								className={cn(
-									'bg-white w-full border-r-[1px] border-b-[1px] p-5 gap-5 grid grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2',
+									'bg-white w-full border-r-[1px] border-b-[1px] p-5 gap-5 grid grid-cols-3 max-lg:grid-cols-2',
 									{ 'min-[500px]:grid-cols-1': currentShowMode === 'list' }
 								)}
 							>
