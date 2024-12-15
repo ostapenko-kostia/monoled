@@ -21,6 +21,14 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 }
 
+.no-scrollbar {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
 .swiper-slide-prev .slide-content {
 	transform: translateY(-100%);
 	opacity: 0.5;
