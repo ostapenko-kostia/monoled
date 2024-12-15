@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { Suspense } from 'react'
 import { Shop } from './_components/shop'
 import { Category, Product } from '@prisma/client'
-import { categoriesService } from '../services/categories.service'
-import { productsService } from '../services/products.service'
+import { categoriesService } from '@/services/categories.service'
+import { productsService } from '@/services/products.service'
 
 export const metadata: Metadata = {
 	title: 'Monoled - Каталог товарів'
@@ -44,7 +44,10 @@ const ShopPage: React.FC = async () => {
 				</p>
 			</header>
 			<Suspense>
-				<Shop allCategories={categories} allProducts={products} />
+				<Shop
+					allCategories={categories}
+					allProducts={products}
+				/>
 			</Suspense>
 		</section>
 	)

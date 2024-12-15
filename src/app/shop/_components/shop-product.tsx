@@ -1,6 +1,7 @@
 import { Product } from '@prisma/client'
 import Image from 'next/image'
 import cn from 'clsx'
+import Link from 'next/link'
 
 interface Props {
 	product: Product
@@ -9,7 +10,8 @@ interface Props {
 
 export function ShopProduct({ product, showMode }: Props) {
 	return (
-		<div
+		<Link
+			href={`/product/${product.slug}`}
 			className={cn('flex w-full flex-col group cursor-pointer', {
 				'min-[500px]:gap-10 min-[500px]:flex-row': showMode === 'list'
 			})}
@@ -35,6 +37,6 @@ export function ShopProduct({ product, showMode }: Props) {
 					{product.description}
 				</p>
 			</div>
-		</div>
+		</Link>
 	)
 }

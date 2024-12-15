@@ -1,7 +1,7 @@
 import { Accordion } from '@/components/ui/accordion'
 import { Category } from '@prisma/client'
 import { MenuList } from './menu-list'
-import { categoriesService } from '@/app/services/categories.service'
+import { categoriesService } from '@/services/categories.service'
 
 export const revalidate = 180
 
