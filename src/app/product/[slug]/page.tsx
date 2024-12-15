@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 
 export const revalidate = 180
 
-export default async function ProductPage({ params }: { params: { slug: string } }) {
-	const { slug } = params
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+	const { slug } = await params;
 
 	const products: TProduct[] | undefined = (await productsService.getAllProducts())?.data
 	const product = products?.find(product => product.slug === slug)
