@@ -48,7 +48,7 @@ export function Shop({ allCategories, allProducts }: Props) {
 						<ShopHeader />
 					</div>
 					<main className='border-r-[1px]'>
-						{slicedFilteredProducts ? (
+						{slicedFilteredProducts && slicedFilteredProducts.length ? (
 							<div
 								className={cn('bg-white w-full p-5 gap-5 grid grid-cols-3 max-lg:grid-cols-2', {
 									'min-[500px]:grid-cols-1': currentShowMode === 'list'
