@@ -22,7 +22,6 @@ export const SheetContext = createContext<{
 
 function SheetComponent({
 	trigger,
-	side = 'right',
 	children,
 	title,
 	className
@@ -51,7 +50,6 @@ function SheetComponent({
 				<SheetContent
 					className={className}
 					title={title}
-					side={side}
 				>
 					{children}
 				</SheetContent>,
@@ -66,7 +64,6 @@ export const Sheet = dynamic(() => Promise.resolve(SheetComponent), { ssr: false
 function SheetContent({
 	children,
 	className,
-	side,
 	title
 }: PropsWithChildren<{
 	className?: string
@@ -80,38 +77,21 @@ function SheetContent({
 	const { closeSheet, isOpen } = sheetContextValues
 
 	const sideVariants: Variants = {
-		hidden: { clipPath: 'inset(0 100% 0 0)' },
-		visible: { clipPath: 'inset(0 0% 0 0)' }
+		hidden: { clipPath: 'inset(0 0 100% 0)' },
+		visible: { clipPath: 'inset(0 0 0 0)' }
 	}
 
 	return (
 		<AnimatePresence mode='wait'>
 			{isOpen && (
 				<div
-					className='fixed left-0 top-0 w-screen h-screen overflow-hidden'
+					className='fixed left-0 top-20 w-screen h-screen overflow-hidden'
 					id='sheet'
 				>
 					<motion.div
-						key='sheet-overlay'
-						className='fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.6)] z-[999]'
-						onClick={closeSheet}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.7 }}
-					/>
-
-					<motion.div
 						key='sheet-content'
 						id='sheet-content'
-						className={clsx(
-							'fixed top-1/2 left-7 rounded-lg p-4 h-[90vh] bg-white z-[1000] w-1/2',
-							{
-								'left-0': side === 'left',
-								'right-0': side === 'right'
-							}
-						)}
-						style={{ translateY: '-50%' }}
+						className={clsx('fixed top-20 left-0 p-4 bg-white z-[1000] w-full h-full')}
 						variants={sideVariants}
 						initial='hidden'
 						animate='visible'

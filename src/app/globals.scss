@@ -43,3 +43,7 @@ body {
 	transform: translateY(0);
 	opacity: 1;
 }
+
+.swiper-pagination-bullet-active {
+	background-color: #000 !important;
+}

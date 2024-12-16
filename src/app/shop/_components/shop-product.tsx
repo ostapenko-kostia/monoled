@@ -17,17 +17,32 @@ export function ShopProduct({ product, showMode }: Props) {
 			})}
 		>
 			<div
-				className={cn('relative w-full aspect-square', {
+				className={cn('relative z-0 w-full aspect-square', {
 					'min-[500px]:h-[200px] 2xl:h-[250px] min-[500px]:w-auto': showMode === 'list'
 				})}
 			>
+				{product.isNew && (
+					<div className='absolute top-0 right-3 bg-blue-500 text-white z-[11] rounded-b-md px-4 py-2'>Новинка</div>
+				)}
 				<Image
 					src={product.images[0]}
 					alt={product.name}
 					fill
 					sizes='100%, 100%'
-					className='object-cover rounded-lg'
+					className={cn('object-cover rounded-lg', {
+						'group-hover:opacity-0 transition-opacity duration-[400ms] absolute z-10':
+							product.images[1]
+					})}
 				/>
+				{product.images[1] && (
+					<Image
+						src={product.images[1]}
+						alt={product.name}
+						fill
+						sizes='100%, 100%'
+						className='object-cover rounded-lg absolute top-0 left-0 w-full h-full'
+					/>
+				)}
 			</div>
 			<div>
 				<p className='mt-5 text-lg group-hover:underline group-hover:text-blue-500 underline-offset-4 transition-colors duration-200 max-[500px]:text-base'>

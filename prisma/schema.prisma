@@ -17,9 +17,10 @@ model Product {
   description String
   info        Json?
   modelUrl    String?
+  isNew       Boolean?
 
   category     Category @relation(fields: [categorySlug], references: [slug])
-  categorySlug String 
+  categorySlug String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -44,5 +45,5 @@ model Admin {
   password String
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt 
+  updatedAt DateTime @updatedAt
 }

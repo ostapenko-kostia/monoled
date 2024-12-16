@@ -18,7 +18,7 @@ export function MenuList({ categories }: Props) {
 	const sheetContext = useContext(SheetContext)
 
 	return (
-		<ul className='flex flex-col gap-3 text-xl'>
+		<ul className='flex flex-col gap-5 text-xl'>
 			{categories ? (
 				<>
 					<li
@@ -30,6 +30,7 @@ export function MenuList({ categories }: Props) {
 					>
 						<Link
 							href='/shop'
+							className='text-3xl'
 							onClick={() => sheetContext?.closeSheet()}
 						>
 							- Всі категорії
@@ -45,6 +46,7 @@ export function MenuList({ categories }: Props) {
 						>
 							<Link
 								href={`/shop?category=${i.slug}`}
+								className='text-3xl'
 								onClick={() => sheetContext?.closeSheet()}
 							>
 								- {i.name}
