@@ -3,7 +3,6 @@ import { Product } from './_components/product'
 import { type Product as TProduct } from '@prisma/client'
 import { productsService } from '@/services/products.service'
 import { notFound } from 'next/navigation'
-import { ShopProduct } from '@/app/shop/_components/shop-product'
 import { RecommendedProducts } from './_components/recommended-products'
 
 export const metadata: Metadata = {
@@ -23,7 +22,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 	return (
 		<>
 			<Product product={product} />
-			<RecommendedProducts products={products} slug={slug} />
+			<RecommendedProducts
+				products={products}
+				slug={slug}
+			/>
 		</>
 	)
 }
