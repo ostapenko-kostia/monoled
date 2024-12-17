@@ -4,7 +4,7 @@ import { type Product as TProduct } from '@prisma/client'
 import { productsService } from '@/services/products.service'
 import { notFound } from 'next/navigation'
 import { RecommendedProducts } from './_components/recommended-products'
-import { ContactUsForm } from '@/components/layout/contact-us-form'
+import { ContactUsForm } from '@/components/layout/contact-us-form/contact-us-form'
 
 export const metadata: Metadata = {
 	title: 'Monoled - Товар'
@@ -27,7 +27,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 				products={products}
 				slug={slug}
 			/>
-			<div className='py-6 bg-neutral-200'>
+			<div className='py-6 bg-neutral-100'>
+				<p className='text-4xl font-semibold text-center mb-4 w-full tracking-[0.015rem]'>Зацікавив товар?</p>
 				<ContactUsForm />
 			</div>
 		</>
