@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.scss'
 import Layout from '@/components/layout/layout'
+import { Header } from '@/components/layout/header'
 
 const fixel = localFont({
 	src: [
@@ -30,7 +31,10 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={fixel.className}>
-				<Layout>{children}</Layout>
+				<Layout>
+					<Header />
+					{children}
+				</Layout>
 			</body>
 		</html>
 	)
