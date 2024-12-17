@@ -21,32 +21,20 @@ export function MenuList({ categories }: Props) {
 		<ul className='flex flex-col gap-5 text-xl'>
 			{categories ? (
 				<>
-					<li
-						className={cn({
-							'text-[rgb(10,120,191)]':
-								(!params.toString().includes('category') || !params.get('category')?.length) &&
-								pathname.includes('shop')
-						})}
-					>
+					<li>
 						<Link
 							href='/shop'
-							className='text-3xl'
+							className='text-2xl max-sm:text-xl'
 							onClick={() => sheetContext?.closeSheet()}
 						>
 							- Всі категорії
 						</Link>
 					</li>
 					{categories.map(i => (
-						<li
-							key={i.slug}
-							className={cn({
-								'text-[rgb(10,120,191)]':
-									params.toString().includes(i.slug) && pathname.includes('shop')
-							})}
-						>
+						<li key={i.slug}>
 							<Link
 								href={`/shop?category=${i.slug}`}
-								className='text-3xl'
+								className='text-2xl max-sm:text-xl'
 								onClick={() => sheetContext?.closeSheet()}
 							>
 								- {i.name}

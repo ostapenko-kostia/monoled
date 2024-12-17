@@ -23,11 +23,6 @@ export function ShopSidebar({ allCategories }: Props) {
 				{allCategories ? (
 					<>
 						<motion.li
-							className={cn({
-								'text-[rgb(10,120,191)]':
-									(!params.toString().includes('category') || !params.get('category')?.length) &&
-									pathname.includes('shop')
-							})}
 							initial={{ opacity: 0, y: '100%' }}
 							animate={{ opacity: 1, y: '0' }}
 							transition={{ duration: 0.2, bounce: 0, ease: 'easeInOut' }}
@@ -49,9 +44,6 @@ export function ShopSidebar({ allCategories }: Props) {
 							return (
 								<motion.li
 									key={i.slug}
-									className={cn({
-										'text-[rgb(10,120,191)]': isCurrentSelected
-									})}
 									initial={{ opacity: 0, y: '100%' }}
 									animate={{ opacity: 1, y: '0' }}
 									transition={{ duration: 0.2, bounce: 0, ease: 'easeInOut' }}

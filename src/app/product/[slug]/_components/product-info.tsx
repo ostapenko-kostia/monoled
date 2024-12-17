@@ -1,15 +1,16 @@
+'use client'
+
 import { stringifyWithoutQuotes } from '@/utils/stringifyWithoutQuotes'
 import { Product } from '@prisma/client'
 import cn from 'clsx'
-import { Dispatch, SetStateAction } from 'react'
+import { useState } from 'react'
 
-interface Props { 
-  currentInfoBlock: 'description' | 'characteristics' | 'info'
-  setCurrentInfoBlock: Dispatch<SetStateAction<'description' | 'characteristics' | 'info'>>
-  product: Product
+interface Props {
+	product: Product
 }
 
-export function ProductInfo({ currentInfoBlock, setCurrentInfoBlock, product }: Props) {
+export function ProductInfo({ product }: Props) {
+	const [currentInfoBlock, setCurrentInfoBlock] = useState<'description' | 'info'>('description')
 	return (
 		<div
 			id='info'
@@ -25,15 +26,6 @@ export function ProductInfo({ currentInfoBlock, setCurrentInfoBlock, product }: 
 					Опис
 				</button>
 				<button
-					onClick={() => setCurrentInfoBlock('characteristics')}
-					className={cn('bg-neutral-100 h-full px-6 py-5 max-[430px]:w-full', {
-						'underline underline-offset-[6px] !bg-neutral-200':
-							currentInfoBlock === 'characteristics'
-					})}
-				>
-					Характеристики
-				</button>
-				<button
 					onClick={() => setCurrentInfoBlock('info')}
 					className={cn('bg-neutral-100 h-full px-6 py-5 max-[430px]:w-full', {
 						'underline underline-offset-[6px] !bg-neutral-200': currentInfoBlock === 'info'
@@ -43,24 +35,6 @@ export function ProductInfo({ currentInfoBlock, setCurrentInfoBlock, product }: 
 				</button>
 			</header>
 			<main>
-				{currentInfoBlock === 'characteristics' && (
-					<div className='p-5 bg-white'>
-						<h3 className='mb-5 text-xl'>Основні характеристики:</h3>
-						{Object.entries(JSON.parse(JSON.stringify(product.info))).map(([key, value], index) => (
-							<div
-								className={cn(
-									'w-full py-2 px-6 flex items-center justify-between max-[500px]:flex-col max-[500px]:gap-4',
-									{
-										'bg-[#eee]': index % 2 === 0
-									}
-								)}
-								key={key}
-							>
-								{key}: <span className='text-neutral-500'>{stringifyWithoutQuotes(value)}</span>
-							</div>
-						))}
-					</div>
-				)}
 				{currentInfoBlock === 'description' && (
 					<div className='p-5 bg-white'>
 						<h3 className='mb-5 text-xl'>Опис:</h3>

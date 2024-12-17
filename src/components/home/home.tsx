@@ -55,10 +55,7 @@ export function Home() {
 						}}
 					>
 						<div className='w-full h-full px-8 max-sm:px-2 flex flex-col items-start text-start justify-end max-sm:text-center max-sm:items-center gap-7'>
-							{slide.supTitle && (
-								<span className='uppercase text-xl font-medium'>{slide.supTitle}</span>
-							)}
-							<h2 className='text-6xl font-bold max-2xl:text-5xl max-xl:text-4xl max-sm:text-2xl w-[700px] max-md:w-full'>
+							<h2 className='text-6xl font-medium max-2xl:text-5xl max-xl:text-4xl max-sm:text-2xl w-[700px] max-md:w-full'>
 								{slide.title}
 							</h2>
 							<button className='bg-white rounded-md text-black font-medium border-2 border-transparent hover:border-black transition-colors duration-300 border-black max-sm:mx-auto'>

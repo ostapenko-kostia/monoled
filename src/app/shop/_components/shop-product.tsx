@@ -45,7 +45,7 @@ export function ShopProduct({ product, showMode }: Props) {
 				)}
 			</div>
 			<div>
-				<p className='mt-5 text-lg group-hover:underline group-hover:text-blue-500 underline-offset-4 transition-colors duration-200 max-[500px]:text-base'>
+				<p className='mt-5 text-lg group-hover:underline underline-offset-4 transition-colors duration-200 max-[500px]:text-base'>
 					{product.name}
 				</p>
 				<p className='line-clamp-6 text-sm text-neutral-500 my-3 max-[500px]:text-xs'>

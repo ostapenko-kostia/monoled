@@ -85,13 +85,13 @@ function SheetContent({
 		<AnimatePresence mode='wait'>
 			{isOpen && (
 				<div
-					className='fixed left-0 top-20 w-screen h-screen overflow-hidden'
+					className='fixed left-0 top-20 w-screen h-screen overflow-x-hidden z-[9999]'
 					id='sheet'
 				>
 					<motion.div
 						key='sheet-content'
 						id='sheet-content'
-						className={clsx('fixed top-20 left-0 p-4 bg-white z-[1000] w-full h-full')}
+						className={clsx('fixed top-20 left-0 p-4 bg-white z-[1000] w-full h-full overflow-y-scroll')}
 						variants={sideVariants}
 						initial='hidden'
 						animate='visible'
