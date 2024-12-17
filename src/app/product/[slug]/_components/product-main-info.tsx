@@ -47,13 +47,14 @@ export function ProductMainInfo({ product }: Props) {
 						</Link>
 					</button>
 					<button className='h-full max-sm:w-full max-sm:items-center max-sm:flex max-sm:justify-center max-xl:h-16 border-[1px] border-foreground bg-background text-foreground rounded-md hover:text-background hover:bg-foreground transition-colors duration-300'>
-						<Link
+						<a
 							className='flex items-center px-6 h-full gap-3'
-							href='/contact-us'
+							href={product.modelUrl ?? '#'}
+							download
 						>
 							<DownloadIcon />
 							Завантажи модель (.3ds)
-						</Link>
+						</a>
 					</button>
 				</div>
 			</div>
