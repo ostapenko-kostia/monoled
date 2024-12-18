@@ -3,7 +3,6 @@
 import { Product } from '@prisma/client'
 import { DownloadIcon } from 'lucide-react'
 import Link from 'next/link'
-import cn from 'clsx'
 import { stringifyWithoutQuotes } from '@/utils/stringifyWithoutQuotes'
 
 interface Props {

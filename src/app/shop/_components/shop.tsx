@@ -40,14 +40,14 @@ export function Shop({ allCategories, allProducts }: Props) {
 			<h2 className='text-3xl max-lg:text-center'>Продукція MONOLED</h2>
 			<div className='grid grid-cols-[1fr_3fr] max-lg:grid-cols-[1fr_2fr] max-md:grid-cols-1 max-md:gap-5 w-full mt-8'>
 				<ShopSidebar allCategories={allCategories} />
-				<section className='w-full border-[1px] border-r-0 border-t-0 bg-white'>
+				<section className='w-full bg-white'>
 					<div className='w-full py-4 uppercase font-light tracking-wide bg-[#f0f1f3] flex items-center justify-center text-center text-xl'>
 						Товари
 					</div>
 					<div className='h-[60px] max-lg:h-[200px] max-md:h-[140px]'>
 						<ShopHeader />
 					</div>
-					<main className='border-r-[1px]'>
+					<main>
 						{slicedFilteredProducts && slicedFilteredProducts.length ? (
 							<div
 								className={cn('bg-white w-full p-5 gap-5 grid grid-cols-3 max-lg:grid-cols-2', {

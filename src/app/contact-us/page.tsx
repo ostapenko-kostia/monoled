@@ -1,4 +1,5 @@
 import { ContactUsForm } from '@/components/layout/contact-us-form/contact-us-form'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default function ContactUsPage() {
@@ -29,16 +30,50 @@ export default function ContactUsPage() {
 					<span className='font-normal'>Контакти</span>
 				</p>
 			</header>
-			<div className='my-20 container mx-auto max-sm:px-2'>
-				<h1 className='text-5xl mb-10 text-center uppercase font-semibold'>Monoled</h1>
-				<p className='mb-10 text-center mx-auto w-full'>
-					Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet, reprehenderit iure
-					assumenda incidunt commodi eaque dolorem excepturi ad officiis sint molestias quo atque
-					error sunt architecto dolor ratione consectetur consequatur? Laboriosam ea velit rerum
-					officiis, culpa animi officia odio vel illum voluptatum assumenda qui obcaecati maiores
-					repellendus accusamus fuga corrupti quibusdam! Labore facere sint ut qui mollitia, eius
-					cupiditate sapiente.
-				</p>
+			<div className='grid-cols-2 grid gap-10 py-10'>
+				<div className='my-20 container mx-auto max-sm:px-2 min-h-screen'>
+					<h1 className='text-5xl mb-10 text-center uppercase font-semibold'>Monoled</h1>
+					<p className='mb-10 text-center mx-auto w-[90%]'>
+						Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet, reprehenderit iure
+						assumenda incidunt commodi eaque dolorem excepturi ad officiis sint molestias quo atque
+						error sunt architecto dolor ratione consectetur consequatur? Laboriosam ea velit rerum
+						officiis, culpa animi officia odio vel illum voluptatum assumenda qui obcaecati maiores
+						repellendus accusamus fuga corrupti quibusdam! Labore facere sint ut qui mollitia, eius
+						cupiditate sapiente. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet,
+						reprehenderit iure assumenda incidunt commodi eaque dolorem excepturi ad officiis sint
+						molestias quo atque error sunt architecto dolor ratione consectetur consequatur?
+						Laboriosam ea velit rerum officiis, culpa animi officia odio vel illum voluptatum
+						assumenda qui obcaecati maiores repellendus accusamus fuga corrupti quibusdam! Labore
+						facere sint ut qui mollitia, eius cupiditate sapiente. Lorem ipsum dolor, sit amet
+						consectetur adipisicing elit. Eveniet, reprehenderit iure assumenda incidunt commodi
+						eaque dolorem excepturi ad officiis sint molestias quo atque error sunt architecto dolor
+						ratione consectetur consequatur? Laboriosam ea velit rerum officiis, culpa animi officia
+						odio vel illum voluptatum assumenda qui obcaecati maiores repellendus accusamus fuga
+						corrupti quibusdam! Labore facere sint ut qui mollitia, eius cupiditate sapiente. Lorem
+						ipsum dolor, sit amet consectetur adipisicing elit. Eveniet, reprehenderit iure
+						assumenda incidunt commodi eaque dolorem excepturi ad officiis sint molestias quo atque
+						error sunt architecto dolor ratione consectetur consequatur? Laboriosam ea velit rerum
+						officiis, culpa animi officia odio vel illum voluptatum assumenda qui obcaecati maiores
+						repellendus accusamus fuga corrupti quibusdam! Labore facere sint ut qui mollitia, eius
+						cupiditate sapiente. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet,
+						reprehenderit iure assumenda incidunt commodi eaque dolorem excepturi ad officiis sint
+						molestias quo atque error sunt architecto dolor ratione consectetur consequatur?
+						Laboriosam ea velit rerum officiis, culpa animi officia odio vel illum voluptatum
+						assumenda qui obcaecati maiores repellendus accusamus fuga corrupti quibusdam! Labore
+						facere sint ut qui mollitia, eius cupiditate sapiente.
+					</p>
+				</div>
+				<div className='w-full h-min aspect-square sticky top-5 max-sm:hidden'>
+					<div className='relative w-full h-full'>
+						<Image
+							src='/uploads/1.avif'
+							alt='about'
+							className='object-cover'
+							fill
+							sizes='100%, 100%'
+						/>
+					</div>
+				</div>
 			</div>
 			<div className='py-20 bg-neutral-100'>
 				<ContactUsForm />

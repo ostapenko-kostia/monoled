@@ -33,7 +33,7 @@ function ShopHeaderComponent() {
 
 	return (
 		<motion.header
-			className='border-[1px] border-l-0 bg-white px-4 py-2 flex items-center gap-5 h-full max-lg:flex-col max-lg:py-5'
+			className=' bg-white px-4 py-2 flex items-center gap-5 h-full max-lg:flex-col max-lg:py-5'
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.3, bounce: 0, ease: 'easeInOut' }}

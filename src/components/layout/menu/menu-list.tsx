@@ -2,19 +2,14 @@
 
 import { SheetContext } from '@/components/ui/sheet'
 import { Category } from '@prisma/client'
-import cn from 'clsx'
 import Link from 'next/link'
-import { usePathname, useSearchParams } from 'next/navigation'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 
 interface Props {
 	categories: Category[] | undefined
 }
 
 export function MenuList({ categories }: Props) {
-	const pathname = usePathname()
-	const params = useSearchParams()
-
 	const sheetContext = useContext(SheetContext)
 
 	return (

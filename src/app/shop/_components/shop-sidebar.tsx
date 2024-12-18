@@ -3,7 +3,6 @@
 import { Category } from '@prisma/client'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
-import cn from 'clsx'
 import { motion } from 'framer-motion'
 
 interface Props {
@@ -15,11 +14,11 @@ export function ShopSidebar({ allCategories }: Props) {
 	const pathname = usePathname()
 
 	return (
-		<aside className='bg-white border-b-[1px] overflow-y-hidden'>
+		<aside className='bg-white overflow-y-hidden'>
 			<header className='w-full py-4 uppercase font-light tracking-wide bg-[#f0f1f3] flex items-center justify-center text-center text-xl'>
 				Категорії
 			</header>
-			<ul className='flex flex-col gap-5 py-5 px-6 border-t-[1px] border-l-[1px] h-full'>
+			<ul className='flex flex-col gap-5 py-5 px-6 h-full'>
 				{allCategories ? (
 					<>
 						<motion.li
