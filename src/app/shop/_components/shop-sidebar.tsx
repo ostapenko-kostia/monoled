@@ -15,9 +15,9 @@ export function ShopSidebar({ allCategories }: Props) {
 
 	return (
 		<aside className='bg-white overflow-y-hidden'>
-			<header className='w-full py-4 uppercase font-light tracking-wide bg-[#f0f1f3] flex items-center justify-center text-center text-xl'>
+			{/* <header className='w-full py-4 uppercase font-light tracking-wide bg-[#f0f1f3] flex items-center justify-center text-center text-xl'>
 				Категорії
-			</header>
+			</header> */}
 			<ul className='flex flex-col gap-5 py-5 px-6 h-full'>
 				{allCategories ? (
 					<>
