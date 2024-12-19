@@ -10,7 +10,7 @@ export default function Layout({ children }: PropsWithChildren<unknown>) {
 	return (
 		<>
 			<main>{children}</main>
-			{pathname === '/' ? <></> : <Footer />}
+			{pathname === '/' ? <></> : <Footer className='pb-10 [&_div]:pt-10' />}
 		</>
 	)
 }

@@ -30,7 +30,7 @@ export default function ContactUsPage() {
 					<span className='font-normal'>Контакти</span>
 				</p>
 			</header>
-			<div className='grid-cols-2 grid gap-10 py-10'>
+			<div className='grid-cols-2 grid gap-10 py-10 max-sm:grid-cols-1'>
 				<div className='my-20 container mx-auto max-sm:px-2 min-h-screen'>
 					<h1 className='text-5xl mb-10 text-center uppercase font-semibold'>Monoled</h1>
 					<p className='mb-10 text-center mx-auto w-[90%]'>
