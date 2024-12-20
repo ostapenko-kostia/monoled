@@ -5,7 +5,6 @@ import { EffectCreative, Mousewheel, Keyboard } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/effect-creative'
 import Link from 'next/link'
-import { useHomeStore } from './home.store'
 import type { SwiperOptions, Swiper as TSwiper } from 'swiper/types'
 import { Footer } from '../layout/footer/footer'
 import { Slide } from '@prisma/client'
@@ -15,8 +14,6 @@ interface Props {
 }
 
 export function Home({ slides }: Props) {
-	const { setCurrentSlide } = useHomeStore()
-
 	const swiperSettings: SwiperOptions = {
 		spaceBetween: 0,
 		slidesPerView: 1,
@@ -44,7 +41,6 @@ export function Home({ slides }: Props) {
 		<div className='h-vh absolute inset-0 top-0 left-0 w-full h-full -z-10'>
 			<Swiper
 				className='overflow-hidden h-full'
-				onSlideChange={(swiper: TSwiper) => setCurrentSlide(swiper.activeIndex)}
 				{...swiperSettings}
 			>
 				{slides &&

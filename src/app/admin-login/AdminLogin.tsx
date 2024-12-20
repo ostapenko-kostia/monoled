@@ -1,7 +1,10 @@
 'use client'
 
+import { useAdminAuth } from '@/hooks/useAdmin'
 import { LockIcon, MailIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 
 interface Form {
 	email: string
@@ -9,17 +12,30 @@ interface Form {
 }
 
 export function AdminLogin() {
+	const [loadingToastId, setLoadingToastId] = useState('')
 	const { register, handleSubmit } = useForm<Form>()
+	const { mutateAsync: authFunc, isPending, isSuccess, isError } = useAdminAuth()
 
-	const login = (data: Form) => {
-		console.log(data)
-	}
+	useEffect(() => {
+		if (isPending) {
+			const loadingToastId = toast.loading('Триває авторизація...')
+			setLoadingToastId(loadingToastId)
+		}
+		if (isSuccess) {
+			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
+			toast.success('Успішно авторизовано!')
+			setTimeout(() => window.location.reload(), 500)
+		}
+		if (isError) {
+			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
+		}
+	}, [isPending, isSuccess, isError])
 
 	return (
 		<div className='min-h-[50vh]'>
 			<form
 				className='mx-auto bg-white rounded-md p-4 w-[400px] mt-10 h-min flex flex-col gap-8 max-sm:w-[90%]'
-				onSubmit={handleSubmit(login)}
+				onSubmit={handleSubmit(data => authFunc(data))}
 			>
 				<h2 className='text-center font-semibold text-3xl'>Вхід</h2>
 				<div className='flex items-start flex-col gap-3'>
