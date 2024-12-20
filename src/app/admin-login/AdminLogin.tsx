@@ -18,7 +18,7 @@ export function AdminLogin() {
 	return (
 		<div className='min-h-[50vh]'>
 			<form
-				className='mx-auto bg-white rounded-md p-4 w-[400px] mt-10 h-min flex flex-col gap-8 max-sm:w-full'
+				className='mx-auto bg-white rounded-md p-4 w-[400px] mt-10 h-min flex flex-col gap-8 max-sm:w-[90%]'
 				onSubmit={handleSubmit(login)}
 			>
 				<h2 className='text-center font-semibold text-3xl'>Вхід</h2>
@@ -33,7 +33,7 @@ export function AdminLogin() {
 						className='w-full rounded-md border border-gray-500 bg-white px-5 py-3 text-sm placeholder:text-gray-400 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500;'
 						type='email'
 						required
-            placeholder='123@gmail.com'
+						placeholder='123@gmail.com'
 						id='email'
 						{...register('email', { required: true })}
 					/>
@@ -49,7 +49,7 @@ export function AdminLogin() {
 						className='w-full rounded-md border border-gray-500 bg-white px-5 py-3 text-sm placeholder:text-gray-400 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500;'
 						type='password'
 						required
-            placeholder='12345678'
+						placeholder='12345678'
 						id='password'
 						{...register('password', { required: true })}
 					/>

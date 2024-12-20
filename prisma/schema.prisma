@@ -41,7 +41,7 @@ model Category {
 model Admin {
   id Int @id @unique @default(autoincrement())
 
-  login    String
+  login    String @unique
   password String
 
   createdAt DateTime @default(now())
