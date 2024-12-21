@@ -6,7 +6,7 @@ import type { Admin as TAdmin, Category, Product, Slide, TextField } from '@pris
 import dynamic from 'next/dynamic'
 import { AdminCategoriesTab } from './admin-categories'
 import { AdminSlidesTab } from './admin-slides'
-import { AdminsTab } from './admins-tab'
+import { AdminsTab } from './admins-tab/admins-tab'
 import { AdminTextFieldsTab } from './admin-texts'
 
 interface Props {

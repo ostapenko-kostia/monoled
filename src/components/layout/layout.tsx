@@ -12,7 +12,7 @@ export default function Layout({ children }: PropsWithChildren<unknown>) {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<Toaster />
+			<Toaster containerClassName='!z-[10000]' />
 			<main>{children}</main>
 			{pathname === '/' ? <></> : <Footer className='pb-10 [&_div]:pt-10' />}
 		</QueryClientProvider>
