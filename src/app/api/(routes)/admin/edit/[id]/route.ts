@@ -15,8 +15,6 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 
-		console.log(body)
-
 		const hashedPassword = await bcrypt.hash(body.password, 3)
 
 		const admin = await prisma.admin.update({
