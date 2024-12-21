@@ -4,10 +4,10 @@ import { useState } from 'react'
 import type { Admin as TAdmin, Category, Product, Slide, TextField } from '@prisma/client'
 import dynamic from 'next/dynamic'
 import { AdminCategoriesTab } from './admin-categories/admin-categories'
-import { AdminSlidesTab } from './admin-slides'
+import { AdminSlidesTab } from './admin-slides/admin-slides'
 import { AdminsTab } from './admins-tab/admins-tab'
 import { AdminProductsTab } from './admin-products/admin-products'
-import { AdminTextFieldsTab } from './admin-texts'
+import { AdminTextFieldsTab } from './admin-texts/admin-texts'
 
 interface Props {
 	slides: Slide[] | undefined

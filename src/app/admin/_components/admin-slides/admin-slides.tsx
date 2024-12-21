@@ -1,6 +1,7 @@
 import { Slide } from '@prisma/client'
 import { EditIcon, PlusCircleIcon, PlusIcon, Trash2Icon } from 'lucide-react'
 import Image from 'next/image'
+import { AdminDeleteSlide } from './admin-delete-slide'
 
 interface Props {
 	slides: Slide[] | undefined
@@ -24,9 +25,7 @@ export function AdminSlidesTab({ slides }: Props) {
 							<button>
 								<EditIcon />
 							</button>
-							<button>
-								<Trash2Icon />
-							</button>
+							<AdminDeleteSlide id={slide.id} />
 						</div>
 						<div>
 							<div className='relative w-full aspect-square'>
@@ -38,8 +37,10 @@ export function AdminSlidesTab({ slides }: Props) {
 									className='object-cover rounded-lg'
 								/>
 							</div>
-              <h3 className='my-2 text-xl font-medium'>{slide.text}</h3>
-              <p className='text-sm'><span className='font-semibold'>Посилання:</span> {slide.url}</p>
+							<h3 className='my-2 text-xl font-medium'>{slide.text}</h3>
+							<p className='text-sm'>
+								<span className='font-semibold'>Посилання:</span> {slide.url}
+							</p>
 						</div>
 					</div>
 				))}

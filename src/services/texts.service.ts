@@ -9,6 +9,10 @@ class TextsService {
 			return res
 		} catch {}
 	}
+
+	async editText({ id, text }: { id: number; text: string }) {
+		return await api.put(`/texts/edit/${id}`, { text })
+	}
 }
 
 export const textsService = new TextsService()

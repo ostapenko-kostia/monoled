@@ -1,24 +1,24 @@
 'use client'
 
 import { Dialog } from '@/components/ui/dialog'
-import { useEditCategory } from '@/hooks/useCategories'
-import { Category } from '@prisma/client'
+import { useEditText } from '@/hooks/useText'
+import { TextField } from '@prisma/client'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
 interface Props {
-	category: Category
+	text: TextField
 }
 
 interface Form {
-	name: string
+	text: string
 }
 
-export function AdminEditCategory({ category }: Props) {
+export function AdminEditText({ text }: Props) {
 	const [loadingToastId, setLoadingToastId] = useState('')
 	const { register, handleSubmit } = useForm<Form>()
-	const { mutateAsync: editFunc, isPending, isSuccess, isError } = useEditCategory()
+	const { mutateAsync: editFunc, isPending, isSuccess, isError } = useEditText()
 
 	useEffect(() => {
 		if (isPending) {
@@ -36,14 +36,14 @@ export function AdminEditCategory({ category }: Props) {
 
 	const edit = async (data: Form) => {
 		await editFunc({
-			id: category.id,
-			name: data.name ?? undefined
+			id: text.id,
+			text: data.text ?? undefined
 		})
 	}
 
 	return (
 		<Dialog
-			title='Змінити категорію'
+			title='Змінити текстове поле'
 			trigger={<button className='text-blue-600 hover:text-blue-900'>Редагувати</button>}
 		>
 			<form
@@ -52,7 +52,7 @@ export function AdminEditCategory({ category }: Props) {
 			>
 				<div className='flex items-start flex-col gap-3'>
 					<label
-						htmlFor='cat'
+						htmlFor='text'
 						className='flex items-center gap-2'
 					>
 						Назва
@@ -61,10 +61,10 @@ export function AdminEditCategory({ category }: Props) {
 						className='w-full rounded-md border border-gray-500 bg-white px-5 py-3 text-sm placeholder:text-gray-400 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500;'
 						type='text'
 						required
-						placeholder={category.name}
-						defaultValue={category.name}
-						id='cat'
-						{...register('name', { required: true })}
+						placeholder={text.text}
+						defaultValue={text.text}
+						id='text'
+						{...register('text', { required: true })}
 					/>
 				</div>
 				<button

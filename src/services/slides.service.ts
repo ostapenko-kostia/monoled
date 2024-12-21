@@ -9,6 +9,10 @@ class SlideService {
 			return res
 		} catch {}
 	}
+
+	async deleteSlide(id: number) {
+		return await api.delete(`/slides/delete/${id}`)
+	}
 }
 
 export const slideService = new SlideService()
