@@ -1,28 +1,22 @@
-import { Category } from '@prisma/client'
-import { PlusIcon } from 'lucide-react'
+import { Category, Product } from '@prisma/client'
+import { AdminCreateCategory } from './admin-create-category'
+import { AdminDeleteCategory } from './admin-delete-category'
+import { AdminEditCategory } from './admin-edit-categories'
 
 interface Props {
 	categories: Category[] | undefined
+	products: Product[] | undefined
 }
 
-export function AdminCategoriesTab({ categories }: Props) {
-	const createCategory = () => {
-		console.log('create category')
-	}
-
+export function AdminCategoriesTab({ categories, products }: Props) {
 	return (
-		<div className='p-4'>
+		<div className='p-4 w-full'>
 			<div className='flex justify-between items-center mb-6'>
 				<h2 className='text-2xl font-semibold'>Категорії</h2>
-				<button
-					onClick={createCategory}
-					className='bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center justify-center gap-2'
-				>
-					<PlusIcon color='#fff' size={20} /> Додати категорію
-				</button>
+				<AdminCreateCategory />
 			</div>
-			<div className='overflow-x-auto'>
-				<table className='min-w-full divide-y divide-gray-200'>
+			<div className='overflow-x-auto w-full'>
+				<table className='min-w-full divide-y divide-gray-200 overflow-x-scroll'>
 					<thead className='bg-gray-50'>
 						<tr>
 							<th
@@ -80,8 +74,8 @@ export function AdminCategoriesTab({ categories }: Props) {
 									{new Date(category.updatedAt).toLocaleDateString()}
 								</td>
 								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-									<button className='text-blue-600 hover:text-blue-900'>Редагувати</button>
-									<button className='ml-4 text-red-600 hover:text-red-900'>Видалити</button>
+									<AdminEditCategory category={category} />
+									<AdminDeleteCategory category={category} products={products} />
 								</td>
 							</tr>
 						))}

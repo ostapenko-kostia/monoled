@@ -91,6 +91,7 @@ function DialogContent({
 						key='dialog-overlay'
 						className='absolute z-[999] bg-[rgba(0,0,0,.35)] w-screen h-screen left-0 top-0 inset-0'
 						variants={sideVariants}
+						onClick={closeDialog}
 						initial='hidden'
 						animate='visible'
 						exit='hidden'

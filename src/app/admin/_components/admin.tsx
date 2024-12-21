@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { AdminProducts } from './admin-products'
 import type { Admin as TAdmin, Category, Product, Slide, TextField } from '@prisma/client'
 import dynamic from 'next/dynamic'
-import { AdminCategoriesTab } from './admin-categories'
+import { AdminCategoriesTab } from './admin-categories/admin-categories'
 import { AdminSlidesTab } from './admin-slides'
 import { AdminsTab } from './admins-tab/admins-tab'
+import { AdminProductsTab } from './admin-products/admin-products'
 import { AdminTextFieldsTab } from './admin-texts'
 
 interface Props {
@@ -21,8 +21,8 @@ function AdminComponent({ slides, texts, products, categories, admins }: Props) 
 	const [currentTab, setCurrentTab] = useState(0)
 
 	const tabs = [
-		<AdminProducts products={products} />,
-		<AdminCategoriesTab categories={categories} />,
+		<AdminProductsTab products={products} categories={categories} />,
+		<AdminCategoriesTab categories={categories} products={products} />,
 		<AdminSlidesTab slides={slides} />,
 		<AdminsTab admins={admins} />,
 		<AdminTextFieldsTab texts={texts} />
@@ -30,7 +30,7 @@ function AdminComponent({ slides, texts, products, categories, admins }: Props) 
 
 	return (
 		<div className='min-h-[80vh] container mx-auto max-sm:px-2 py-8 grid grid-cols-[1fr_2.5fr] max-lg:grid-cols-1 gap-5'>
-			<aside className='bg-white overflow-y-hidden rounded-xl'>
+			<aside className='bg-white overflow-y-hidden rounded-xl min-w-[360px]'>
 				<h2 className='text-3xl text-center my-5 font-semibold'>Адмін панель</h2>
 				<ul className='flex flex-col gap-5 py-5 px-6 h-full'>
 					<li
@@ -65,7 +65,7 @@ function AdminComponent({ slides, texts, products, categories, admins }: Props) 
 					</li>
 				</ul>
 			</aside>
-			<div className='bg-white rounded-xl'>{tabs[currentTab]}</div>
+			<div className='bg-white rounded-xl w-full overflow-x-hidden'>{tabs[currentTab]}</div>
 		</div>
 	)
 }

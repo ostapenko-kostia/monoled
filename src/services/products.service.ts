@@ -9,6 +9,10 @@ class ProductsService {
 			return res
 		} catch {}
 	}
+
+	async deleteProduct(id: number) {
+		return await api.delete(`/products/delete/${id}`)
+	}
 }
 
 export const productsService = new ProductsService()
