@@ -11,7 +11,7 @@ interface Props {
 export function AdminCategoriesTab({ categories, products }: Props) {
 	return (
 		<div className='p-4 w-full'>
-			<div className='flex justify-between items-center mb-6'>
+			<div className='flex justify-between items-center mb-6 max-sm:flex-col max-sm:gap-4'>
 				<h2 className='text-2xl font-semibold'>Категорії</h2>
 				<AdminCreateCategory />
 			</div>

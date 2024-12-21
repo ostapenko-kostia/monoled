@@ -104,7 +104,7 @@ function DialogContent({
 						key='dialog-content'
 						id='dialog-content'
 						className={clsx(
-							'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 bg-white z-[1000] w-[600px] max-sm:w-full h-min max-h-[90vh] rounded-lg'
+							'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 bg-white z-[1000] w-[600px] max-sm:w-[90%] h-min max-h-[90vh] rounded-lg'
 						)}
 						variants={sideVariants}
 						initial='hidden'
@@ -112,7 +112,7 @@ function DialogContent({
 						exit='hidden'
 					>
 						<div className='w-full py-4 flex justify-between items-center mb-2'>
-							<h2 className='text-3xl font-bold text-black'>{title}</h2>
+							<h2 className='text-3xl font-bold text-black max-[450px]:text-xl'>{title}</h2>
 							<X
 								className='cursor-pointer'
 								onClick={closeDialog}
