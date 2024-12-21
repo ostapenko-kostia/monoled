@@ -6,7 +6,7 @@ import { adminService } from '@/services/admin.service'
 import type { Admin as TAdmin, Category, Product, Slide, TextField } from '@prisma/client'
 import { Admin } from './_components/admin'
 
-export const dynamic = 'no-cache'
+export const dynamic = 'force-dynamic'
 
 export default async function AdminPage() {
 	const slides: Slide[] | undefined = (await slideService.getAllSlides())?.data
