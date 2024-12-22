@@ -3,17 +3,20 @@ import { Category, Product } from '@prisma/client'
 
 interface Filters {
 	category: Category['slug']
+	searchQuery: string | null
 	sortingMethodId: ISortingMethod['id']
 }
 
 export const useFilterProducts = (
 	products: Product[] | undefined,
-	{ category, sortingMethodId }: Filters
+	{ category, sortingMethodId, searchQuery }: Filters
 ): Product[] | undefined => {
-	const filteredProducts = products?.filter(product =>
-		category.length ? product.categorySlug === category : product
-	)
-  
+	const filteredProducts = products
+		?.filter(product => (category.length ? product.categorySlug === category : product))
+		.filter(product =>
+			product.name.toLowerCase().includes(searchQuery ? searchQuery.toLowerCase() : '')
+		)
+
 	let sortedProducts = filteredProducts
 	switch (sortingMethodId) {
 		case 1:

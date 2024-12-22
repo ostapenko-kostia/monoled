@@ -21,10 +21,12 @@ export function Shop({ allCategories, allProducts }: Props) {
 	const params = useSearchParams()
 
 	const currentCategory = params.get('category') ?? ''
+	const searchQuery = params.get('search') ?? '';
 	const { currentSortingId, productsPerPage, currentShowMode, currentPage } = useShopStore()
 
 	const filteredProducts = useFilterProducts(allProducts, {
 		category: currentCategory,
+		searchQuery,
 		sortingMethodId: currentSortingId
 	})
 
