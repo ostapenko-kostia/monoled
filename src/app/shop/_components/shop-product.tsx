@@ -25,7 +25,7 @@ export function ShopProduct({ product, showMode }: Props) {
 					<div className='absolute top-0 right-3 bg-blue-500 text-white z-[11] rounded-b-md px-4 py-2'>Новинка</div>
 				)}
 				<Image
-					src={product.images[0]}
+					src={product.images[0] && product.images[0].length ? product.images[0] : "/placeholder-image.jpg"}
 					alt={product.name}
 					fill
 					sizes='100%, 100%'

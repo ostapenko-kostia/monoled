@@ -11,7 +11,7 @@ export function Header() {
 				<Link href='/'>
 					<Image
 						className=''
-						src='/uploads/logo.avif'
+						src='/logo.avif'
 						alt='Monoled Logo'
 						height={18.13}
 						width={200}

@@ -22,7 +22,7 @@ const ShopPage: React.FC = async () => {
 				<div
 					className='absolute top-0 left-0 inset-0 w-full h-full -z-50 brightness-[.30]'
 					style={{
-						backgroundImage: "url('/uploads/1.avif')",
+						backgroundImage: "url('/1.avif')",
 						backgroundAttachment: 'fixed',
 						backgroundPosition: 'center 70%',
 						backgroundRepeat: 'no-repeat',

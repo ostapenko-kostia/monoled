@@ -34,7 +34,7 @@ export function ProductSlider({ images }: Props) {
 				pagination={{ clickable: true }}
 				loop
 			>
-				{images.map((image, index) => (
+				{images && images.length ? images.map((image, index) => (
 					<SwiperSlide key={index}>
 						<Image
 							className='object-cover rounded-lg'
@@ -44,7 +44,7 @@ export function ProductSlider({ images }: Props) {
 							height={900}
 						/>
 					</SwiperSlide>
-				))}
+				)) : (<SwiperSlide><Image src='/placeholder-image.jpg' alt='No Image' width={900} height={900} /></SwiperSlide>)}
 			</Swiper>
 			<button
 				onClick={() => swiperRef.current?.swiper.slideNext()}

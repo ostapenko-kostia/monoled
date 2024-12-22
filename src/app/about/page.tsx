@@ -9,7 +9,7 @@ export default function AboutPage() {
 				<div
 					className='absolute top-0 left-0 inset-0 w-full h-full -z-50 brightness-[.30]'
 					style={{
-						backgroundImage: "url('/uploads/1.avif')",
+						backgroundImage: "url('/1.avif')",
 						backgroundAttachment: 'fixed',
 						backgroundPosition: 'center 70%',
 						backgroundRepeat: 'no-repeat',
@@ -86,7 +86,7 @@ export default function AboutPage() {
 						<div className='w-full h-min aspect-square sticky top-5 max-sm:hidden'>
 							<div className='relative w-full h-full'>
 								<Image
-									src='/uploads/1.avif'
+									src='/1.avif'
 									alt='about'
 									className='object-cover'
 									fill
