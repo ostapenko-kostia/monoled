@@ -24,15 +24,13 @@ const productSchema = Joi.object({
 		'string.empty': 'Description is required',
 		'any.required': 'Description is required'
 	}),
-	modelUrl: Joi.string().required().messages({
-		'any.required': 'Model URL is required'
-	}),
-	info: Joi.object().min(1),
 	categorySlug: Joi.string().min(1).required().messages({
 		'string.empty': 'Category slug is required',
 		'any.required': 'Category slug is required'
 	}),
-	isNew: Joi.boolean().default(false)
+	info: Joi.object().optional(),
+	modelUrl: Joi.string().optional(),
+	isNew: Joi.boolean().default(false).optional()
 })
 
 async function generateUniqueSlug(slug: string): Promise<string> {

@@ -13,6 +13,18 @@ class SlideService {
 	async deleteSlide(id: number) {
 		return await api.delete(`/slides/delete/${id}`)
 	}
+
+	async createSlide(data: FormData) {
+		return await api.post('/slides/create', data, {
+			headers: { 'Content-Type': 'multipart/form-data' }
+		})
+	}
+
+	async updateSlide(id: number, data: FormData) {
+		return await api.put(`/slides/edit/${id}`, data, {
+			headers: { 'Content-Type': 'multipart/form-data' }
+		})
+	}
 }
 
 export const slideService = new SlideService()

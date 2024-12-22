@@ -13,6 +13,18 @@ class ProductsService {
 	async deleteProduct(id: number) {
 		return await api.delete(`/products/delete/${id}`)
 	}
+
+	async createProduct(formData: FormData) {
+		return await api.post('/products/create', formData, {
+			headers: { 'Content-Type': 'multipart/form-data' }
+		})
+	}
+
+	async updateProduct(id: number, formData: FormData) {
+		return await api.put(`/products/edit/${id}`, formData, {
+			headers: { 'Content-Type': 'multipart/form-data' }
+		})
+	}
 }
 
 export const productsService = new ProductsService()

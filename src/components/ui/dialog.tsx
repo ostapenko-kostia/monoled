@@ -84,7 +84,7 @@ function DialogContent({
 		<AnimatePresence mode='wait'>
 			{isOpen && (
 				<div
-					className='fixed left-0 top-0 w-screen h-screen overflow-x-hidden z-[9999]'
+					className='fixed left-0 top-0 w-screen h-screen overflow-hidden z-[9999]'
 					id='dialog'
 				>
 					<motion.div
@@ -104,7 +104,7 @@ function DialogContent({
 						key='dialog-content'
 						id='dialog-content'
 						className={clsx(
-							'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 bg-white z-[1000] w-[600px] max-sm:w-[90%] h-min max-h-[90vh] rounded-lg'
+							'overflow-y-scroll fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 bg-white z-[1000] w-[600px] max-sm:w-[90%] h-min max-h-[90vh] rounded-lg'
 						)}
 						variants={sideVariants}
 						initial='hidden'

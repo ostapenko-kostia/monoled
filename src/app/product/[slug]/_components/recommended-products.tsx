@@ -12,7 +12,7 @@ export function RecommendedProducts({ products, slug }: Props) {
 			<h3 className='text-3xl max-[500px]:text-center max-[500px]:text-2xl'>
 				Рекомендовані товари
 			</h3>
-			<div className='grid grid-cols-5 mt-8 max-lg:grid-cols-3 max-sm:grid-cols-2'>
+			<div className='grid grid-cols-5 mt-8 max-lg:grid-cols-3 max-sm:grid-cols-2 gap-8'>
 				{products
 					?.filter(product => product.slug !== slug)
 					?.slice(0, 5)

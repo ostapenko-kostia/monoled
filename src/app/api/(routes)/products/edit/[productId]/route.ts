@@ -10,16 +10,6 @@ import path from 'path'
 
 const UPLOADS_DIR = path.join(process.cwd(), 'public', 'uploads', 'images')
 
-const productSchema = Joi.object({
-	name: Joi.string(),
-	price: Joi.number().positive(),
-	description: Joi.string(),
-	modelUrl: Joi.string(),
-	info: Joi.object(),
-	categorySlug: Joi.string(),
-	isNew: Joi.boolean().default(false)
-})
-
 async function generateUniqueSlug(slug: string): Promise<string> {
 	let uniqueSlug = slug
 	let counter = 1
@@ -44,19 +34,12 @@ export async function PUT(
 		const productInfo = JSON.parse(body.productInfo as string)
 		const images = formData.getAll('images') as File[]
 
-		const { error, value } = productSchema.validate(productInfo, { abortEarly: false })
-
-		if (error) {
-			const errorDetails = error.details.map(err => err.message).join(', ')
-			throw new ApiError(`Validation error: ${errorDetails}`, 400)
-		}
-
 		const isAdmin = checkIsAdmin(req)
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 
-		if (value.name && value.name.length) {
-			value.slug = slugify(value.name)
-			value.slug = await generateUniqueSlug(value.slug)
+		if (productInfo.name && productInfo.name.length) {
+			productInfo.slug = slugify(productInfo.name)
+			productInfo.slug = await generateUniqueSlug(productInfo.slug)
 		}
 
 		if (images && images.length) {
@@ -71,9 +54,9 @@ export async function PUT(
 				}
 			}
 
-			value.images = savedImages
+			productInfo.images = savedImages
 		}
-		const product = await prisma.product.update({ where: { id: Number(productId) }, data: value })
+		const product = await prisma.product.update({ where: { id: Number(productId) }, data: productInfo })
 
 		return NextResponse.json(
 			{ ok: true, product },

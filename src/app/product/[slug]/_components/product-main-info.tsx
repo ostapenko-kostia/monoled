@@ -17,15 +17,21 @@ export function ProductMainInfo({ product }: Props) {
 					<h3>Характеристики:</h3>{' '}
 				</div>
 				<div className='grid-cols-2 grid gap-x-8 gap-y-3 max-sm:grid-cols-1'>
-					{Object.entries(JSON.parse(JSON.stringify(product.info))).map(([key, value], index) => (
-						<div
-							className='w-full py-2 flex flex-col items-start gap-2 border-b-[1px] border-black'
-							key={key}
-						>
-							<span className='text-neutral-500'>{key}:</span>{' '}
-							<span className='text-lg'>{stringifyWithoutQuotes(value)}</span>
-						</div>
-					))}
+					{product.info ? (
+						Object.entries(JSON.parse(JSON.stringify(product.info ?? ''))).map(
+							([key, value], index) => (
+								<div
+									className='w-full py-2 flex flex-col items-start gap-2 border-b-[1px] border-black'
+									key={key}
+								>
+									<span className='text-neutral-500'>{key}:</span>{' '}
+									<span className='text-lg'>{stringifyWithoutQuotes(value)}</span>
+								</div>
+							)
+						)
+					) : (
+						<>Характеристики відсутні</>
+					)}
 				</div>
 			</div>
 			<div className='mt-10'>

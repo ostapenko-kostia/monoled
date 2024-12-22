@@ -5,6 +5,8 @@ import type { Category, Product } from '@prisma/client'
 import { EditIcon, PlusCircleIcon, Trash2Icon } from 'lucide-react'
 import { AdminProductInfo } from './admin-product-info'
 import { AdminProductDelete } from './admin-product-delete'
+import { AdminProductCreate } from './admin-product-create'
+import { AdminProductEdit } from './admin-product-edit'
 
 interface Props {
 	products: Product[] | undefined
@@ -30,9 +32,10 @@ export function AdminProductsTab({ products, categories }: Props) {
 									product={product}
 									categoryName={categoryName}
 								/>
-								<button>
-									<EditIcon />
-								</button>
+								<AdminProductEdit
+									product={product}
+									categories={categories}
+								/>
 								<AdminProductDelete
 									productId={product.id}
 									productName={product.name}
@@ -46,13 +49,7 @@ export function AdminProductsTab({ products, categories }: Props) {
 						</div>
 					)
 				})}
-				<button className='w-full h-full min-h-56 bg-[rgba(0,0,0,.35)] hover:bg-[rgba(0,0,0,.6)] transition-colors duration-700 rounded-md flex flex-col gap-4 items-center justify-center'>
-					<PlusCircleIcon
-						size={90}
-						stroke='#fff'
-					/>
-					<h3 className='text-white text-2xl font-medium'>Створити</h3>
-				</button>
+				<AdminProductCreate categories={categories} />
 			</div>
 		</div>
 	)

@@ -1,6 +1,5 @@
 'use client'
 
-import { stringifyWithoutQuotes } from '@/utils/stringifyWithoutQuotes'
 import { Product } from '@prisma/client'
 import cn from 'clsx'
 import { useState } from 'react'
