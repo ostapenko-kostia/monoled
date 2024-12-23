@@ -6,7 +6,7 @@ import 'swiper/css'
 import 'swiper/css/effect-creative'
 import Link from 'next/link'
 import type { SwiperOptions, Swiper as TSwiper } from 'swiper/types'
-import { Footer } from '../layout/footer/footer'
+import { Footer } from '../layout/footer'
 import { Slide } from '@prisma/client'
 
 interface Props {
@@ -70,9 +70,6 @@ export function Home({ slides }: Props) {
 							</div>
 						</SwiperSlide>
 					))}
-				<SwiperSlide className='w-full h-full'>
-					<Footer className='pt-20 pb-10' />
-				</SwiperSlide>
 			</Swiper>
 		</div>
 	)
