@@ -1,9 +1,9 @@
 import { SearchIcon } from 'lucide-react'
-import { Dialog } from '../ui/dialog'
+import { Popup } from '../ui/popup'
 
 export function SearchButton() {
 	return (
-		<Dialog
+		<Popup
 			title='Пошук'
 			trigger={
 				<button>
@@ -14,19 +14,19 @@ export function SearchButton() {
 				</button>
 			}
 		>
-			<search>
-				<form action='/shop' className='relative w-full'>
+			<search className='mx-auto w-[750px] h-[80px]'>
+				<form action='/shop' className='relative w-full h-full'>
 					<input
-						className='w-full p-3 border border-gray-300 rounded'
+						className='w-full pl-16 border border-gray-300 h-full rounded-full'
 						type='search'
 						placeholder='Я шукаю...'
 						name='search'
 					/>
-					<button type='submit' className='absolute top-1/2 -translate-y-1/2 right-3'>
+					<button type='submit' className='absolute top-1/2 -translate-y-1/2 left-6'>
 						<SearchIcon />
 					</button>
 				</form>
 			</search>
-		</Dialog>
+		</Popup>
 	)
 }
