@@ -42,7 +42,7 @@ export function ContactUsForm() {
 			<h2 className='text-3xl text-center'>Зв'язатися з нами</h2>
 			<form
 				className='w-[600px] max-sm:w-[95%] mx-auto mt-10 flex flex-col gap-4 items-center'
-				onSubmit={handleSubmit(data => contactUs(data))}
+				onSubmit={handleSubmit(data  => contactUs(data))}
 			>
 				<div className='grid grid-cols-2 gap-x-6 gap-y-4 w-full mx-auto place-items-center max-sm:grid-cols-1'>
 					<div className={cn('flex flex-col items-start gap-2 w-full', styles.inputParent)}>
