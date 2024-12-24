@@ -15,9 +15,9 @@ const slideSchema = Joi.object({
 	url: Joi.string(),
 });
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
 	try {
-		const id = Number(params.id);
+		const id = Number((await params).id);
 		if (isNaN(id)) throw new ApiError('Invalid ID parameter', 400);
 
 		const isAdmin = await checkIsAdmin(req);

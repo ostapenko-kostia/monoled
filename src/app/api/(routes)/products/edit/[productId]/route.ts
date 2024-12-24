@@ -23,10 +23,10 @@ async function generateUniqueSlug(slug: string): Promise<string> {
 
 export async function PUT(
 	req: NextRequest,
-	{ params }: { params: { productId: string } }
+	{ params }: { params: Promise<{ productId: string }> }
 ) {
 	try {
-		const { productId } = params;
+		const { productId } = await params;
 		const formData = await req.formData();
 		const body = Object.fromEntries(formData);
 
