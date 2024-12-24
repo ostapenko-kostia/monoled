@@ -32,7 +32,7 @@ export function AdminLogin() {
 	}, [isPending, isSuccess, isError])
 
 	return (
-		<div className='min-h-[50vh]'>
+		<div className='min-h-[88vh]'>
 			<form
 				className='mx-auto bg-white rounded-md p-4 w-[400px] mt-10 h-min flex flex-col gap-8 max-sm:w-[90%]'
 				onSubmit={handleSubmit(data => authFunc(data))}

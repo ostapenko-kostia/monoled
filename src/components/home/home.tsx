@@ -1,12 +1,11 @@
 'use client'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { EffectCreative, Mousewheel, Keyboard } from 'swiper/modules'
+import { EffectCreative, Keyboard, Mousewheel } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/effect-creative'
 import Link from 'next/link'
-import type { SwiperOptions, Swiper as TSwiper } from 'swiper/types'
-import { Footer } from '../layout/footer'
+import type { SwiperOptions } from 'swiper/types'
 import { Slide } from '@prisma/client'
 
 interface Props {

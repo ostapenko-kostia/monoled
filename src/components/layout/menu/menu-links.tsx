@@ -17,6 +17,7 @@ export function MenuLinks() {
 					Контакти
 				</Link>
 			</li>
+
 			<li className='text-4xl max-sm:text-2xl hover:text-blue-500 transition-colors duration-300'>
 				<Link
 					href='/about'
@@ -25,6 +26,7 @@ export function MenuLinks() {
 					Про бренд
 				</Link>
 			</li>
+
 			<li className='text-4xl max-sm:text-2xl hover:text-blue-500 transition-colors duration-300'>
 				<Link
 					href='/blog'
@@ -33,6 +35,7 @@ export function MenuLinks() {
 					Блог
 				</Link>
 			</li>
+
 			<li className='text-4xl max-sm:text-2xl hover:text-blue-500 transition-colors duration-300'>
 				<Link
 					href='https://instagram.com/'
