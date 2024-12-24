@@ -10,10 +10,10 @@ const DIR = path.join(process.cwd(), 'public');
 
 export async function DELETE(
 	req: NextRequest,
-	{ params }: { params: { id: string } }
+	{ params }: { params: Promise<{ id: string }> }
 ) {
 	try {
-		const id = parseInt(params.id, 10);
+		const id = parseInt((await params).id, 10);
 		if (isNaN(id)) throw new ApiError('Invalid ID parameter', 400);
 
 		const isAdmin = await checkIsAdmin(req);
