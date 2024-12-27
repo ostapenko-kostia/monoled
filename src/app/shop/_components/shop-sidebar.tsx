@@ -4,6 +4,7 @@ import { Category } from '@prisma/client'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
+import { useTexts } from '@/context/textContext'
 
 interface Props {
 	allCategories: Category[] | undefined
@@ -12,6 +13,10 @@ interface Props {
 export function ShopSidebar({ allCategories }: Props) {
 	const params = useSearchParams()
 	const pathname = usePathname()
+	const texts = useTexts()
+
+	const allCategoriesText = texts?.find(text => text.slug === 'all-categories-text')?.text
+	const categoriesLoadingError = texts?.find(text => text.slug === 'categories-loading-error')?.text
 
 	return (
 		<aside className='bg-white overflow-y-hidden'>
@@ -31,7 +36,7 @@ export function ShopSidebar({ allCategories }: Props) {
 								{(!params.toString().includes('category') || !params.get('category')?.length) &&
 									pathname.includes('shop') &&
 									'-'}{' '}
-								Всі категорії
+								{allCategoriesText}
 							</Link>
 						</motion.li>
 						{allCategories.map(i => {
@@ -56,7 +61,7 @@ export function ShopSidebar({ allCategories }: Props) {
 						})}
 					</>
 				) : (
-					<li>Помилка при завантаженні категорій, спробуйте оновити сторінку</li>
+					<li>{categoriesLoadingError}</li>
 				)}
 			</ul>
 		</aside>

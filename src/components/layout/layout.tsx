@@ -14,7 +14,7 @@ export default function Layout({ children }: PropsWithChildren<unknown>) {
 		<QueryClientProvider client={queryClient}>
 			<Toaster containerClassName='!z-[10000]' />
 			<main>{children}</main>
-			{pathname === '/' ? <></> : <Footer />}
+			{pathname !== '/' && <Footer />}
 		</QueryClientProvider>
 	)
 }

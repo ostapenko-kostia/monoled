@@ -1,7 +1,11 @@
 import { SearchIcon } from 'lucide-react'
 import { Popup } from '../ui/popup'
+import { textsService } from '@/services/texts.service'
 
-export function SearchButton() {
+export async function SearchButton() {
+	const texts = await textsService.getAllTexts()
+	const searchPlaceholder = texts?.data?.find(text => text.slug === 'search-placeholder')?.text
+
 	return (
 		<Popup
 			title='Пошук'
@@ -19,7 +23,7 @@ export function SearchButton() {
 					<input
 						className='w-full pl-16 border border-gray-300 h-full rounded-full'
 						type='search'
-						placeholder='Я шукаю...'
+						placeholder={searchPlaceholder}
 						name='search'
 					/>
 					<button type='submit' className='absolute top-1/2 -translate-y-1/2 left-6'>

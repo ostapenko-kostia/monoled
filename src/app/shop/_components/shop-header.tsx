@@ -8,8 +8,10 @@ import { LayoutGridIcon, ListIcon } from 'lucide-react'
 import cn from 'clsx'
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
+import { useTexts } from '@/context/textContext'
 
 function ShopHeaderComponent() {
+	const texts = useTexts()
 	const {
 		currentSortingId,
 		setCurrentSortingId,
@@ -31,6 +33,8 @@ function ShopHeaderComponent() {
 		}
 	}
 
+	const nothingFound = texts?.find(text => text.slug === 'nothing-found')?.text
+
 	return (
 		<motion.header
 			className=' bg-white px-4 py-2 flex items-center gap-5 h-full max-lg:flex-col max-lg:py-5'
@@ -40,13 +44,14 @@ function ShopHeaderComponent() {
 		>
 			<Select
 				options={SORTING_METHODS.map(i => ({ value: i.id, label: i.name }))}
+				noOptionsMessage={() => nothingFound}
 				value={
 					SORTING_METHODS.some(i => i.id === currentSortingId)
 						? {
 								value: currentSortingId,
 								label: SORTING_METHODS.find(i => i.id === currentSortingId)?.name
-							}
-						: { value: 1, label: 'За популярністю' }
+						  }
+						: { value: 1, label: 'Найрелевантніші' }
 				}
 				onChange={i => setCurrentSortingId(i?.value || 1)}
 				className='w-[300px] max-[400px]:w-full'

@@ -1,5 +1,6 @@
 'use client'
 
+import { useTexts } from '@/context/textContext'
 import { Product } from '@prisma/client'
 import cn from 'clsx'
 import { useState } from 'react'
@@ -10,6 +11,12 @@ interface Props {
 
 export function ProductInfo({ product }: Props) {
 	const [currentInfoBlock, setCurrentInfoBlock] = useState<'description' | 'info'>('description')
+	const texts = useTexts()
+
+	const descriptionTitle = texts?.find(text => text.slug === 'description-title')?.text
+	const infoTitle = texts?.find(text => text.slug === 'info-title')?.text
+	const mainInfoText = texts?.find(text => text.slug === 'main-info')?.text
+
 	return (
 		<div
 			id='info'
@@ -22,7 +29,7 @@ export function ProductInfo({ product }: Props) {
 						'underline underline-offset-[6px] !bg-neutral-200': currentInfoBlock === 'description'
 					})}
 				>
-					Опис
+					{descriptionTitle}
 				</button>
 				<button
 					onClick={() => setCurrentInfoBlock('info')}
@@ -30,13 +37,13 @@ export function ProductInfo({ product }: Props) {
 						'underline underline-offset-[6px] !bg-neutral-200': currentInfoBlock === 'info'
 					})}
 				>
-					Інформація
+					{infoTitle}
 				</button>
 			</header>
 			<main>
 				{currentInfoBlock === 'description' && (
 					<div className='p-5 bg-white'>
-						<h3 className='mb-5 text-xl'>Опис:</h3>
+						<h3 className='mb-5 text-xl'>{descriptionTitle}:</h3>
 						<p className='w-2/3 max-xl:w-3/4 max-lg:w-full text-lg text-neutral-500 pl-5 font-light'>
 							{product.description}
 						</p>
@@ -44,36 +51,7 @@ export function ProductInfo({ product }: Props) {
 				)}
 				{currentInfoBlock === 'info' && (
 					<div className='p-5 bg-white'>
-						<div className='font-light'>
-							Ми доставляємо замовлення по всій Україні.
-							<br />
-							<br />
-							Терміни доставки замовлення залежать від наявності товарів на складі. Якщо в момент
-							оформлення замовлення всі обрані товари є в наявності, то ми доставимо замовлення
-							протягом 1 - 2 тижнів, в залежності від віддаленості Вашого регіону. Якщо замовлений
-							товар відсутній на складі, то максимальний термін доставки замовлення може скласти 8
-							тижнів. Але ми намагаємося доставляти замовлення клієнтам якомога швидше, і 90%
-							замовлень клієнтів відправляються протягом перших 3 тижнів. У разі, якщо частина
-							товарів з Вашого замовлення через 3 тижні не надійшла на склад, ми відправимо всі
-							наявні товари, а потім за наш рахунок дійшли Вам решту замовлення.
-							<br />
-							<br /> <span className='font-medium'>Способи оплати:</span>
-							<br />
-							<br />
-							<ul className='list-disc list-inside'>
-								<li>Оплата при отриманні</li>
-								<li>Оплата в терміналі</li>
-								<li>Безготівковій розрахунок</li>
-							</ul>
-							<br />
-							Інтернет-магазин - сайт має адресу в мережі Інтернет. Товар - продукція, представлена
-							​​до продажу в інтернет-магазині.
-							<br />
-							<br /> Клієнт - розмістила Замовлення фізична або юридична особа. Замовлення -
-							оформлений належним чином запит Клієнта на купівлю Товару. <br />
-							<br />
-							Транспортна компанія - третя особа, що надає послуги з доставки Товарів Клієнта
-						</div>
+						<div className='font-light text-xl'>{mainInfoText}</div>
 					</div>
 				)}
 			</main>

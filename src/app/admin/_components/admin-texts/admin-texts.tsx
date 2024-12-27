@@ -56,7 +56,9 @@ export function AdminTextFieldsTab({ texts }: Props) {
 							<tr key={text.id}>
 								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{text.id}</td>
 								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{text.slug}</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{text.text}</td>
+								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
+									{text.text.length > 40 ? text.text.slice(0, 40) + '...' : text.text}
+								</td>
 								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
 									{new Date(text.createdAt).toLocaleDateString()}
 								</td>

@@ -1,6 +1,7 @@
 'use client'
 
 import { SheetContext } from '@/components/ui/sheet'
+import { useTexts } from '@/context/textContext'
 import { Category } from '@prisma/client'
 import Link from 'next/link'
 import { useContext } from 'react'
@@ -11,6 +12,8 @@ interface Props {
 
 export function MenuList({ categories }: Props) {
 	const sheetContext = useContext(SheetContext)
+	const texts = useTexts()
+	const categoriesLoadingError = texts?.find(text => text.slug === 'categories-loading-error')?.text
 
 	return (
 		<ul className='flex flex-col gap-5 text-xl'>
@@ -38,7 +41,7 @@ export function MenuList({ categories }: Props) {
 					))}
 				</>
 			) : (
-				<li>Помилка при отриманні категорій, спробуйте оновити сторінку</li>
+				<li>{categoriesLoadingError}</li>
 			)}
 		</ul>
 	)

@@ -4,17 +4,30 @@ import { Product } from '@prisma/client'
 import { DownloadIcon } from 'lucide-react'
 import Link from 'next/link'
 import { stringifyWithoutQuotes } from '@/utils/stringifyWithoutQuotes'
+import { useTexts } from '@/context/textContext'
 
 interface Props {
 	product: Product
 }
 
 export function ProductMainInfo({ product }: Props) {
+	const texts = useTexts()
+
+	const productCharacteristicsTitle = texts?.find(
+		text => text.slug === 'product-characteristics-title'
+	)?.text
+	const productCharacteristicsEmpty = texts?.find(
+		text => text.slug === 'product-characteristics-empty'
+	)?.text
+	const basePriceText = texts?.find(text => text.slug === 'base-price')?.text
+	const howToOrder = texts?.find(text => text.slug === 'how-to-order')?.text
+	const downloadModel = texts?.find(text => text.slug === 'download-product-model')?.text
+
 	return (
 		<div className='mx-auto w-full'>
 			<div>
-				<div className='text-2xl mb-6 w-full flex items-center'>
-					<h3>Характеристики:</h3>{' '}
+				<div className='text-3xl mb-6 w-full flex items-center'>
+					<h3>{productCharacteristicsTitle}</h3>{' '}
 				</div>
 				<div className='grid-cols-2 grid gap-x-8 gap-y-3 max-sm:grid-cols-1'>
 					{product.info ? (
@@ -30,15 +43,14 @@ export function ProductMainInfo({ product }: Props) {
 							)
 						)
 					) : (
-						<>Характеристики відсутні</>
+						<>{productCharacteristicsEmpty}</>
 					)}
 				</div>
 			</div>
 			<div className='mt-10'>
 				<div className='flex items-end gap-3 max-lg:justify-center max-[500px]:flex-col max-[500px]:items-center'>
-					<h3 className='text-xl'>Базова ціна:</h3>
+					<h3 className='text-xl'>{basePriceText}:</h3>
 					<span className='inline-flex items-end gap-2'>
-						від
 						<span className='text-2xl font-semibold tracking-wide'>{product.price} грн </span>
 					</span>
 				</div>
@@ -48,7 +60,7 @@ export function ProductMainInfo({ product }: Props) {
 							className='flex items-center px-6 h-full'
 							href='/contact-us'
 						>
-							Як замовити?
+							{howToOrder}
 						</Link>
 					</button>
 					<button className='h-full max-sm:w-full max-sm:items-center max-sm:flex max-sm:justify-center max-xl:h-16 border-[1px] border-foreground bg-background text-foreground rounded-md hover:text-background hover:bg-foreground transition-colors duration-300'>
@@ -58,7 +70,7 @@ export function ProductMainInfo({ product }: Props) {
 							download
 						>
 							<DownloadIcon />
-							Завантажи модель (.3ds)
+							{downloadModel}
 						</a>
 					</button>
 				</div>
