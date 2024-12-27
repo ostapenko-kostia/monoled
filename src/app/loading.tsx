@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-	const texts = (await textsService.getAllTexts())?.data
+	const texts = (await textsService.getAllTexts())
 	const loadingText = texts?.find(text => text.slug === 'loading')?.text
 	return (
 		<div className='w-full my-40 min-h-[88vh]'>

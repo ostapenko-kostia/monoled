@@ -7,7 +7,7 @@ export const revalidate = 180
 
 export default async function HomePage() {
 	const slides: Slide[] | undefined = (await slideService.getAllSlides())?.data
-	const texts: TextField[] | undefined = (await textsService.getAllTexts())?.data
+	const texts: TextField[] | undefined = (await textsService.getAllTexts())
 
 	return <Home slides={slides} />
 }

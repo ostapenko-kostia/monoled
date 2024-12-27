@@ -16,7 +16,7 @@ export const revalidate = 180
 const ShopPage: React.FC = async () => {
 	const categories: Category[] | undefined = (await categoriesService.getAllCategories())?.data
 	const products: Product[] | undefined = (await productsService.getAllProducts())?.data
-	const texts = (await textsService.getAllTexts())?.data
+	const texts = (await textsService.getAllTexts())
 
 	const shopFullTitle = texts?.find(text => text.slug === 'shop-full-title')?.text
 	const shopShortTitle = texts?.find(text => text.slug === 'shop-short-title')?.text

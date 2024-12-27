@@ -21,7 +21,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
 	if (!product || !slug) notFound()
 
-	const texts = (await textsService.getAllTexts())?.data
+	const texts = (await textsService.getAllTexts())
 	const interestedInProductText = texts?.find(text => text.slug === 'interested-in-product')?.text
 
 	return (

@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default async function ContactUsPage() {
-	const texts = (await textsService.getAllTexts())?.data
+	const texts = (await textsService.getAllTexts())
 	const contactUsText = texts?.find(text => text.slug === 'contacts-title')?.text
 	const homeText = texts?.find(text => text.slug === 'home-title')?.text
 	const title = texts?.find(text => text.slug === 'title')?.text

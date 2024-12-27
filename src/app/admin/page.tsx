@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function AdminPage() {
 	const slides: Slide[] | undefined = (await slideService.getAllSlides())?.data
-	const texts: TextField[] | undefined = (await textsService.getAllTexts())?.data
+	const texts: TextField[] | undefined = (await textsService.getAllTexts())
 	const products: Product[] | undefined = (await productsService.getAllProducts())?.data
 	const categories: Category[] | undefined = (await categoriesService.getAllCategories())?.data
 	const admins: TAdmin[] | undefined = (await adminService.getAllAdmins())?.data

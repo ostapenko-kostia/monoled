@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default async function AboutPage() {
-	const texts = (await textsService.getAllTexts())?.data
+	const texts = (await textsService.getAllTexts())
 
 	const aboutTitle = texts?.find(text => text.slug === 'about-title')?.text
 	const homeTitle = texts?.find(text => text.slug === 'home-title')?.text

@@ -7,7 +7,7 @@ interface Props {
 }
 
 export async function ProductBreadcrumbs({ product }: Props) {
-	const texts = (await textsService.getAllTexts())?.data
+	const texts = (await textsService.getAllTexts())
 	const homeTitle = texts?.find(text => text.slug === 'home-title')?.text
 	const shopShortTitle = texts?.find(text => text.slug === 'shop-short-title')?.text
 

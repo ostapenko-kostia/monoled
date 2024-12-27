@@ -3,8 +3,6 @@ import localFont from 'next/font/local'
 import './globals.scss'
 import Layout from '@/components/layout/layout'
 import { Header } from '@/components/layout/header'
-import { Footer } from '@/components/layout/footer'
-import { headers } from 'next/headers'
 import { TextProvider } from '@/context/textContext'
 import { textsService } from '@/services/texts.service'
 
@@ -34,7 +32,7 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
-	const texts = (await textsService.getAllTexts())?.data
+	const texts = await textsService.getAllTexts()
 
 	return (
 		<html lang='en'>

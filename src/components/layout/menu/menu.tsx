@@ -8,7 +8,7 @@ export const revalidate = 180
 
 export async function Menu() {
 	const categories: Category[] | undefined = (await categoriesService.getAllCategories())?.data
-	const categoryTitle = (await textsService.getAllTexts())?.data?.find(
+	const categoryTitle = (await textsService.getAllTexts())?.find(
 		text => text.slug === 'main-menu-categories-title'
 	)?.text
 
