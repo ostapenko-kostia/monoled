@@ -4,7 +4,7 @@ import { textsService } from '@/services/texts.service'
 
 export async function SearchButton() {
 	const texts = await textsService.getAllTexts()
-	const searchPlaceholder = texts?.data?.find(text => text.slug === 'search-placeholder')?.text
+	const searchPlaceholder = texts?.find(text => text.slug === 'search-placeholder')?.text
 
 	return (
 		<Popup
