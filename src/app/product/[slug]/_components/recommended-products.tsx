@@ -8,7 +8,7 @@ interface Props {
 }
 
 export async function RecommendedProducts({ products, slug }: Props) {
-	const texts = (await textsService.getAllTexts())?.data
+	const texts = (await textsService.getAllTexts())
 	const recommendedProductsText = texts?.find(text => text.slug === 'recommended-products')?.text
 
 	return (
