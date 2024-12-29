@@ -1,14 +1,10 @@
-import fs from 'fs/promises'
 import { handleApiError } from '@/app/api/exceptions/handleApiError'
 import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
 import Joi from 'joi'
 import { ApiError } from '@/app/api/exceptions/apiError'
 import { checkIsAdmin } from '../../admin/auth/utils/checkIsAdmin'
-import path from 'path'
-import slugify from '@sindresorhus/slugify'
-
-const UPLOADS_DIR = path.join(process.cwd(), 'public', 'uploads', 'images')
+import { api } from '@/services/axios'
 
 const slideSchema = Joi.object({
 	text: Joi.string().min(1).required().messages({
@@ -67,16 +63,17 @@ export async function POST(req: NextRequest) {
 }
 
 async function saveFile(file: File): Promise<string> {
-	const fileName = `${Date.now()}-${slugify(file.name)}`
-	const targetPath = path.join(UPLOADS_DIR, fileName)
-
 	try {
-		await fs.mkdir(path.dirname(targetPath), { recursive: true })
-
-		await fs.writeFile(targetPath, Buffer.from(await file.arrayBuffer()))
-
-		return path.join('/uploads', 'images', fileName).replace(/\\/g, '/')
+		const storageURL = process.env.NEXT_PUBLIC_STORAGE_URL
+		const formData = new FormData()
+		formData.append('image', file)
+		const fileUrl = (
+			await api.post(`${storageURL}/upload`, formData, {
+				headers: { 'Content-Type': 'multipart/form-data' }
+			})
+		)?.data?.fileUrl
+		return storageURL + (fileUrl ?? '/')
 	} catch (error) {
-		throw new ApiError(`Failed to save file: ${fileName}`, 500)
+		throw new ApiError(`Failed to save file: ${file.name}`, 500)
 	}
 }

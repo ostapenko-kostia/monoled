@@ -38,8 +38,6 @@ export const useCreateProduct = () => {
 
 			formData.append('productInfo', JSON.stringify(dataWithoutImages))
 
-			console.log(Object.fromEntries(formData))
-
 			const res = await productsService.createProduct(formData)
 			if (!res?.data) return Promise.reject()
 			return res
@@ -75,8 +73,6 @@ export const useUpdateProduct = () => {
 			}, {} as Record<string, string>)
 
 			formData.append('productInfo', JSON.stringify(dataWithoutImages))
-
-			console.log(Object.fromEntries(formData))
 
 			const res = await productsService.updateProduct(id, formData)
 			if (!res?.data) return Promise.reject()

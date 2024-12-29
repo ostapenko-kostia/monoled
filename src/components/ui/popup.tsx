@@ -109,10 +109,10 @@ function PopupContent({
 						transition={{
 							duration: 0.2
 						}}
-						className='py-4 flex gap-10 items-center mt-24 justify-center z-[10001]'
+						className='py-4 flex gap-10 max-sm:gap-2 items-center mt-24 justify-center z-[10001] max-lg:w-[95%] max-lg:mx-auto'
 					>
-						<div className='z-[10001]'>{children}</div>
-						<div className='rounded-full bg-[#666] p-2 w-20 aspect-square flex items-center justify-center z-[10001]'>
+						<div className='z-[10001] max-lg:w-4/5'>{children}</div>
+						<div className='rounded-full bg-[#666] p-2 h-20 max-sm:h-16 aspect-square flex items-center justify-center z-[10001]'>
 							<X
 								className='cursor-pointer'
 								onClick={closePopup}

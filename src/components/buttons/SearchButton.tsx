@@ -18,7 +18,7 @@ export async function SearchButton() {
 				</button>
 			}
 		>
-			<search className='mx-auto w-[750px] h-[80px]'>
+			<search className='mx-auto w-[750px] h-[80px] max-sm:h-16 max-lg:w-full'>
 				<form action='/shop' className='relative w-full h-full'>
 					<input
 						className='w-full pl-16 border border-gray-300 h-full rounded-full'
