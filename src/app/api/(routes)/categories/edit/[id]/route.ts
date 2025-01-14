@@ -29,7 +29,7 @@ export async function PUT(
 
 		value.slug = slugify(value.name)
 
-		const isAdmin = checkIsAdmin(req)
+		const isAdmin = await checkIsAdmin(req)
 
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 

@@ -13,7 +13,7 @@ export async function DELETE(
 	try {
 		const id = Number((params.params as any).id)
 
-		const isAdmin = checkIsAdmin(req)
+		const isAdmin = await checkIsAdmin(req)
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 
 		await prisma.category.delete({ where: { id } })

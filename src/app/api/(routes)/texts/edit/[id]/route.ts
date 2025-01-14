@@ -23,7 +23,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 			throw new ApiError(`Validation error: ${errorDetails}`, 400)
 		}
 
-		const isAdmin = checkIsAdmin(req)
+		const isAdmin = await checkIsAdmin(req)
 
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 

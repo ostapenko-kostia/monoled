@@ -11,7 +11,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 		const id = Number((await params).id)
 		const body = await req.json()
 
-		const isAdmin = checkIsAdmin(req)
+		const isAdmin = await checkIsAdmin(req)
 
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 

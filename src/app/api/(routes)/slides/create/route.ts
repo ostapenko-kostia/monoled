@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
 
 		value.background = savedImage
 
-		const isAdmin = checkIsAdmin(req)
+		const isAdmin = await checkIsAdmin(req)
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 
 		const slide = await prisma.slide.create({ data: value })

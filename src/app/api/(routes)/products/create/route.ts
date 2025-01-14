@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
 
 		value.slug = await generateUniqueSlug(value.slug)
 
-		const isAdmin = checkIsAdmin(req)
+		const isAdmin = await checkIsAdmin(req)
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 
 		const savedImages: string[] = []

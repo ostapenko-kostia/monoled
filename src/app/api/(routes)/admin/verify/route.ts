@@ -1,29 +1,21 @@
+import { NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
-import { handleApiError } from '@/app/api/exceptions/handleApiError'
-import Joi from 'joi'
-import { NextRequest, NextResponse } from 'next/server'
 import { ApiError } from '@/app/api/exceptions/apiError'
+import { handleApiError } from '@/app/api/exceptions/handleApiError'
 
-const schema = Joi.object({
-	token: Joi.string().min(1).required().messages({
-		'string.empty': 'Token is required',
-		'any.required': 'Token is required'
-	})
-})
-
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
 	try {
-		const body = await request.json()
-		const { error, value } = schema.validate(await body)
+		const { token } = await request.json()
+		if (!token) throw new ApiError('JWT must be provided', 400)
+		const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET as string) as { login: string }
 
-		if (error) {
-			const errorDetails = error.details.map((err: any) => err.message).join(', ')
-			throw new ApiError(`Validation error: ${errorDetails}`, 400)
+		if (!decoded || !decoded.login) {
+			return NextResponse.json({ error: 'Invalid token' }, { status: 400 })
 		}
 
-		const data = jwt.verify(value?.token ?? '', process.env.JWT_ACCESS_SECRET as string)
-		return NextResponse.json(data, { status: 200 })
+		return NextResponse.json({ login: decoded.login })
 	} catch (error) {
+		console.error('JWT Error:', error)
 		return handleApiError(error)
 	}
 }
