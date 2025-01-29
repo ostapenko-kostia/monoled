@@ -5,6 +5,7 @@ import { DownloadIcon } from 'lucide-react'
 import Link from 'next/link'
 import { stringifyWithoutQuotes } from '@/utils/stringifyWithoutQuotes'
 import { useTexts } from '@/context/textContext'
+import clsx from 'clsx'
 
 interface Props {
 	product: Product
@@ -22,6 +23,8 @@ export function ProductMainInfo({ product }: Props) {
 	const basePriceText = texts?.find(text => text.slug === 'base-price')?.text
 	const howToOrder = texts?.find(text => text.slug === 'how-to-order')?.text
 	const downloadModel = texts?.find(text => text.slug === 'download-product-model')?.text
+	const productInStock = texts?.find(text => text.slug === 'product-in-stock')?.text
+	const productOutOfStock = texts?.find(text => text.slug === 'product-out-of-stock')?.text
 
 	return (
 		<div className='mx-auto w-full'>
@@ -47,7 +50,17 @@ export function ProductMainInfo({ product }: Props) {
 					)}
 				</div>
 			</div>
-			<div className='mt-10'>
+			<div className='mt-10 w-full flex flex-col gap-1'>
+				<div
+					className={clsx({
+						'text-green-700': product.quantityLeft > 0,
+						'text-red-700': product.quantityLeft <= 0
+					})}
+				>
+					{product.quantityLeft > 0
+						? `${productInStock} ${product.quantityLeft} шт.`
+						: `${productOutOfStock}`}
+				</div>
 				<div className='flex items-end gap-3 max-lg:justify-center max-[500px]:flex-col max-[500px]:items-center'>
 					<h3 className='text-xl'>{basePriceText}:</h3>
 					<span className='inline-flex items-end gap-2'>

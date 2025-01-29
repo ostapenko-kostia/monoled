@@ -17,6 +17,7 @@ export function AdminProductInfo({ product, categoryName }: Props) {
 		images: 'Зображення',
 		slug: 'Slug',
 		info: 'Інформація',
+		quantityLeft: "Кількість на складі",
 		modelUrl: 'URL моделі',
 		isNew: 'Новинка',
 		description: 'Опис',

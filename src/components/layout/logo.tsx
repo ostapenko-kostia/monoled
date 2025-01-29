@@ -6,7 +6,7 @@ import clsx from 'clsx'
 import { useTexts } from '@/context/textContext'
 
 const bestari = localFont({
-	src: [{ path: '../../fonts/Bestari-Regular.woff2', weight: '400', style: 'normal' }]
+	src: [{ path: '../../fonts/Quantify-Bold.woff2', weight: '700', style: 'normal' }]
 })
 
 function Logo() {
@@ -14,7 +14,7 @@ function Logo() {
 
 	return (
 		<Link href='/'>
-			<span className={clsx('uppercase text-3xl', bestari.className)}>{title ?? ''}</span>
+			<span className={clsx('uppercase text-4xl tracking-[0.07em]', bestari.className)}>{title ?? ''}</span>
 		</Link>
 	)
 }

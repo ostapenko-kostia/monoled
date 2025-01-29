@@ -55,6 +55,7 @@ export const useUpdateProduct = () => {
 		info?: Record<string, string>
 		modelUrl: string | null
 		isNew: boolean | null
+		quantityLeft: number
 	}
 
 	return useMutation({

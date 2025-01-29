@@ -18,6 +18,7 @@ interface Form {
 	info?: Record<string, string>
 	modelUrl?: string
 	isNew?: boolean
+	quantityLeft: number
 }
 
 interface Props {
@@ -35,7 +36,8 @@ export function AdminProductEdit({ categories, product }: Props) {
 			modelUrl: product.modelUrl as string | undefined,
 			name: product.name,
 			price: product.price,
-			isNew: product.isNew as boolean | undefined
+			isNew: product.isNew as boolean | undefined,
+			quantityLeft: product.quantityLeft
 		}
 	})
 	const { mutateAsync: editFunc, isPending, isSuccess, isError } = useUpdateProduct()
@@ -62,7 +64,8 @@ export function AdminProductEdit({ categories, product }: Props) {
 				categorySlug: data.categorySlug ?? product.categorySlug,
 				info: data.info ?? (product.info as Record<string, string>),
 				modelUrl: data.modelUrl ?? product.modelUrl,
-				isNew: data.isNew ?? product.isNew
+				isNew: data.isNew ?? product.isNew,
+				quantityLeft: Number(data.quantityLeft) ?? Number(product.quantityLeft)
 			}
 		})
 	}
@@ -138,10 +141,27 @@ export function AdminProductEdit({ categories, product }: Props) {
 					</label>
 					<input
 						className='w-full rounded-md border border-[#ccc] bg-white h-10 text-[#333] placeholder:text-[#808080] px-3 py-3 text-sm focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500;'
-						type='price'
+						type='number'
 						placeholder='1500'
 						id='price'
 						{...register('price')}
+					/>
+				</div>
+
+				<div className='flex items-start flex-col gap-2'>
+					<label
+						htmlFor='quantityLeft'
+						className='flex items-center gap-2'
+					>
+						Кількість товару <span className='text-red-400'>*</span>
+					</label>
+					<input
+						className='w-full rounded-md border border-[#ccc] bg-white h-10 text-[#333] placeholder:text-[#808080] px-3 py-3 text-sm focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500;'
+						type='number'
+						required
+						placeholder='10'
+						id='quantityLeft'
+						{...register('quantityLeft', { required: true })}
 					/>
 				</div>
 

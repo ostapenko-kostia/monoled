@@ -27,7 +27,11 @@ const productSchema = Joi.object({
 	}),
 	info: Joi.object().optional(),
 	modelUrl: Joi.string().optional(),
-	isNew: Joi.boolean().default(false).optional()
+	isNew: Joi.boolean().default(false).optional(),
+	quantityLeft: Joi.number().default(0).required().messages({
+		'string.empty': 'Quantity is required',
+		'any.required': 'Quantity is required'
+	}),
 })
 
 async function generateUniqueSlug(slug: string): Promise<string> {
