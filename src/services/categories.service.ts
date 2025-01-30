@@ -9,6 +9,18 @@ class CategoriesService {
 			return res
 		} catch {}
 	}
+
+	async createCategory(name: string) {
+		return await api.post('/categories/create', { name })
+	}
+
+	async editCategory({ id, name }: { id: number; name: string }) {
+		return await api.put(`/categories/edit/${id}`, { name })
+	}
+
+	async deleteCategory(id: number) {
+		return await api.delete(`/categories/delete/${id}`)
+	}
 }
 
 export const categoriesService = new CategoriesService()

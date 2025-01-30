@@ -11,6 +11,7 @@ import { useFilterProducts } from '@/hooks/useFilterProducts'
 import { motion } from 'framer-motion'
 import cn from 'clsx'
 import { ShopPagination } from './shop-pagination'
+import { useTexts } from '@/context/textContext'
 
 interface Props {
 	allCategories: Category[] | undefined
@@ -19,12 +20,15 @@ interface Props {
 
 export function Shop({ allCategories, allProducts }: Props) {
 	const params = useSearchParams()
+	const texts = useTexts()
 
 	const currentCategory = params.get('category') ?? ''
+	const searchQuery = params.get('search') ?? ''
 	const { currentSortingId, productsPerPage, currentShowMode, currentPage } = useShopStore()
 
 	const filteredProducts = useFilterProducts(allProducts, {
 		category: currentCategory,
+		searchQuery,
 		sortingMethodId: currentSortingId
 	})
 
@@ -35,19 +39,19 @@ export function Shop({ allCategories, allProducts }: Props) {
 		currentPage * debouncedProductsPerPage
 	)
 
+	const shopSectionTitle = texts?.find(text => text.slug === 'shop-section-title')?.text
+	const nothingFound = texts?.find(text => text.slug === 'nothing-found')?.text
+
 	return (
 		<div className='container mx-auto max-sm:px-2 mt-12 pb-20'>
-			<h2 className='text-3xl max-lg:text-center'>Продукція MONOLED</h2>
+			<h2 className='text-3xl max-lg:text-center'>{shopSectionTitle}</h2>
 			<div className='grid grid-cols-[1fr_3fr] max-lg:grid-cols-[1fr_2fr] max-md:grid-cols-1 max-md:gap-5 w-full mt-8'>
 				<ShopSidebar allCategories={allCategories} />
-				<section className='w-full border-[1px] border-r-0 border-t-0 bg-white'>
-					<div className='w-full py-4 uppercase font-light tracking-wide bg-[#f0f1f3] flex items-center justify-center text-center text-xl'>
-						Товари
-					</div>
+				<section className='w-full bg-white'>
 					<div className='h-[60px] max-lg:h-[200px] max-md:h-[140px]'>
 						<ShopHeader />
 					</div>
-					<main className='border-r-[1px]'>
+					<main>
 						{slicedFilteredProducts && slicedFilteredProducts.length ? (
 							<div
 								className={cn('bg-white w-full p-5 gap-5 grid grid-cols-3 max-lg:grid-cols-2', {
@@ -74,7 +78,7 @@ export function Shop({ allCategories, allProducts }: Props) {
 								))}
 							</div>
 						) : (
-							<h2 className='ml-8 mt-5 text-xl'>Нічого не знайдено{'('}</h2>
+							<h2 className='ml-8 mt-5 text-xl'>{nothingFound}</h2>
 						)}
 						<ShopPagination filteredProducts={filteredProducts} />
 					</main>

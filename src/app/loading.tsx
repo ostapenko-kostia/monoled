@@ -7,12 +7,12 @@ export const metadata: Metadata = {
 
 export default function Page() {
 	return (
-		<div className='w-full'>
+		<div className='w-full my-40 min-h-[88vh]'>
 			<LoaderIcon
-				className='animate-spin mx-auto mt-40'
+				className='animate-spin mx-auto'
 				size={30}
 			/>
-			<h1 className='text-center text-3xl mt-9'>Завантаження</h1>
+			<h1 className='text-center text-3xl mt-9'>Завантаження...</h1>
 		</div>
 	)
 }

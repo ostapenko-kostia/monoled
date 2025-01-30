@@ -4,19 +4,22 @@ import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useRef } from 'react'
 import { Pagination } from 'swiper/modules'
-import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react'
+import { Swiper, type SwiperRef as TSwiperRef, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/pagination'
 
 interface Props {
 	images: string[]
 }
 
 export function ProductSlider({ images }: Props) {
-  const swiperRef = useRef<SwiperRef | null>(null)
+	const swiperRef = useRef<TSwiperRef | null>(null)
+
 	return (
-		<div className='flex items-center gap-3 -z-10'>
+		<div className='flex items-center gap-3'>
 			<button
 				onClick={() => swiperRef.current?.swiper.slidePrev()}
-				className='p-1 aspect-square rounded-full bg-[#ececec] flex items-center justify-center'
+				className='p-1 aspect-square rounded-full bg-[#ececec] flex items-center justify-center max-sm:hidden'
 			>
 				<ChevronLeftIcon
 					size={40}
@@ -31,7 +34,7 @@ export function ProductSlider({ images }: Props) {
 				pagination={{ clickable: true }}
 				loop
 			>
-				{images.map((image, index) => (
+				{images && images.length ? images.map((image, index) => (
 					<SwiperSlide key={index}>
 						<Image
 							className='object-cover rounded-lg'
@@ -41,11 +44,11 @@ export function ProductSlider({ images }: Props) {
 							height={900}
 						/>
 					</SwiperSlide>
-				))}
+				)) : (<SwiperSlide><Image src='/placeholder-image.jpg' alt='No Image' width={900} height={900} /></SwiperSlide>)}
 			</Swiper>
 			<button
 				onClick={() => swiperRef.current?.swiper.slideNext()}
-				className='p-1 aspect-square rounded-full bg-[#ececec] flex items-center justify-center'
+				className='p-1 aspect-square rounded-full bg-[#ececec] flex items-center justify-center max-sm:hidden'
 			>
 				<ChevronRightIcon
 					size={40}

@@ -1,0 +1,5 @@
+.inputParent {
+	input, textarea {
+		@apply w-full rounded-md border border-gray-500 bg-white px-5 py-3 text-sm placeholder:text-gray-400 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500;
+	}
+}

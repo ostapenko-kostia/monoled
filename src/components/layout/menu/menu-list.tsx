@@ -1,52 +1,38 @@
 'use client'
 
 import { SheetContext } from '@/components/ui/sheet'
+import { useTexts } from '@/context/textContext'
 import { Category } from '@prisma/client'
-import cn from 'clsx'
 import Link from 'next/link'
-import { usePathname, useSearchParams } from 'next/navigation'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 
 interface Props {
 	categories: Category[] | undefined
 }
 
 export function MenuList({ categories }: Props) {
-	const pathname = usePathname()
-	const params = useSearchParams()
-
 	const sheetContext = useContext(SheetContext)
+	const texts = useTexts()
+	const categoriesLoadingError = texts?.find(text => text.slug === 'categories-loading-error')?.text
 
 	return (
 		<ul className='flex flex-col gap-5 text-xl'>
 			{categories ? (
 				<>
-					<li
-						className={cn({
-							'text-[rgb(10,120,191)]':
-								(!params.toString().includes('category') || !params.get('category')?.length) &&
-								pathname.includes('shop')
-						})}
-					>
+					<li>
 						<Link
 							href='/shop'
-							className='text-3xl'
+							className='text-2xl max-sm:text-xl'
 							onClick={() => sheetContext?.closeSheet()}
 						>
 							- Всі категорії
 						</Link>
 					</li>
 					{categories.map(i => (
-						<li
-							key={i.slug}
-							className={cn({
-								'text-[rgb(10,120,191)]':
-									params.toString().includes(i.slug) && pathname.includes('shop')
-							})}
-						>
+						<li key={i.slug}>
 							<Link
 								href={`/shop?category=${i.slug}`}
-								className='text-3xl'
+								className='text-2xl max-sm:text-xl'
 								onClick={() => sheetContext?.closeSheet()}
 							>
 								- {i.name}
@@ -55,7 +41,7 @@ export function MenuList({ categories }: Props) {
 					))}
 				</>
 			) : (
-				<li>Помилка при отриманні категорій, спробуйте оновити сторінку</li>
+				<li>{categoriesLoadingError}</li>
 			)}
 		</ul>
 	)

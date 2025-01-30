@@ -6,7 +6,6 @@ export function MenuButton() {
 	return (
 		<Sheet
 			side='left'
-			title='Меню'
 			trigger={
 				<button title='Відкрити меню'>
 					<MenuIcon

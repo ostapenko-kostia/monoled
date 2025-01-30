@@ -15,12 +15,28 @@ model Product {
   images      String[]
   price       Int
   description String
-  info        Json?
+  info        ProductInfo[]
   modelUrl    String?
   isNew       Boolean?
 
+  quantityLeft Int @default(0)
+
   category     Category @relation(fields: [categorySlug], references: [slug])
   categorySlug String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProductInfo {
+  id Int @id @unique @default(autoincrement())
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+
+  title String
+  value String
+  order Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -41,8 +57,29 @@ model Category {
 model Admin {
   id Int @id @unique @default(autoincrement())
 
-  login    String
+  login    String @unique
   password String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Slide {
+  id Int @id @unique @default(autoincrement())
+
+  background String
+  text       String
+  url        String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TextField {
+  id Int @id @unique @default(autoincrement())
+
+  slug String
+  text String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -3,8 +3,8 @@
 import { Category } from '@prisma/client'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
-import cn from 'clsx'
 import { motion } from 'framer-motion'
+import { useTexts } from '@/context/textContext'
 
 interface Props {
 	allCategories: Category[] | undefined
@@ -13,21 +13,17 @@ interface Props {
 export function ShopSidebar({ allCategories }: Props) {
 	const params = useSearchParams()
 	const pathname = usePathname()
+	const texts = useTexts()
+
+	const allCategoriesText = texts?.find(text => text.slug === 'all-categories-text')?.text
+	const categoriesLoadingError = texts?.find(text => text.slug === 'categories-loading-error')?.text
 
 	return (
-		<aside className='bg-white border-b-[1px] overflow-y-hidden'>
-			<header className='w-full py-4 uppercase font-light tracking-wide bg-[#f0f1f3] flex items-center justify-center text-center text-xl'>
-				Категорії
-			</header>
-			<ul className='flex flex-col gap-5 py-5 px-6 border-t-[1px] border-l-[1px] h-full'>
+		<aside className='bg-white overflow-y-hidden'>
+			<ul className='flex flex-col gap-5 py-5 px-6 h-full'>
 				{allCategories ? (
 					<>
 						<motion.li
-							className={cn({
-								'text-[rgb(10,120,191)]':
-									(!params.toString().includes('category') || !params.get('category')?.length) &&
-									pathname.includes('shop')
-							})}
 							initial={{ opacity: 0, y: '100%' }}
 							animate={{ opacity: 1, y: '0' }}
 							transition={{ duration: 0.2, bounce: 0, ease: 'easeInOut' }}
@@ -40,7 +36,7 @@ export function ShopSidebar({ allCategories }: Props) {
 								{(!params.toString().includes('category') || !params.get('category')?.length) &&
 									pathname.includes('shop') &&
 									'-'}{' '}
-								Всі категорії
+								{allCategoriesText}
 							</Link>
 						</motion.li>
 						{allCategories.map(i => {
@@ -49,9 +45,6 @@ export function ShopSidebar({ allCategories }: Props) {
 							return (
 								<motion.li
 									key={i.slug}
-									className={cn({
-										'text-[rgb(10,120,191)]': isCurrentSelected
-									})}
 									initial={{ opacity: 0, y: '100%' }}
 									animate={{ opacity: 1, y: '0' }}
 									transition={{ duration: 0.2, bounce: 0, ease: 'easeInOut' }}
@@ -68,7 +61,7 @@ export function ShopSidebar({ allCategories }: Props) {
 						})}
 					</>
 				) : (
-					<li>Помилка при завантаженні категорій, спробуйте оновити сторінку</li>
+					<li>{categoriesLoadingError}</li>
 				)}
 			</ul>
 		</aside>
