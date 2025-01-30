@@ -19,7 +19,7 @@ export function ProductSlider({ images }: Props) {
 		<div className='flex items-center gap-3'>
 			<button
 				onClick={() => swiperRef.current?.swiper.slidePrev()}
-				className='p-1 aspect-square rounded-full bg-[#ececec] flex items-center justify-center'
+				className='p-1 aspect-square rounded-full bg-[#ececec] flex items-center justify-center max-sm:hidden'
 			>
 				<ChevronLeftIcon
 					size={40}
@@ -48,7 +48,7 @@ export function ProductSlider({ images }: Props) {
 			</Swiper>
 			<button
 				onClick={() => swiperRef.current?.swiper.slideNext()}
-				className='p-1 aspect-square rounded-full bg-[#ececec] flex items-center justify-center'
+				className='p-1 aspect-square rounded-full bg-[#ececec] flex items-center justify-center max-sm:hidden'
 			>
 				<ChevronRightIcon
 					size={40}

@@ -18,7 +18,6 @@ export async function middleware(request: NextRequest) {
 			).data
 			const admins = (await axios.get<Admin[]>(`${process.env.NEXT_PUBLIC_API_URL}/admin/all`)).data
 			const admin = admins.find(admin => admin.login === decoded.login)
-			console.log(admin)
 			if (admin) return NextResponse.next()
 			return NextResponse.redirect(new URL('/admin-login', request.url))
 		} catch {

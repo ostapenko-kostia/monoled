@@ -5,14 +5,15 @@ import type { Admin as TAdmin, Category, Product, Slide, TextField } from '@pris
 import dynamic from 'next/dynamic'
 import { AdminCategoriesTab } from './admin-categories/admin-categories'
 import { AdminSlidesTab } from './admin-slides/admin-slides'
-import { AdminsTab } from './admins-tab/admins-tab'
+import { AdminsTab } from './admin-texts/admins-tab/admins-tab'
 import { AdminProductsTab } from './admin-products/admin-products'
 import { AdminTextFieldsTab } from './admin-texts/admin-texts'
+import { ProductWithInfo } from '@/typing/interfaces'
 
 interface Props {
 	slides: Slide[] | undefined
 	texts: TextField[] | undefined
-	products: Product[] | undefined
+	products: ProductWithInfo[] | undefined
 	categories: Category[] | undefined
 	admins: TAdmin[] | undefined
 }

@@ -19,6 +19,9 @@ export async function DELETE(
 		const product = await prisma.product.findUnique({
 			where: { id: productId }
 		})
+		const productInfo = await prisma.productInfo.findMany({
+			where: { productId }
+		})
 
 		if (!product) throw new ApiError('Product not found', 404)
 
@@ -34,6 +37,9 @@ export async function DELETE(
 			}
 		}
 
+		productInfo?.forEach(async info => {
+			await prisma.productInfo.delete({ where: { id: info.id } })
+		})
 		await prisma.product.delete({ where: { id: productId } })
 
 		return NextResponse.json({ ok: true }, { status: 200 })

@@ -5,16 +5,26 @@ import slugify from '@sindresorhus/slugify'
 import { ApiError } from '@/app/api/exceptions/apiError'
 import { checkIsAdmin } from '../../../admin/auth/utils/checkIsAdmin'
 import { api } from '@/services/axios'
+import Joi from 'joi'
+
+const productSchema = Joi.object({
+	name: Joi.string().optional(),
+	price: Joi.number().positive().optional(),
+	description: Joi.string().optional(),
+	categorySlug: Joi.string().optional(),
+	info: Joi.array().optional().default([]),
+	modelUrl: Joi.string().optional(),
+	isNew: Joi.boolean().optional(),
+	quantityLeft: Joi.number().optional()
+})
 
 async function generateUniqueSlug(slug: string): Promise<string> {
 	let uniqueSlug = slug
 	let counter = 1
-
 	while (await prisma.product.findUnique({ where: { slug: uniqueSlug } })) {
 		uniqueSlug = `${slug}-${counter}`
 		counter++
 	}
-
 	return uniqueSlug
 }
 
@@ -26,19 +36,25 @@ export async function PUT(
 		const { productId } = await params
 		const formData = await req.formData()
 		const body = Object.fromEntries(formData)
-
 		const productInfo = JSON.parse(body.productInfo as string)
 		const newImages = formData.getAll('images') as File[]
 
 		const isAdmin = await checkIsAdmin(req)
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 
-		if (productInfo.name && productInfo.name.length) {
-			productInfo.slug = slugify(productInfo.name)
-			productInfo.slug = await generateUniqueSlug(productInfo.slug)
+		const { error, value } = productSchema.validate(productInfo, { abortEarly: false })
+
+		if (error) {
+			const errorDetails = error.details.map(err => err.message).join(', ')
+			throw new ApiError(`Validation error: ${errorDetails}`, 400)
 		}
 
-		if (newImages && newImages.length) {
+		if (value.name) {
+			value.slug = slugify(value.name)
+			value.slug = await generateUniqueSlug(value.slug)
+		}
+
+		if (newImages.length) {
 			const product = await prisma.product.findUnique({
 				where: { id: Number(productId) }
 			})
@@ -65,22 +81,30 @@ export async function PUT(
 				}
 			}
 
-			productInfo.images = savedImages
+			value.images = savedImages
 		}
 
-		const updatedProduct = await prisma.product.update({
-			where: { id: Number(productId) },
-			data: productInfo
+		const { info: _, ...valueWithoutInfo } = value
+
+		if (valueWithoutInfo) {
+			await prisma.product.update({
+				where: { id: Number(productId) },
+				data: valueWithoutInfo
+			})
+		}
+
+		await prisma.productInfo.deleteMany({
+			where: { productId: Number(productId) }
+		})
+		value.info.forEach(async (current: any) => {
+			await prisma.productInfo.create({
+				data: { ...current, productId: Number(productId) }
+			})
 		})
 
 		return NextResponse.json(
-			{ ok: true, product: updatedProduct },
-			{
-				status: 200,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}
+			{ ok: true },
+			{ status: 200, headers: { 'Content-Type': 'application/json' } }
 		)
 	} catch (error) {
 		return handleApiError(error)

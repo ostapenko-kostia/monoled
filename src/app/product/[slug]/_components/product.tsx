@@ -1,11 +1,11 @@
-import { type Product } from '@prisma/client'
 import { ProductBreadcrumbs } from './product-breadcrumbs'
 import { ProductSlider } from './product-slider'
 import { ProductMainInfo } from './product-main-info'
 import { ProductInfo } from './product-info'
+import { ProductWithInfo } from '@/typing/interfaces'
 
 interface Props {
-	product: Product
+	product: ProductWithInfo
 }
 
 export function Product({ product }: Props) {

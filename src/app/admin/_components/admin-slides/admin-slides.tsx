@@ -1,5 +1,4 @@
 import { Slide } from '@prisma/client'
-import { EditIcon, PlusCircleIcon, PlusIcon, Trash2Icon } from 'lucide-react'
 import Image from 'next/image'
 import { AdminDeleteSlide } from './admin-delete-slide'
 import { AdminSlideCreate } from './admin-create-slide'
@@ -10,10 +9,6 @@ interface Props {
 }
 
 export function AdminSlidesTab({ slides }: Props) {
-	const createSlide = () => {
-		console.log('create slide')
-	}
-
 	return (
 		<div className='p-4'>
 			<h2 className='text-2xl font-semibold mb-6'>Слайди</h2>

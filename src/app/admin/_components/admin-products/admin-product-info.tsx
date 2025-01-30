@@ -17,7 +17,7 @@ export function AdminProductInfo({ product, categoryName }: Props) {
 		images: 'Зображення',
 		slug: 'Slug',
 		info: 'Інформація',
-		quantityLeft: "Кількість на складі",
+		quantityLeft: 'Кількість на складі',
 		modelUrl: 'URL моделі',
 		isNew: 'Новинка',
 		description: 'Опис',
@@ -36,16 +36,36 @@ export function AdminProductInfo({ product, categoryName }: Props) {
 		>
 			<ul>
 				<li className='my-2 [&_span]:text-neutral-500 text-lg'>
-					<span>Категорія:</span> {categoryName}
+					<span className='!text-black'>Категорія:</span> <span>{categoryName}</span>
 				</li>
-				{Object.entries(product).map(([key, value]) => (
-					<li
-						className='my-2 [&_span]:text-neutral-500 text-lg'
-						key={key}
-					>
-						<span>{keysToDisplay[key]}:</span> {stringifyWithoutQuotes(value)}
-					</li>
-				))}
+				{Object.entries(product)
+					.filter(i => i[0] !== 'images')
+					.map(([key, value]) => (
+						<li
+							className='my-2 [&_span]:text-neutral-500 text-lg'
+							key={key}
+						>
+							{key !== 'info' ? (
+								<>
+									<span className='!text-black'>{keysToDisplay[key]}:</span>{' '}
+									<span>{stringifyWithoutQuotes(value)}</span>
+								</>
+							) : (
+								<>
+									<span className='!text-black'>{keysToDisplay[key]}:</span>
+									<br />
+									{(value as any[])
+										.sort((a, b) => a.order - b.order)
+										.map(({ title, value }, index) => (
+											<span key={index}>
+												{title}: {value}
+												<br />
+											</span>
+										))}
+								</>
+							)}
+						</li>
+					))}
 			</ul>
 		</Dialog>
 	)

@@ -15,7 +15,7 @@ model Product {
   images      String[]
   price       Int
   description String
-  info        Json?
+  info        ProductInfo[]
   modelUrl    String?
   isNew       Boolean?
 
@@ -23,6 +23,20 @@ model Product {
 
   category     Category @relation(fields: [categorySlug], references: [slug])
   categorySlug String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProductInfo {
+  id Int @id @unique @default(autoincrement())
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+
+  title String
+  value String
+  order Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

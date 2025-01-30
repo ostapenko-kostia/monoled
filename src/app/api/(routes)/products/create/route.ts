@@ -25,13 +25,13 @@ const productSchema = Joi.object({
 		'string.empty': 'Category slug is required',
 		'any.required': 'Category slug is required'
 	}),
-	info: Joi.object().optional(),
-	modelUrl: Joi.string().optional(),
-	isNew: Joi.boolean().default(false).optional(),
-	quantityLeft: Joi.number().default(0).required().messages({
+	info: Joi.array().optional(),
+	modelUrl: Joi.string().required(),
+	isNew: Joi.boolean().optional(),
+	quantityLeft: Joi.number().required().messages({
 		'string.empty': 'Quantity is required',
 		'any.required': 'Quantity is required'
-	}),
+	})
 })
 
 async function generateUniqueSlug(slug: string): Promise<string> {
@@ -79,9 +79,27 @@ export async function POST(req: NextRequest) {
 			}
 		}
 
-		value.images = savedImages
+		const product = await prisma.product.create({
+			data: {
+				name: value.name,
+				slug: value.slug,
+				price: value.price,
+				description: value.description,
+				categorySlug: value.categorySlug,
+				isNew: value.isNew,
+				quantityLeft: value.quantityLeft,
+				modelUrl: value.modelUrl,
+				images: savedImages
+			}
+		})
 
-		const product = await prisma.product.create({ data: value })
+		if (value.info && value.info.length) {
+			value.info.forEach(async (current: any) => {
+				await prisma.productInfo.create({
+					data: { ...current, productId: Number(product.id) }
+				})
+			})
+		}
 
 		return NextResponse.json(
 			{ ok: true, product },

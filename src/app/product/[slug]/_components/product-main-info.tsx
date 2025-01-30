@@ -1,14 +1,14 @@
 'use client'
 
-import { Product } from '@prisma/client'
 import { DownloadIcon } from 'lucide-react'
 import Link from 'next/link'
 import { stringifyWithoutQuotes } from '@/utils/stringifyWithoutQuotes'
 import { useTexts } from '@/context/textContext'
 import clsx from 'clsx'
+import { ProductWithInfo } from '@/typing/interfaces'
 
 interface Props {
-	product: Product
+	product: ProductWithInfo
 }
 
 export function ProductMainInfo({ product }: Props) {
@@ -33,18 +33,18 @@ export function ProductMainInfo({ product }: Props) {
 					<h3>{productCharacteristicsTitle}</h3>{' '}
 				</div>
 				<div className='grid-cols-2 grid gap-x-8 gap-y-3 max-sm:grid-cols-1'>
-					{product.info ? (
-						Object.entries(JSON.parse(JSON.stringify(product.info ?? ''))).map(
-							([key, value], index) => (
+					{product.info.length ? (
+						product.info
+							.sort((a, b) => a.order - b.order)
+							.map((field, index) => (
 								<div
 									className='w-full py-2 flex flex-col items-start gap-2 border-b-[1px] border-black'
-									key={key}
+									key={index}
 								>
-									<span className='text-neutral-500'>{key}:</span>{' '}
-									<span className='text-lg'>{stringifyWithoutQuotes(value)}</span>
+									<span className='text-neutral-500'>{field.title}:</span>{' '}
+									<span className='text-lg'>{stringifyWithoutQuotes(field.value)}</span>
 								</div>
-							)
-						)
+							))
 					) : (
 						<>{productCharacteristicsEmpty}</>
 					)}

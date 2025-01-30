@@ -1,4 +1,5 @@
 import { productsService } from '@/services/products.service'
+import { ProductWithInfo } from '@/typing/interfaces'
 import { useMutation } from '@tanstack/react-query'
 
 export const useDeleteProduct = () => {
@@ -19,9 +20,10 @@ export const useCreateProduct = () => {
 		images: FileList
 		description: string
 		categorySlug: string
-		info?: Record<string, string>
-		modelUrl?: string
-		isNew?: boolean
+		modelUrl: string | null
+		quantityLeft: number
+		info?: ProductWithInfo['info']
+		isNew?: boolean | null
 	}
 	return useMutation({
 		mutationKey: ['product create'],
@@ -52,10 +54,10 @@ export const useUpdateProduct = () => {
 		images?: FileList
 		description?: string
 		categorySlug?: string
-		info?: Record<string, string>
-		modelUrl: string | null
-		isNew: boolean | null
-		quantityLeft: number
+		info?: ProductWithInfo['info']
+		modelUrl?: string | null
+		isNew?: boolean | null
+		quantityLeft?: number
 	}
 
 	return useMutation({
@@ -68,12 +70,13 @@ export const useUpdateProduct = () => {
 					formData.append('images', el)
 				})
 			}
-			const dataWithoutImages = Object.entries(data).reduce((acc, [key, value]) => {
+			const dataForForm = Object.entries(data).reduce((acc, [key, value]) => {
 				if (key !== 'images') acc[key] = value
+				if (!value) delete acc[key]
 				return acc
 			}, {} as Record<string, string>)
 
-			formData.append('productInfo', JSON.stringify(dataWithoutImages))
+			formData.append('productInfo', JSON.stringify(dataForForm))
 
 			const res = await productsService.updateProduct(id, formData)
 			if (!res?.data) return Promise.reject()
