@@ -24,6 +24,7 @@ export default async function AboutPage() {
 							src='/1.avif'
 							alt='bg'
 							fill
+							priority
 							sizes='100%, 100%'
 							className='object-cover object-[50%_70%] min-h-full brightness-[.30] z-0'
 						/>
@@ -66,6 +67,7 @@ export default async function AboutPage() {
 									alt='about'
 									className='object-cover'
 									fill
+									loading='lazy'
 									sizes='100%, 100%'
 								/>
 							</div>
