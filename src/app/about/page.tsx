@@ -17,7 +17,7 @@ export default async function AboutPage() {
 
 	return (
 		<>
-			<header className='flex items-center justify-center py-36 w-full gap-2 flex-col relative text-white'>
+			<header className='flex items-center justify-center py-36 w-full gap-2 flex-col relative text-white animate-opacity-1'>
 				<div
 					className='absolute top-0 left-0 inset-0 w-full h-full -z-50 brightness-[.30]'
 					style={{
@@ -43,7 +43,7 @@ export default async function AboutPage() {
 				</p>
 			</header>
 			<div>
-				<div className='text-center py-10 container mx-auto'>
+				<div className='text-center py-10 container mx-auto animate-opacity-1'>
 					<div className='grid grid-cols-[1.5fr_2fr] gap-12 max-sm:grid-cols-1'>
 						<div className='w-full'>
 							<div>

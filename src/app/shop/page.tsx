@@ -24,7 +24,7 @@ const ShopPage: React.FC = async () => {
 
 	return (
 		<section>
-			<header className='flex items-center justify-center py-36 w-full gap-2 flex-col relative text-white'>
+			<header className='flex items-center justify-center py-36 w-full gap-2 flex-col relative text-white animate-opacity-1'>
 				<div
 					className='absolute top-0 left-0 inset-0 w-full h-full -z-50 brightness-[.30]'
 					style={{

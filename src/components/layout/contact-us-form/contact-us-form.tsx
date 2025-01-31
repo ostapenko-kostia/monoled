@@ -63,7 +63,7 @@ export function ContactUsForm() {
 	}, [isPending, isSuccess, isError])
 
 	return (
-		<div>
+		<div className='animate-opacity-1'>
 			<h2 className='text-3xl text-center'>{contactUsText}</h2>
 			<form
 				className='w-[600px] max-sm:w-[95%] mx-auto mt-10 flex flex-col gap-4 items-center'

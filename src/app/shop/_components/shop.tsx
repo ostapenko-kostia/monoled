@@ -43,7 +43,7 @@ export function Shop({ allCategories, allProducts }: Props) {
 	const nothingFound = texts?.find(text => text.slug === 'nothing-found')?.text
 
 	return (
-		<div className='container mx-auto max-sm:px-2 mt-12 pb-20'>
+		<div className='container mx-auto max-sm:px-2 mt-12 pb-20 animate-opacity-1'>
 			<h2 className='text-3xl max-lg:text-center'>{shopSectionTitle}</h2>
 			<div className='grid grid-cols-[1fr_3fr] max-lg:grid-cols-[1fr_2fr] max-md:grid-cols-1 max-md:gap-5 w-full mt-8'>
 				<ShopSidebar allCategories={allCategories} />

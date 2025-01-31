@@ -1,10 +1,10 @@
+import { Header } from '@/components/layout/header/header'
+import Layout from '@/components/layout/layout'
+import { TextProvider } from '@/context/textContext'
+import { textsService } from '@/services/texts.service'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.scss'
-import Layout from '@/components/layout/layout'
-import { Header } from '@/components/layout/header'
-import { TextProvider } from '@/context/textContext'
-import { textsService } from '@/services/texts.service'
 
 export const revalidate = 120
 

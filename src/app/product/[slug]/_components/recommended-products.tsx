@@ -12,7 +12,7 @@ export async function RecommendedProducts({ products, slug }: Props) {
 	const recommendedProductsText = texts?.find(text => text.slug === 'recommended-products')?.text
 
 	return (
-		<div className='container mx-auto max-sm:px-2 mb-10'>
+		<div className='container mx-auto max-sm:px-2 mb-10 animate-opacity-1'>
 			<h3 className='text-3xl max-[500px]:text-center max-[500px]:text-2xl'>
 				{recommendedProductsText}
 			</h3>

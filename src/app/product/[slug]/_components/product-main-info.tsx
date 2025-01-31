@@ -27,7 +27,7 @@ export function ProductMainInfo({ product }: Props) {
 	const productOutOfStock = texts?.find(text => text.slug === 'product-out-of-stock')?.text
 
 	return (
-		<div className='mx-auto w-full'>
+		<div className='mx-auto w-full animate-opacity-1'>
 			<div>
 				<div className='text-3xl mb-6 w-full flex items-center'>
 					<h3>{productCharacteristicsTitle}</h3>{' '}

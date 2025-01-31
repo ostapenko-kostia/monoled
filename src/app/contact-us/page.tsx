@@ -14,7 +14,7 @@ export default async function ContactUsPage() {
 
 	return (
 		<>
-			<header className='flex items-center justify-center py-36 w-full gap-2 flex-col relative text-white'>
+			<header className='flex items-center justify-center py-36 w-full gap-2 flex-col relative text-white animate-opacity-1'>
 				<div
 					className='absolute top-0 left-0 inset-0 w-full h-full -z-50 brightness-[.30]'
 					style={{
@@ -39,7 +39,7 @@ export default async function ContactUsPage() {
 					<span className='font-normal'>{contactUsText}</span>
 				</p>
 			</header>
-			<div className='grid-cols-2 grid gap-10 py-10 max-sm:grid-cols-1'>
+			<div className='grid-cols-2 grid gap-10 py-10 max-sm:grid-cols-1 animate-opacity-1'>
 				<div className='my-20 container mx-auto max-sm:px-2 min-h-screen'>
 					<h1 className='text-5xl mb-10 text-center uppercase font-semibold'>{title}</h1>
 					<p className='mb-10 text-center mx-auto w-[90%] text-xl'>{description}</p>

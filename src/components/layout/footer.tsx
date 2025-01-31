@@ -15,7 +15,7 @@ export function Footer({ className }: Props) {
 		<footer
 			className={cn(
 				className,
-				'bg-foreground text-background px-8 py-5 max-sm:px-4 w-ful h-full flex flex-col items-center text-center gap-4'
+				'bg-foreground text-background px-8 py-5 max-sm:px-4 w-ful h-full flex flex-col items-center text-center gap-4 animate-opacity-1'
 			)}
 		>
 			<Logo />

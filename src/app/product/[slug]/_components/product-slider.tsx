@@ -16,7 +16,7 @@ export function ProductSlider({ images }: Props) {
 	const swiperRef = useRef<TSwiperRef | null>(null)
 
 	return (
-		<div className='flex items-center gap-3'>
+		<div className='flex items-center gap-3 animate-opacity-1'>
 			<button
 				onClick={() => swiperRef.current?.swiper.slidePrev()}
 				className='p-1 aspect-square rounded-full bg-[#ececec] flex items-center justify-center max-sm:hidden'
@@ -41,6 +41,7 @@ export function ProductSlider({ images }: Props) {
 							src={image}
 							alt={`${image} #${index}`}
 							width={900}
+							priority
 							height={900}
 						/>
 					</SwiperSlide>

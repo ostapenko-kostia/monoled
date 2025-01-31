@@ -12,7 +12,7 @@ export async function ProductBreadcrumbs({ product }: Props) {
 	const shopShortTitle = texts?.find(text => text.slug === 'shop-short-title')?.text
 
 	return (
-		<div className='bg-[#f0f1f3] py-7'>
+		<div className='bg-[#f0f1f3] py-7 animate-opacity-1'>
 			<div className='container mx-auto max-sm:px-2 flex items-center gap-5 h-[40px] max-[500px]:gap-3'>
 				<Link href='/'>{homeTitle}</Link>
 				<span className='font-semibold'>{' > '}</span>

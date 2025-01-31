@@ -12,6 +12,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      animation: {
+        "opacity-1": "opacity 1s ease-in-out",
+      }
     },
   },
   plugins: [],

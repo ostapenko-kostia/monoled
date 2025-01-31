@@ -7,6 +7,7 @@ import 'swiper/css/effect-creative'
 import Link from 'next/link'
 import type { SwiperOptions } from 'swiper/types'
 import { Slide } from '@prisma/client'
+import { motion } from 'framer-motion'
 
 interface Props {
 	slides: Slide[] | undefined
@@ -37,7 +38,11 @@ export function Home({ slides }: Props) {
 	}
 
 	return (
-		<div className='h-vh absolute inset-0 top-0 left-0 w-full h-full -z-10'>
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1, transition: { duration: 1 } }}
+			className='h-vh absolute inset-0 top-0 left-0 w-full h-full -z-10'
+		>
 			<Swiper
 				className='overflow-hidden h-full'
 				{...swiperSettings}
@@ -55,7 +60,7 @@ export function Home({ slides }: Props) {
 							}}
 						>
 							<div className='w-full h-full px-8 max-sm:px-2 flex flex-col items-start text-start justify-end max-sm:text-center max-sm:items-center gap-7'>
-								<h2 className='text-6xl font-medium max-2xl:text-5xl max-xl:text-4xl max-sm:text-2xl w-[700px] max-md:w-full'>
+								<h2 className='font-medium text-5xl max-xl:text-4xl max-sm:text-2xl w-[700px] max-md:w-full'>
 									{slide.text}
 								</h2>
 								<button className='bg-white rounded-md text-black font-medium border-2 border-transparent hover:border-black transition-colors duration-300 border-black max-sm:mx-auto'>
@@ -70,6 +75,6 @@ export function Home({ slides }: Props) {
 						</SwiperSlide>
 					))}
 			</Swiper>
-		</div>
+		</motion.div>
 	)
 }

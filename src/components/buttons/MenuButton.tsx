@@ -1,6 +1,6 @@
 import { MenuIcon } from 'lucide-react'
 import { Menu } from '../layout/menu/menu'
-import { Sheet } from '../ui/sheet'
+import { Sheet } from '../ui/sheet-menu'
 
 export function MenuButton() {
 	return (

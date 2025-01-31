@@ -1,6 +1,6 @@
 'use client'
 
-import { SheetContext } from '@/components/ui/sheet'
+import { SheetContext } from '@/components/ui/sheet-menu'
 import { useTexts } from '@/context/textContext'
 import { Category } from '@prisma/client'
 import Link from 'next/link'
