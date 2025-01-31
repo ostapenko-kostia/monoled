@@ -28,7 +28,7 @@ export function ShopProduct({ product, showMode }: Props) {
 					src={product.images[0] && product.images[0].length ? product.images[0] : "/placeholder-image.jpg"}
 					alt={product.name}
 					fill
-					priority
+					loading='lazy'
 					sizes='100%, 100%'
 					className={cn('object-cover rounded-lg', {
 						'group-hover:opacity-0 transition-opacity duration-[400ms] absolute z-10':
@@ -40,6 +40,7 @@ export function ShopProduct({ product, showMode }: Props) {
 						src={product.images[1]}
 						alt={product.name}
 						fill
+						loading='lazy'
 						sizes='100%, 100%'
 						className='object-cover rounded-lg absolute top-0 left-0 w-full h-full'
 					/>

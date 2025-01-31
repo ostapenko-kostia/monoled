@@ -41,7 +41,7 @@ export function ProductSlider({ images }: Props) {
 							src={image}
 							alt={`${image} #${index}`}
 							width={900}
-							priority
+							loading='lazy'
 							height={900}
 						/>
 					</SwiperSlide>
