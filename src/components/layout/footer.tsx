@@ -1,15 +1,13 @@
-'use client'
-
 import cn from 'clsx'
 import Logo from '@/components/layout/logo'
-import { useTexts } from '@/context/textContext'
+import { textsService } from '@/services/texts.service'
 
 interface Props {
 	className?: string
 }
 
-export function Footer({ className }: Props) {
-	const texts = useTexts();
+export async function Footer({ className }: Props) {
+	const texts = await textsService.getAllTexts();
 	const copyrightText = texts?.find(text => text.slug === 'copyright')?.text
 	return (
 		<footer

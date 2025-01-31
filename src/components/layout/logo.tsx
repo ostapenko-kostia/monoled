@@ -12,7 +12,7 @@ async function Logo() {
 
 	return (
 		<Link href='/'>
-			<span className={clsx('text-4xl tracking-[0.07em]', bestari.className)}>{title ?? ''}</span>
+			<span className={clsx('text-4xl tracking-[0.07em]', bestari.className)}>{title}</span>
 		</Link>
 	)
 }

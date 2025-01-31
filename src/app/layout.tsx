@@ -5,6 +5,8 @@ import { textsService } from '@/services/texts.service'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.scss'
+import { Footer } from '@/components/layout/footer'
+import HiddenOnMain from '@/components/util/hidden-on-main'
 
 export const revalidate = 120
 
@@ -41,6 +43,9 @@ export default async function RootLayout({
 					<Layout>
 						<Header />
 						{children}
+						<HiddenOnMain>
+							<Footer />
+						</HiddenOnMain>
 					</Layout>
 				</TextProvider>
 			</body>
