@@ -1,7 +1,11 @@
 'use client'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { EffectCreative, Keyboard, Mousewheel } from 'swiper/modules'
+import {
+	EffectCards,
+	Keyboard,
+	Mousewheel
+} from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/effect-creative'
 import Link from 'next/link'
@@ -18,19 +22,12 @@ export function Home({ slides }: Props) {
 		spaceBetween: 0,
 		slidesPerView: 1,
 		resistanceRatio: 0,
-		modules: [Mousewheel, Keyboard, EffectCreative],
-		effect: 'creative',
+		modules: [Mousewheel, Keyboard, EffectCards],
+		effect: 'cards',
 		direction: 'vertical',
 		speed: 500,
-		creativeEffect: {
-			prev: {
-				translate: [0, '-0%', 0],
-				shadow: false
-			},
-			next: {
-				translate: [0, '100%', 1],
-				shadow: true
-			}
+		cardsEffect: {
+			rotate: false
 		},
 		followFinger: false,
 		mousewheel: true,

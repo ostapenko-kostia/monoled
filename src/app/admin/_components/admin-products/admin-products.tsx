@@ -15,7 +15,7 @@ interface Props {
 
 export function AdminProductsTab({ products, categories }: Props) {
 	return (
-		<div className='w-full p-4'>
+		<div className='w-full p-4 animate-opacity-1'>
 			<h2 className='mb-6 text-2xl font-semibold'>Товари</h2>
 			<div className='grid grid-cols-1 w-full gap-10'>
 				{products

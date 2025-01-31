@@ -5,7 +5,7 @@ import type { Admin as TAdmin, Category, Product, Slide, TextField } from '@pris
 import dynamic from 'next/dynamic'
 import { AdminCategoriesTab } from './admin-categories/admin-categories'
 import { AdminSlidesTab } from './admin-slides/admin-slides'
-import { AdminsTab } from './admin-texts/admins-tab/admins-tab'
+import { AdminsTab } from './admins-tab/admins-tab'
 import { AdminProductsTab } from './admin-products/admin-products'
 import { AdminTextFieldsTab } from './admin-texts/admin-texts'
 import { ProductWithInfo } from '@/typing/interfaces'
@@ -30,7 +30,7 @@ function AdminComponent({ slides, texts, products, categories, admins }: Props) 
 	]
 
 	return (
-		<div className='min-h-[80vh] container mx-auto max-sm:px-2 py-8 grid grid-cols-[1fr_2.5fr] max-lg:grid-cols-1 gap-5'>
+		<div className='min-h-[80vh] container mx-auto max-sm:px-2 py-8 grid grid-cols-[1fr_2.5fr] max-lg:grid-cols-1 gap-5 animate-opacity-1'>
 			<aside className='bg-white overflow-y-hidden rounded-xl min-w-[360px] max-sm:min-w-min'>
 				<h2 className='text-3xl text-center my-5 font-semibold'>Адмін панель</h2>
 				<ul className='flex flex-col gap-5 py-5 px-6 h-full'>

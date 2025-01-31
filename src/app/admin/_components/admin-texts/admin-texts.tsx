@@ -7,7 +7,7 @@ interface Props {
 
 export function AdminTextFieldsTab({ texts }: Props) {
 	return (
-		<div className='p-4'>
+		<div className='p-4 animate-opacity-1'>
 			<h2 className='text-2xl font-semibold mb-6'>Текстові поля</h2>
 			<div className='overflow-x-auto'>
 				<table className='min-w-full divide-y divide-gray-200'>

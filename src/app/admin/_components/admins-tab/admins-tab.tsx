@@ -9,7 +9,7 @@ interface Props {
 
 export function AdminsTab({ admins }: Props) {
 	return (
-		<div className='p-4'>
+		<div className='p-4 animate-opacity-1'>
 			<div className='flex justify-between items-center mb-6 max-sm:flex-col max-sm:gap-4'>
 				<h2 className='text-2xl font-semibold'>Адміністратори</h2>
 				<CreateAdmin />

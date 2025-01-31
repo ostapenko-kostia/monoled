@@ -10,7 +10,7 @@ interface Props {
 
 export function AdminSlidesTab({ slides }: Props) {
 	return (
-		<div className='p-4'>
+		<div className='p-4 animate-opacity-1'>
 			<h2 className='text-2xl font-semibold mb-6'>Слайди</h2>
 			<div className='grid grid-cols-4 w-full gap-10 max-xl:grid-cols-3 max-md:grid-cols-2 max-[480px]:grid-cols-1'>
 				{slides?.map(slide => (
