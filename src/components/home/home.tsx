@@ -1,17 +1,14 @@
 'use client'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
-import {
-	EffectCards,
-	Keyboard,
-	Mousewheel
-} from 'swiper/modules'
+import { Keyboard, Mousewheel } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/effect-creative'
 import Link from 'next/link'
 import type { SwiperOptions } from 'swiper/types'
 import { Slide } from '@prisma/client'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 interface Props {
 	slides: Slide[] | undefined
@@ -22,13 +19,9 @@ export function Home({ slides }: Props) {
 		spaceBetween: 0,
 		slidesPerView: 1,
 		resistanceRatio: 0,
-		modules: [Mousewheel, Keyboard, EffectCards],
-		effect: 'cards',
+		modules: [Mousewheel, Keyboard],
 		direction: 'vertical',
 		speed: 500,
-		cardsEffect: {
-			rotate: false
-		},
 		followFinger: false,
 		mousewheel: true,
 		keyboard: true
@@ -48,14 +41,22 @@ export function Home({ slides }: Props) {
 					slides.map((slide, index) => (
 						<SwiperSlide
 							key={index}
-							className='w-full h-full pt-20 pb-10 text-center'
-							style={{
-								backgroundImage: `url(${slide.background})`,
-								backgroundRepeat: 'no-repeat',
-								backgroundSize: 'cover',
-								backgroundPosition: '30% 55%'
-							}}
+							className='w-full h-full pt-20 pb-10 text-center relative'
 						>
+							<div className='absolute w-full h-full inset-0 top-0 left-0 -z-10'>
+								<div className='relative w-full h-full inset-0 top-0 left-0'>
+									<Image
+										src={slide.background}
+										alt={slide.text}
+										fill
+										sizes='100%, 100%'
+										priority={index === 0}
+										loading={index === 0 ? 'eager' : 'lazy'}
+										className='object-cover object-[30%_55%]'
+									/>
+								</div>
+							</div>
+
 							<div className='w-full h-full px-8 max-sm:px-2 flex flex-col items-start text-start justify-end max-sm:text-center max-sm:items-center gap-7'>
 								<h2 className='font-medium text-5xl max-xl:text-4xl max-sm:text-2xl w-[700px] max-md:w-full'>
 									{slide.text}
