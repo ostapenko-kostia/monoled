@@ -104,7 +104,7 @@ function DialogContent({
 						key='dialog-content'
 						id='dialog-content'
 						className={clsx(
-							'overflow-y-scroll scroll-smooth no-scrollbar fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 bg-white z-[1000] w-[600px] max-sm:w-[90%] h-min max-h-[90vh] rounded-lg'
+							'overflow-y-scroll scroll-smooth no-scrollbar fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 bg-white z-[1000] w-1/2 max-sm:w-[90vw] h-[90vh] rounded-lg'
 						)}
 						variants={sideVariants}
 						initial='hidden'

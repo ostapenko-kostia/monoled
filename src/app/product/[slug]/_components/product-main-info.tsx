@@ -52,7 +52,7 @@ export function ProductMainInfo({ product }: Props) {
 			</div>
 			<div className='mt-10 w-full flex flex-col gap-1'>
 				<div
-					className={clsx({
+					className={clsx("max-lg:text-center max-lg:w-full text-lg", {
 						'text-green-700': product.quantityLeft > 0,
 						'text-red-700': product.quantityLeft <= 0
 					})}
@@ -62,7 +62,7 @@ export function ProductMainInfo({ product }: Props) {
 						: `${productOutOfStock}`}
 				</div>
 				<div className='flex items-end gap-3 max-lg:justify-center max-[500px]:flex-col max-[500px]:items-center'>
-					<h3 className='text-xl'>{basePriceText}:</h3>
+					<h3 className='text-2xl'>{basePriceText}:</h3>
 					<span className='inline-flex items-end gap-2'>
 						<span className='text-2xl font-semibold tracking-wide'>{product.price} грн </span>
 					</span>
