@@ -51,7 +51,7 @@ export function Home({ slides }: Props) {
 										sizes='100%, 100%'
 										priority={index === 0}
 										loading={index === 0 ? 'eager' : 'lazy'}
-										className='object-cover object-[30%_55%] max-sm:object-contain'
+										className='object-cover object-[30%_55%]'
 									/>
 								</div>
 							</div>

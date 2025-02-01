@@ -32,6 +32,7 @@ export function AdminProductDelete({ productName, productId }: Props) {
 	return (
 		<Dialog
 			title='Видалити'
+			className='flex items-center'
 			trigger={
 				<button>
 					<Trash2Icon />

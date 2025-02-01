@@ -26,13 +26,22 @@ export function AdminProductEditImage({ product, register, watch }: Props) {
 			{watch('images') ? (
 				<div className='flex flex-col gap-2'>
 					{Array.from(watch('images')).map((file: any, i) => (
-						<span key={i}>- {file.name}</span>
+						<span key={i}>
+							-{' '}
+							{file.name.length > 30
+								? file.name.split('').slice(0, 30).join('') + '...'
+								: file.name}
+						</span>
 					))}
 				</div>
 			) : (
 				<div className='flex flex-col gap-2'>
 					{product.images.map((name, i) => (
-						<span key={i}>{name}</span>
+						<span key={i}>
+							{name.split('uploads/')[1].length > 30
+								? '- ' + name.split('uploads/')[1].split('').slice(0, 30).join('') + '...'
+								: '- ' + name.split('uploads/')[1]}
+						</span>
 					))}
 				</div>
 			)}
