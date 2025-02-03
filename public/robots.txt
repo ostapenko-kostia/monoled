@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /product/*
+Allow: /shop
+Allow: /about
+Allow: /contact-us
+Disallow: /api/*
+Disallow: /admin
+Disallow: /admin-login

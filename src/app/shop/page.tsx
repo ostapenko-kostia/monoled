@@ -9,7 +9,7 @@ import { textsService } from '@/services/texts.service'
 import Image from 'next/image'
 
 export const metadata: Metadata = {
-	title: 'Monoled - Каталог товарів'
+	title: 'Lumineka - Каталог товарів'
 }
 
 export const revalidate = 180

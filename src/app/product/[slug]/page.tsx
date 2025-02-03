@@ -8,7 +8,7 @@ import { textsService } from '@/services/texts.service'
 import { ProductWithInfo } from '@/typing/interfaces'
 
 export const metadata: Metadata = {
-	title: 'Monoled - Товар'
+	title: 'Lumineka - Товар'
 }
 
 export const revalidate = 180

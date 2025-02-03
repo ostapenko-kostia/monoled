@@ -25,8 +25,9 @@ const fixel = localFont({
 })
 
 export const metadata: Metadata = {
-	title: 'Monoled',
-	description: 'Monoled'
+	title: 'Lumineka',
+	description:
+		'У Lumineka ми створюємо світло, яке формує простір і атмосферу. Поєднуючи технології, дизайн і бездоганну якість, ми розробляємо освітлення, що доповнює архітектуру та підкреслює деталі.'
 }
 
 export default async function RootLayout({

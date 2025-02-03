@@ -51,7 +51,7 @@ export const AdminProductEdit = dynamic(() =>
 				id: product.id,
 				data: {
 					...data,
-					info
+					info: info && info.length ? info : undefined
 				}
 			})
 		}

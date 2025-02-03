@@ -72,7 +72,7 @@ export const useUpdateProduct = () => {
 			}
 			const dataForForm = Object.entries(data).reduce((acc, [key, value]) => {
 				if (key !== 'images') acc[key] = value
-				if (!value) delete acc[key]
+				if (!value && key !== 'isNew') delete acc[key]
 				return acc
 			}, {} as Record<string, string>)
 
