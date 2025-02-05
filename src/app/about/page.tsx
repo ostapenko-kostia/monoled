@@ -1,7 +1,6 @@
 import { textsService } from '@/services/texts.service'
 import { Metadata } from 'next'
 import Image from 'next/image'
-import Link from 'next/link'
 
 export const metadata: Metadata = {
 	title: 'Lumineka - Про бренд'
@@ -10,61 +9,18 @@ export const metadata: Metadata = {
 export default async function AboutPage() {
 	const texts = await textsService.getAllTexts()
 
-	const aboutTitle = texts?.find(text => text.slug === 'about-title')?.text
-	const homeTitle = texts?.find(text => text.slug === 'home-title')?.text
 	const title = texts?.find(text => text.slug === 'title')?.text
-
-	const aboutFirst = texts?.find(text => text.slug === 'about-first')?.text
-	const aboutSecond = texts?.find(text => text.slug === 'about-second')?.text
-	const aboutThird = texts?.find(text => text.slug === 'about-third')?.text
+	const aboutTitle = texts?.find(text => text.slug === 'about-title')?.text
+	const about = texts?.find(text => text.slug === 'about')?.text
 
 	const imageUrl = texts?.find(text => text.slug === 'about-page-image-url')?.text
 
 	return (
 		<>
-			<header className='flex items-center justify-center py-36 w-full relative gap-2 flex-col text-white animate-opacity-1'>
-				<div className='absolute top-0 left-0 inset-0 w-full'>
-					<div className='relative top-0 left-0 inset-0 w-full h-full -z-50'>
-						<Image
-							src='/1.avif'
-							alt='bg'
-							fill
-							priority
-							sizes='100%, 100%'
-							className='object-cover object-[50%_70%] min-h-full brightness-[.30] z-0'
-						/>
-					</div>
-				</div>
-
-				<h2 className='font-medium text-5xl max-[450px]:text-4xl'>{aboutTitle}</h2>
-				<p className='text-lg font-semibold max-[450px]:text-base'>
-					<Link
-						className='underline-offset-[6px] hover:underline'
-						href='/'
-					>
-						{homeTitle}
-					</Link>
-					{' > '}
-					<span className='font-normal'>{aboutTitle}</span>
-				</p>
-			</header>
-			<div>
+			<div className='mx-auto container my-5'>
+				<h2 className='text-5xl font-medium mb-6 text-left'>{aboutTitle}</h2>
 				<div className='text-center py-10 container mx-auto animate-opacity-1'>
 					<div className='grid grid-cols-[1.5fr_2fr] gap-12 max-sm:grid-cols-1'>
-						<div className='w-full'>
-							<div>
-								<h1 className='font-semibold text-5xl uppercase'>{title}</h1>
-								<p className='mt-10 w-full text-center mx-auto font-light text-xl'>{aboutFirst}</p>
-							</div>
-							<hr className='w-[100px] h-1 mx-auto my-10 bg-black' />
-							<div>
-								<p className='mt-10 w-full text-center mx-auto font-light text-xl'>{aboutSecond}</p>
-							</div>
-							<hr className='w-[100px] h-1 mx-auto my-10 bg-black' />
-							<div>
-								<p className='mt-10 w-full text-center mx-auto font-light text-xl'>{aboutThird}</p>
-							</div>
-						</div>
 						<div className='w-full h-min aspect-square sticky top-5 max-sm:hidden'>
 							<div className='relative w-full h-full'>
 								<Image
@@ -75,6 +31,12 @@ export default async function AboutPage() {
 									loading='lazy'
 									sizes='100%, 100%'
 								/>
+							</div>
+						</div>
+						<div className='w-full'>
+							<div>
+								<h1 className='font-semibold text-5xl uppercase'>{title}</h1>
+								<p className='mt-10 w-full text-center mx-auto font-light text-xl'>{about}</p>
 							</div>
 						</div>
 					</div>
