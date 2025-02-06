@@ -18,26 +18,42 @@ export function AdminSlidesTab({ slides }: Props) {
 	return (
 		<div className='p-4 animate-opacity-1'>
 			<h2 className='text-2xl font-semibold'>Слайди</h2>
-			<div className='w-full my-6'>
+			<div className='w-full my-6 flex items-center max-sm:flex-col max-sm:w-1/2 max-sm:mx-auto max-[450px]:w-full'>
 				<button
 					onClick={() => setTab('desktop')}
-					className={clsx('px-4 py-2 rounded-l-md bg-gray-100', {
-						'!bg-gray-500 text-white': tab === 'desktop'
-					})}
+					className={clsx(
+						'px-4 py-2 rounded-l-md bg-gray-100 max-sm:w-full max-sm:rounded-t-md max-sm:rounded-es-none',
+						{
+							'!bg-gray-500 text-white': tab === 'desktop'
+						}
+					)}
 				>
 					Комп'ютерні слайди
 				</button>
 				<button
 					onClick={() => setTab('mobile')}
-					className={clsx('px-4 py-2 rounded-r-md bg-gray-100', {
-						'!bg-gray-500 text-white': tab === 'mobile'
-					})}
+					className={clsx(
+						'px-4 py-2 rounded-r-md bg-gray-100 max-sm:w-full max-sm:rounded-b-md max-sm:rounded-se-none',
+						{
+							'!bg-gray-500 text-white': tab === 'mobile'
+						}
+					)}
 				>
 					Мобільні слайди
 				</button>
 			</div>
-			{tab === 'desktop' && <AdminSlidesList view={tab} slides={desktopSlides} />}
-			{tab === 'mobile' && <AdminSlidesList view={tab} slides={mobileSlides} />}
+			{tab === 'desktop' && (
+				<AdminSlidesList
+					view={tab}
+					slides={desktopSlides}
+				/>
+			)}
+			{tab === 'mobile' && (
+				<AdminSlidesList
+					view={tab}
+					slides={mobileSlides}
+				/>
+			)}
 		</div>
 	)
 }
