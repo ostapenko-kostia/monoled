@@ -5,12 +5,14 @@ interface Filters {
 	category: Category['slug']
 	searchQuery: string | null
 	sortingMethodId: ISortingMethod['id']
+	page: number
+	limit: number
 }
 
-export const useFilterProducts = (
+export const filterProducts = (
 	products: Product[] | undefined,
-	{ category, sortingMethodId, searchQuery }: Filters
-): Product[] | undefined => {
+	{ category, sortingMethodId, searchQuery, page = 1, limit = 25 }: Filters
+): { filteredProducts: Product[] | undefined; totalPages: number } => {
 	const filteredProducts = products
 		?.filter(product => (category.length ? product.categorySlug === category : product))
 		.filter(product =>
@@ -30,5 +32,10 @@ export const useFilterProducts = (
 			break
 	}
 
-	return sortedProducts
+	const limitSafe = limit > 0 ? limit : 1
+	const slicedFilteredProducts = sortedProducts?.slice((page - 1) * limitSafe, page * limitSafe)
+
+	const totalPages = filteredProducts?.length ? Math.ceil(filteredProducts.length / limitSafe) : 1
+
+	return { filteredProducts: slicedFilteredProducts, totalPages }
 }

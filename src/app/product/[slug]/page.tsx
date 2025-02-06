@@ -28,7 +28,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
 	return (
 		<>
-			<Product product={product} />
+			<Product product={product} texts={texts} />
 			<RecommendedProducts
 				products={products}
 				slug={slug}

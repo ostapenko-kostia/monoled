@@ -1,44 +1,42 @@
 'use client'
 
 import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
-import { useShopStore } from '../shop.store'
 import cn from 'clsx'
-import { useEffect } from 'react'
-import useDebounce from '@/hooks/useDebounce'
-import { Product } from '@prisma/client'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 interface Props {
-	filteredProducts: Product[] | undefined
+	totalPages: number
+	
 }
 
-export function ShopPagination({ filteredProducts }: Props) {
-	const { currentPage, setCurrentPage, totalPages, setTotalPages, productsPerPage } = useShopStore()
+export function ShopPagination({ totalPages }: Props) {
+	const searchParams = useSearchParams()
+	const router = useRouter()
 
-	const debouncedProductsPerPage = useDebounce(productsPerPage > 0 ? productsPerPage : 1, 500)
+	const page = Number(searchParams.get('page') ?? '1')
 
-	useEffect(() => {
-		setTotalPages(
-			filteredProducts?.length ? Math.ceil(filteredProducts.length / debouncedProductsPerPage) : 1
-		)
-		setCurrentPage(1)
-	}, [debouncedProductsPerPage])
+	const setPage = (page: number) => {
+		const params = new URLSearchParams(window.location.search)
+		params.set('page', String(page))
+		router.replace(`?${params.toString()}`)
+	}
 
 	return (
 		<ul className='flex items-center gap-2 justify-center my-12'>
 			<li>
 				<button
 					className='bg-neutral-200 p-2 aspect-square rounded-md'
-					disabled={currentPage === 1}
-					onClick={() => setCurrentPage(currentPage - 1)}
+					disabled={page === 1}
+					onClick={() => setPage(page - 1)}
 				>
 					<ArrowLeftIcon />
 				</button>
 			</li>
 			<li className='overflow-x-scroll no-scrollbar flex items-center gap-2'>
 				{Array.from({ length: totalPages })
-					.slice(Math.max(0, currentPage - 6), Math.min(totalPages, currentPage + 4))
+					.slice(Math.max(0, page - 6), Math.min(totalPages, page + 4))
 					.map((_, index) => {
-						const pageNumber = Math.max(1, currentPage - 5) + index
+						const pageNumber = Math.max(1, page - 5) + index
 						return (
 							<div
 								key={pageNumber}
@@ -46,9 +44,9 @@ export function ShopPagination({ filteredProducts }: Props) {
 							>
 								<button
 									className={cn('bg-neutral-200 p-2 aspect-square w-full h-full rounded-md', {
-										'!bg-neutral-400': currentPage === pageNumber
+										'!bg-neutral-400': page === pageNumber
 									})}
-									onClick={() => setCurrentPage(pageNumber)}
+									onClick={() => setPage(pageNumber)}
 								>
 									{pageNumber}
 								</button>
@@ -59,8 +57,8 @@ export function ShopPagination({ filteredProducts }: Props) {
 			<li>
 				<button
 					className='bg-neutral-200 p-2 aspect-square rounded-md'
-					disabled={currentPage === totalPages}
-					onClick={() => setCurrentPage(currentPage + 1)}
+					disabled={page === totalPages}
+					onClick={() => setPage(page + 1)}
 				>
 					<ArrowRightIcon />
 				</button>

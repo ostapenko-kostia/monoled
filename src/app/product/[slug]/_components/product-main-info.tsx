@@ -1,19 +1,17 @@
-'use client'
-
 import { DownloadIcon } from 'lucide-react'
 import Link from 'next/link'
 import { stringifyWithoutQuotes } from '@/utils/stringifyWithoutQuotes'
 import { useTexts } from '@/context/textContext'
 import clsx from 'clsx'
 import { ProductWithInfo } from '@/typing/interfaces'
+import { TextField } from '@prisma/client'
 
 interface Props {
 	product: ProductWithInfo
+	texts: TextField[] | undefined
 }
 
-export function ProductMainInfo({ product }: Props) {
-	const texts = useTexts()
-
+export function ProductMainInfo({ product, texts }: Props) {
 	const productCharacteristicsTitle = texts?.find(
 		text => text.slug === 'product-characteristics-title'
 	)?.text
@@ -52,7 +50,7 @@ export function ProductMainInfo({ product }: Props) {
 			</div>
 			<div className='mt-10 w-full flex flex-col gap-1'>
 				<div
-					className={clsx("max-lg:text-center max-lg:w-full text-lg", {
+					className={clsx('max-lg:text-center max-lg:w-full text-lg', {
 						'text-green-700': product.quantityLeft > 0,
 						'text-red-700': product.quantityLeft <= 0
 					})}

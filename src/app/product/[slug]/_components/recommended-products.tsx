@@ -20,9 +20,10 @@ export async function RecommendedProducts({ products, slug }: Props) {
 				{products
 					?.filter(product => product.slug !== slug)
 					?.slice(0, 5)
-					.map(product => (
+					.map((product, index) => (
 						<ShopProduct
 							key={product.id}
+							index={index}
 							product={product}
 							showMode='grid'
 						/>

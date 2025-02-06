@@ -20,7 +20,7 @@ export function AdminProductsTab({ products, categories }: Props) {
 			<div className='grid grid-cols-1 w-full gap-10'>
 				{products
 					?.sort((a, b) => a.id - b.id)
-					.map(product => {
+					.map((product, index) => {
 						const categoryName =
 							categories?.find(category => category.slug === product.categorySlug)?.name ??
 							'Без категорії'
@@ -44,6 +44,7 @@ export function AdminProductsTab({ products, categories }: Props) {
 									/>
 								</div>
 								<ShopProduct
+									index={index}
 									showMode='list'
 									product={product}
 								/>

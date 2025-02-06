@@ -2,35 +2,34 @@
 
 import { SORTING_METHODS } from '../shop.data'
 import Select from 'react-select'
-import { useShopStore } from '../shop.store'
-import { ChangeEvent } from 'react'
 import { LayoutGridIcon, ListIcon } from 'lucide-react'
 import cn from 'clsx'
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { useTexts } from '@/context/textContext'
+import { useRouter, useSearchParams } from 'next/navigation'
+import LimitSelector from './shop-limit-selector'
 
-function ShopHeaderComponent() {
+interface Props {
+	currentShowMode: 'grid' | 'list'
+}
+
+function ShopHeaderComponent({ currentShowMode }: Props) {
 	const texts = useTexts()
-	const {
-		currentSortingId,
-		setCurrentSortingId,
-		productsPerPage,
-		setProductPerPage,
-		currentShowMode,
-		setCurrentShowMode
-	} = useShopStore()
+	const searchParams = useSearchParams()
+	const router = useRouter()
 
-	const handleProductsPerPageChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const value: number = Number(e.target.value)
-
-		if (value < 0) {
-			setProductPerPage(1)
-		} else if (value > 100) {
-			setProductPerPage(100)
-		} else {
-			setProductPerPage(value)
-		}
+	const sortingMethodId = Number(searchParams.get('sorting') ?? '')
+	const setSortingMethod = (methodId: number) => {
+		const params = new URLSearchParams(window.location.search)
+		params.set('sorting', String(methodId))
+		router.replace(`?${params.toString()}`)
+	}
+``
+	const setCurrentShowMode = (showMode: 'grid' | 'list') => {
+		const params = new URLSearchParams(window.location.search)
+		params.set('showMode', showMode)
+		router.replace(`?${params.toString()}`)
 	}
 
 	const nothingFound = texts?.find(text => text.slug === 'nothing-found')?.text
@@ -46,14 +45,14 @@ function ShopHeaderComponent() {
 				options={SORTING_METHODS.map(i => ({ value: i.id, label: i.name }))}
 				noOptionsMessage={() => nothingFound}
 				value={
-					SORTING_METHODS.some(i => i.id === currentSortingId)
+					SORTING_METHODS.some(i => i.id === sortingMethodId)
 						? {
-								value: currentSortingId,
-								label: SORTING_METHODS.find(i => i.id === currentSortingId)?.name
+								value: sortingMethodId,
+								label: SORTING_METHODS.find(i => i.id === sortingMethodId)?.name
 						  }
 						: { value: 1, label: 'Найрелевантніші' }
 				}
-				onChange={i => setCurrentSortingId(i?.value || 1)}
+				onChange={i => setSortingMethod(i?.value || 1)}
 				className='w-[300px] max-[400px]:w-full'
 				theme={theme => ({
 					...theme,
@@ -65,19 +64,7 @@ function ShopHeaderComponent() {
 					}
 				})}
 			/>
-			<div className='flex gap-2 h-full items-center'>
-				Показати
-				<input
-					type='number'
-					value={productsPerPage.toString()}
-					onChange={handleProductsPerPageChange}
-					min='1'
-					max='100'
-					placeholder='шт.'
-					className='rounded-[4px] border-[1px] border-[rgb(204,204,204)] h-full px-2 max-lg:h-[40px]'
-				/>
-				шт.
-			</div>
+			<LimitSelector />
 			<div className='ml-auto flex items-center gap-2 max-lg:mx-auto max-md:hidden'>
 				<button
 					className={cn(

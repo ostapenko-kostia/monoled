@@ -1,44 +1,29 @@
-'use client'
-
-import { useSearchParams } from 'next/navigation'
-import { useShopStore } from '../shop.store'
-import { Category, Product } from '@prisma/client'
+import { Category, Product, TextField } from '@prisma/client'
 import { ShopSidebar } from './shop-sidebar'
 import { ShopHeader } from './shop-header'
 import { ShopProduct } from './shop-product'
-import useDebounce from '@/hooks/useDebounce'
-import { useFilterProducts } from '@/hooks/useFilterProducts'
-import { motion } from 'framer-motion'
+import * as motion from 'framer-motion/client'
 import cn from 'clsx'
 import { ShopPagination } from './shop-pagination'
-import { useTexts } from '@/context/textContext'
+import { ShopSearchView } from './shop-search-view'
 
 interface Props {
 	allCategories: Category[] | undefined
 	allProducts: Product[] | undefined
+	texts: TextField[] | undefined
+	totalPages: number
+	searchQuery: string | null
+	currentShowMode: 'grid' | 'list'
 }
 
-export function Shop({ allCategories, allProducts }: Props) {
-	const params = useSearchParams()
-	const texts = useTexts()
-
-	const currentCategory = params.get('category') ?? ''
-	const searchQuery = params.get('search') ?? ''
-	const { currentSortingId, productsPerPage, currentShowMode, currentPage } = useShopStore()
-
-	const filteredProducts = useFilterProducts(allProducts, {
-		category: currentCategory,
-		searchQuery,
-		sortingMethodId: currentSortingId
-	})
-
-	const debouncedProductsPerPage = useDebounce(productsPerPage > 0 ? productsPerPage : 1, 500)
-
-	const slicedFilteredProducts = filteredProducts?.slice(
-		(currentPage - 1) * debouncedProductsPerPage,
-		currentPage * debouncedProductsPerPage
-	)
-
+export function Shop({
+	allCategories,
+	allProducts,
+	totalPages,
+	searchQuery,
+	currentShowMode,
+	texts
+}: Props) {
 	const shopSectionTitle = texts?.find(text => text.slug === 'shop-section-title')?.text
 	const nothingFound = texts?.find(text => text.slug === 'nothing-found')?.text
 
@@ -49,16 +34,17 @@ export function Shop({ allCategories, allProducts }: Props) {
 				<ShopSidebar allCategories={allCategories} />
 				<section className='w-full bg-white'>
 					<div className='h-[60px] max-lg:h-[200px] max-md:h-[140px]'>
-						<ShopHeader />
+						<ShopHeader currentShowMode={currentShowMode} />
 					</div>
 					<main>
-						{slicedFilteredProducts && slicedFilteredProducts.length ? (
+						<ShopSearchView searchQuery={searchQuery} />
+						{allProducts && allProducts.length ? (
 							<div
 								className={cn('bg-white w-full p-5 gap-5 grid grid-cols-3 max-lg:grid-cols-2', {
 									'min-[500px]:grid-cols-1': currentShowMode === 'list'
 								})}
 							>
-								{slicedFilteredProducts.map((product, index) => (
+								{allProducts.map((product, index) => (
 									<motion.article
 										key={product.id}
 										initial={{ opacity: 0 }}
@@ -71,6 +57,7 @@ export function Shop({ allCategories, allProducts }: Props) {
 										}}
 									>
 										<ShopProduct
+											index={index}
 											showMode={currentShowMode}
 											product={product}
 										/>
@@ -80,7 +67,7 @@ export function Shop({ allCategories, allProducts }: Props) {
 						) : (
 							<h2 className='ml-8 mt-5 text-xl'>{nothingFound}</h2>
 						)}
-						<ShopPagination filteredProducts={filteredProducts} />
+						<ShopPagination totalPages={totalPages} />
 					</main>
 				</section>
 			</div>
