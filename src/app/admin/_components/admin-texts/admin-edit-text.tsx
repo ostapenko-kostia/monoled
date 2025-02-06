@@ -27,7 +27,7 @@ export function AdminEditText({ text }: Props) {
 		}
 		if (isSuccess) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
-			toast.success('Успішно змінено, оновіть сторінку, щоб побачити зміни!')
+			window.location.reload()
 		}
 		if (isError) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)

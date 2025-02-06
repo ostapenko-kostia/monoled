@@ -51,7 +51,7 @@ export function AdminProductCreate({ categories }: Props) {
 		}
 		if (isSuccess) {
 			loadingToastId && toast.dismiss(loadingToastId)
-			toast.success('Успішно створено, оновіть сторінку, щоб побачити зміни!')
+			window.location.reload()
 		}
 		if (isError) {
 			loadingToastId && toast.dismiss(loadingToastId)

@@ -24,7 +24,7 @@ export function CreateAdmin() {
 		}
 		if (isSuccess) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
-			toast.success('Успішно створено, оновіть сторінку, щоб побачити зміни!')
+			window.location.reload()
 		}
 		if (isError) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)

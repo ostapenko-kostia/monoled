@@ -63,7 +63,7 @@ export const AdminProductEdit = dynamic(() =>
 			}
 			if (isSuccess) {
 				loadingToastId && toast.dismiss(loadingToastId)
-				toast.success('Успішно змінено, оновіть сторінку, щоб побачити зміни!')
+				window.location.reload()
 			}
 			if (isError) {
 				loadingToastId && toast.dismiss(loadingToastId)

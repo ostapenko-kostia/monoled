@@ -17,6 +17,7 @@ export function useCreateSlide() {
 		background: FileList
 		text: string
 		url: string
+		device: "MOBILE" | "DESKTOP"
 	}
 	return useMutation({
 		mutationKey: ['slide create'],

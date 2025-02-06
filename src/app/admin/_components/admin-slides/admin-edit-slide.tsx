@@ -3,7 +3,7 @@
 import { Dialog } from '@/components/ui/dialog'
 import { useUpdateSlide } from '@/hooks/useSlides'
 import { Slide } from '@prisma/client'
-import { EditIcon, PlusCircleIcon } from 'lucide-react'
+import { EditIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -21,12 +21,12 @@ interface Props {
 export function AdminSlideEdit({ slide }: Props) {
 	const [loadingToastId, setLoadingToastId] = useState('')
 	const { register, handleSubmit } = useForm<Form>({
-    defaultValues: {
-      background: undefined,
-      text: slide.text,
-      url: slide.url
-    }
-  })
+		defaultValues: {
+			background: undefined,
+			text: slide.text,
+			url: slide.url
+		}
+	})
 	const { mutateAsync: editFunc, isPending, isSuccess, isError } = useUpdateSlide()
 
 	const edit = async (data: Form) => {
@@ -42,12 +42,12 @@ export function AdminSlideEdit({ slide }: Props) {
 
 	useEffect(() => {
 		if (isPending) {
-			const loadingToastId = toast.loading('Триває створення...')
+			const loadingToastId = toast.loading('Триває зміна...')
 			setLoadingToastId(loadingToastId)
 		}
 		if (isSuccess) {
 			loadingToastId && toast.dismiss(loadingToastId)
-			toast.success('Успішно створено, оновіть сторінку, щоб побачити зміни!')
+			window.location.reload()
 		}
 		if (isError) {
 			loadingToastId && toast.dismiss(loadingToastId)

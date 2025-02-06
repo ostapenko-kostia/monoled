@@ -14,6 +14,11 @@ const slideSchema = Joi.object({
 	url: Joi.string().min(1).required().messages({
 		'string.empty': 'Url is required',
 		'any.required': 'Url is required'
+	}),
+	device: Joi.string().valid('MOBILE', 'DESKTOP').required().messages({
+		'string.empty': 'Device is required',
+		'any.required': 'Device is required',
+		'any.valid': 'Device must be MOBILE or DESKTOP'
 	})
 })
 

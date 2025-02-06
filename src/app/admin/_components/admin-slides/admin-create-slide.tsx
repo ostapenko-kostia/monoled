@@ -13,7 +13,11 @@ interface Form {
 	url: string
 }
 
-export function AdminSlideCreate() {
+interface Props {
+	view: 'desktop' | 'mobile'
+}
+
+export function AdminSlideCreate({ view }: Props) {
 	const [loadingToastId, setLoadingToastId] = useState('')
 	const { register, handleSubmit } = useForm<Form>()
 	const { mutateAsync: createFunc, isPending, isSuccess, isError } = useCreateSlide()
@@ -25,7 +29,7 @@ export function AdminSlideCreate() {
 		}
 		if (isSuccess) {
 			loadingToastId && toast.dismiss(loadingToastId)
-			toast.success('Успішно створено, оновіть сторінку, щоб побачити зміни!')
+			window.location.reload()
 		}
 		if (isError) {
 			loadingToastId && toast.dismiss(loadingToastId)
@@ -47,7 +51,9 @@ export function AdminSlideCreate() {
 		>
 			<form
 				className='mx-auto bg-white rounded-md p-4 w-[400px] h-min flex flex-col gap-4 max-sm:w-[90%]'
-				onSubmit={handleSubmit(data => createFunc(data))}
+				onSubmit={handleSubmit(data =>
+					createFunc({ ...data, device: view.toUpperCase() as 'MOBILE' | 'DESKTOP' })
+				)}
 			>
 				<div>
 					<label
