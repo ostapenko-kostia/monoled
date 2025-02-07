@@ -21,7 +21,8 @@ const fixel = localFont({
 		{ path: '../fonts/FixelText-Bold.woff2', weight: '700', style: 'normal' },
 		{ path: '../fonts/FixelText-ExtraBold.woff2', weight: '800', style: 'normal' },
 		{ path: '../fonts/FixelText-Black.woff2', weight: '900', style: 'normal' }
-	]
+	],
+	display: 'swap'
 })
 
 export const metadata: Metadata = {
