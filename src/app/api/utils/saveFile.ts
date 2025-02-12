@@ -15,7 +15,12 @@ export async function saveFile(file: File, req: NextRequest): Promise<string> {
 			}
 		})
 		const fileUrl = res?.data?.fileUrl
-		return storageURL + (fileUrl ?? '/')
+		const re = /(?:\.([^.]+))?$/
+		return (
+			storageURL +
+			(fileUrl ?? '/') +
+			(re.exec(file.name)?.length ? '.' + re.exec(file.name)?.[1] : '')
+		)
 	} catch (error) {
 		throw new ApiError(`Error: ${error}`, 500)
 	}
