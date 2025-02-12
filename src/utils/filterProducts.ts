@@ -22,7 +22,7 @@ export const filterProducts = (
 	let sortedProducts = filteredProducts
 	switch (sortingMethodId) {
 		case 1:
-			sortedProducts = filteredProducts
+			sortedProducts = filteredProducts?.sort((a, b) => a.order - b.order)
 			break
 		case 2:
 			sortedProducts = filteredProducts?.sort((a, b) => a.price - b.price)

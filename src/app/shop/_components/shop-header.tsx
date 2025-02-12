@@ -25,7 +25,7 @@ function ShopHeaderComponent({ currentShowMode }: Props) {
 		params.set('sorting', String(methodId))
 		router.replace(`?${params.toString()}`)
 	}
-``
+
 	const setCurrentShowMode = (showMode: 'grid' | 'list') => {
 		const params = new URLSearchParams(window.location.search)
 		params.set('showMode', showMode)

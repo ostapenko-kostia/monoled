@@ -4,7 +4,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import Joi from 'joi'
 import { ApiError } from '@/app/api/exceptions/apiError'
 import { checkIsAdmin } from '../../../admin/auth/utils/checkIsAdmin'
-import { api } from '@/services/axios'
+import { saveFile } from '@/app/api/utils/saveFile'
+import { deleteFile } from '@/app/api/utils/deleteFile'
 
 const slideSchema = Joi.object({
 	text: Joi.string(),
@@ -41,13 +42,13 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 			if (background.type?.startsWith('image/')) {
 				if (existingSlide.background) {
 					try {
-						await api.delete(existingSlide.background)
+						await deleteFile(existingSlide.background, req)
 					} catch (error) {
 						console.warn(`Failed to delete file: ${existingSlide.background}`, error)
 					}
 				}
 
-				const savedPath = await saveFile(background)
+				const savedPath = await saveFile(background, req)
 				savedImage = savedPath
 			} else {
 				throw new ApiError('Each image must be of type image/*', 400)
@@ -69,21 +70,5 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 		)
 	} catch (error) {
 		return handleApiError(error)
-	}
-}
-
-async function saveFile(file: File): Promise<string> {
-	try {
-		const storageURL = process.env.NEXT_PUBLIC_STORAGE_URL
-		const formData = new FormData()
-		formData.append('image', file)
-		const fileUrl = (
-			await api.post(`${storageURL}/upload`, formData, {
-				headers: { 'Content-Type': 'multipart/form-data' }
-			})
-		)?.data?.fileUrl
-		return storageURL + (fileUrl ?? '/')
-	} catch (error) {
-		throw new ApiError(`Failed to save file: ${file.name}`, 500)
 	}
 }

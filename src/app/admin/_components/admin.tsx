@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import type { Admin as TAdmin, Category, Product, Slide, TextField } from '@prisma/client'
+import type { Admin as TAdmin, Category, Slide, TextField } from '@prisma/client'
 import dynamic from 'next/dynamic'
 import { AdminCategoriesTab } from './admin-categories/admin-categories'
 import { AdminSlidesTab } from './admin-slides/admin-slides'
@@ -9,6 +9,8 @@ import { AdminsTab } from './admins-tab/admins-tab'
 import { AdminProductsTab } from './admin-products/admin-products'
 import { AdminTextFieldsTab } from './admin-texts/admin-texts'
 import { ProductWithInfo } from '@/typing/interfaces'
+import { AdminStorageControlTab } from './admin-storage/admin-storage-control-tab'
+import { IFile } from './admin-storage/admin-storage.typing'
 
 interface Props {
 	slides: Slide[] | undefined
@@ -16,17 +18,25 @@ interface Props {
 	products: ProductWithInfo[] | undefined
 	categories: Category[] | undefined
 	admins: TAdmin[] | undefined
+	files: IFile[] | undefined
 }
 
-function AdminComponent({ slides, texts, products, categories, admins }: Props) {
+function AdminComponent({ slides, texts, products, categories, admins, files }: Props) {
 	const [currentTab, setCurrentTab] = useState(0)
 
 	const tabs = [
-		<AdminProductsTab products={products} categories={categories} />,
-		<AdminCategoriesTab categories={categories} products={products} />,
+		<AdminProductsTab
+			products={products}
+			categories={categories}
+		/>,
+		<AdminCategoriesTab
+			categories={categories}
+			products={products}
+		/>,
 		<AdminSlidesTab slides={slides} />,
 		<AdminsTab admins={admins} />,
-		<AdminTextFieldsTab texts={texts} />
+		<AdminTextFieldsTab texts={texts} />,
+		<AdminStorageControlTab files={files} />
 	]
 
 	return (
@@ -63,6 +73,12 @@ function AdminComponent({ slides, texts, products, categories, admins }: Props) 
 						className='text-xl max-sm:text-xl hover:text-blue-500 transition-colors duration-300 cursor-pointer'
 					>
 						Текстові поля
+					</li>
+					<li
+						onClick={() => setCurrentTab(5)}
+						className='text-xl max-sm:text-xl hover:text-blue-500 transition-colors duration-300 cursor-pointer'
+					>
+						Керування сховищем
 					</li>
 				</ul>
 			</aside>

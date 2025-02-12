@@ -16,26 +16,26 @@ export function MenuList({ categories }: Props) {
 	const categoriesLoadingError = texts?.find(text => text.slug === 'categories-loading-error')?.text
 
 	return (
-		<ul className='flex flex-col gap-5 text-xl'>
+		<ul className='flex flex-col gap-6 text-xl max-sm:pl-3'>
 			{categories ? (
 				<>
 					<li>
 						<Link
 							href='/shop'
-							className='text-2xl max-sm:text-xl'
+							className='text-2xl'
 							onClick={() => sheetContext?.closeSheet()}
 						>
-							- Всі категорії
+							Всі категорії
 						</Link>
 					</li>
 					{categories.map(i => (
 						<li key={i.slug}>
 							<Link
 								href={`/shop?category=${i.slug}`}
-								className='text-2xl max-sm:text-xl'
+								className='text-2xl'
 								onClick={() => sheetContext?.closeSheet()}
 							>
-								- {i.name}
+								{i.name}
 							</Link>
 						</li>
 					))}

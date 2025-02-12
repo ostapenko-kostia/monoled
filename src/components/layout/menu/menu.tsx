@@ -13,9 +13,9 @@ export async function Menu() {
 	)?.text
 
 	return (
-		<div className='w-full text-foreground flex items-start gap-20 justify-around pr-28 max-sm:flex-col max-sm:gap-12 max-sm:p-0'>
+		<div className='w-full text-foreground flex items-start gap-20 justify-around pr-28 max-sm:flex-col max-sm:p-0'>
 			<div>
-				<h2 className='text-4xl max-sm:text-2xl font-medium mb-10 max-sm:mb-4'>
+				<h2 className='text-4xl max-sm:text-3xl font-medium mb-10 max-sm:mb-5'>
 					{categoryTitle ?? ''}
 				</h2>
 				<MenuList categories={categories} />

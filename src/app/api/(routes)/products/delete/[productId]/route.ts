@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { checkIsAdmin } from '../../../admin/auth/utils/checkIsAdmin'
 import { ApiError } from '@/app/api/exceptions/apiError'
 import { prisma } from '@/prisma/prisma-client'
-import { api } from '@/services/axios'
+import { deleteFile } from '@/app/api/utils/deleteFile'
 
 export async function DELETE(
 	req: NextRequest,
@@ -29,7 +29,7 @@ export async function DELETE(
 			for (const image of product.images) {
 				if (image) {
 					try {
-						await api.delete(image)
+						await deleteFile(image, req)
 					} catch (error) {
 						console.warn(`Failed to delete file: ${image}`, error)
 					}

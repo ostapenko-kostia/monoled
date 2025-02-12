@@ -84,3 +84,25 @@ export const useUpdateProduct = () => {
 		}
 	})
 }
+
+export const useMoveUpProduct = () => {
+	return useMutation({
+		mutationKey: ['product move up'],
+		mutationFn: async (productId: number) => {
+			const res = await productsService.moveUp(productId)
+			if (!res?.data) return Promise.reject()
+			return res
+		}
+	})
+}
+
+export const useMoveDownProduct = () => {
+	return useMutation({
+		mutationKey: ['product move down'],
+		mutationFn: async (productId: number) => {
+			const res = await productsService.moveDown(productId)
+			if (!res?.data) return Promise.reject()
+			return res
+		}
+	})
+}

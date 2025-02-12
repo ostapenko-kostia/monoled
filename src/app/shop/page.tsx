@@ -37,7 +37,7 @@ async function ShopPage({
 		!searchParameters.showMode || searchParameters.showMode !== 'list' ? 'grid' : 'list'
 	const sortingMethodId = Number(searchParameters.sorting ?? '')
 	const page = Number(searchParameters.page) || 1
-	const limit = Number(searchParameters.limit) || 24
+	const limit = Number(searchParameters.limit) || 10
 
 	const { filteredProducts, totalPages } = filterProducts(products, {
 		category,

@@ -19,6 +19,8 @@ model Product {
   modelUrl    String?
   isNew       Boolean?
 
+  order Int @default(autoincrement())
+
   quantityLeft Int @default(0)
 
   category     Category @relation(fields: [categorySlug], references: [slug])

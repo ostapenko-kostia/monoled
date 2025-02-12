@@ -25,6 +25,14 @@ class ProductsService {
 			headers: { 'Content-Type': 'multipart/form-data' }
 		})
 	}
+
+	async moveUp(productId: number) {
+		return await api.put(`/products/move-up/${productId}`)
+	}
+
+	async moveDown(productId: number) {
+		return await api.put(`/products/move-down/${productId}`)
+	}
 }
 
 export const productsService = new ProductsService()

@@ -1,7 +1,5 @@
 'use client'
 
-'use client'
-
 import { useRouter, useSearchParams } from 'next/navigation'
 import { ChangeEvent, useState, useEffect } from 'react'
 import useDebounce from '@/hooks/useDebounce'
