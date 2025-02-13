@@ -5,8 +5,7 @@ async function Logo({ color = 'black' }: { color?: string }) {
 		<Link href='/'>
 			<svg
 				id='Layer_2'
-				width={120}
-				height={50}
+				className='max-sm:w-[120px] max-sm:h-[50px] h-[65px] w-[140px]'
 				data-name='Layer 2'
 				xmlns='http://www.w3.org/2000/svg'
 				viewBox='0 0 1038.43 416.77'
