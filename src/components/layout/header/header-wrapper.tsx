@@ -8,7 +8,7 @@ export function HeaderWrapper({ children }: PropsWithChildren) {
 	const { isOpen } = useMenuState()
 	return (
 		<header
-			className={clsx('py-5 transition-colors duration-500 animate-opacity-1', {
+			className={clsx('py-3 transition-colors duration-500 animate-opacity-1', {
 				'bg-[rgba(255,255,255,.5)]': !isOpen,
 				'bg-white': isOpen
 			})}
