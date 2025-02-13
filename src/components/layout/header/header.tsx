@@ -7,8 +7,10 @@ export async function Header() {
 	return (
 		<HeaderWrapper>
 			<div className='px-8 max-sm:px-2 flex items-center justify-between'>
-				<MenuButton />
-				<Logo />
+				<div className='flex items-center gap-12'>
+					<MenuButton />
+					<Logo />
+				</div>
 				<SearchButton />
 			</div>
 		</HeaderWrapper>
