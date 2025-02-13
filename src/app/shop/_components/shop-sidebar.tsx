@@ -20,7 +20,7 @@ export function ShopSidebar({ allCategories }: Props) {
 
 	return (
 		<aside className='bg-white overflow-y-hidden'>
-			<ul className='flex flex-col gap-5 py-5 px-6 h-full'>
+			<ul className='flex flex-col gap-6 py-5 px-6 h-full'>
 				{allCategories ? (
 					<>
 						<motion.li
@@ -31,7 +31,7 @@ export function ShopSidebar({ allCategories }: Props) {
 							<Link
 								target='_top'
 								href='/shop'
-								className='py-2'
+								className='py-2 text-xl'
 							>
 								{(!params.toString().includes('category') || !params.get('category')?.length) &&
 									pathname.includes('shop') &&
@@ -51,7 +51,7 @@ export function ShopSidebar({ allCategories }: Props) {
 								>
 									<Link
 										target='_top'
-										className='py-2'
+										className='py-2 text-xl'
 										href={`/shop?category=${i.slug}`}
 									>
 										{isCurrentSelected && '-'} {i.name}
