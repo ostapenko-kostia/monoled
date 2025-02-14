@@ -2,6 +2,7 @@
 
 import { Dialog } from '@/components/ui/dialog'
 import { useDeleteProduct } from '@/hooks/useProducts'
+import { useQueryClient } from '@tanstack/react-query'
 import { Trash2Icon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -13,6 +14,7 @@ interface Props {
 
 export function AdminProductDelete({ productName, productId }: Props) {
 	const [loadingToastId, setLoadingToastId] = useState('')
+	const queryClient = useQueryClient()
 	const { mutateAsync: deleteFunc, isPending, isSuccess, isError } = useDeleteProduct()
 
 	useEffect(() => {
@@ -22,7 +24,7 @@ export function AdminProductDelete({ productName, productId }: Props) {
 		}
 		if (isSuccess) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
-			window.location.reload()
+			queryClient.invalidateQueries({ queryKey: ['products get'] })
 		}
 		if (isError) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)

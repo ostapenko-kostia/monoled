@@ -1,6 +1,7 @@
 'use client'
 
 import { useMoveUpProduct } from '@/hooks/useProducts'
+import { useQueryClient } from '@tanstack/react-query'
 import { ChevronUpIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -11,6 +12,7 @@ interface Props {
 
 export function AdminProductMoveUp({ productId }: Props) {
 	const [loadingToastId, setLoadingToastId] = useState('')
+	const queryClient = useQueryClient()
 	const { mutateAsync: moveUp, isPending, isSuccess, isError } = useMoveUpProduct()
 
 	useEffect(() => {
@@ -20,7 +22,7 @@ export function AdminProductMoveUp({ productId }: Props) {
 		}
 		if (isSuccess) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
-			window.location.reload()
+			queryClient.invalidateQueries({ queryKey: ['products get'] })
 		}
 
 		if (isError) {

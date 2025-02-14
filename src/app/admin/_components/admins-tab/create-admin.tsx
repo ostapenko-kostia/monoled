@@ -2,6 +2,7 @@
 
 import { Dialog } from '@/components/ui/dialog'
 import { useAdminCreate } from '@/hooks/useAdmin'
+import { useQueryClient } from '@tanstack/react-query'
 import { LockIcon, MailIcon, PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -15,6 +16,7 @@ interface Form {
 export function CreateAdmin() {
 	const [loadingToastId, setLoadingToastId] = useState('')
 	const { register, handleSubmit } = useForm<Form>()
+	const queryClient = useQueryClient()
 	const { mutateAsync: createFunc, isPending, isSuccess, isError } = useAdminCreate()
 
 	useEffect(() => {
@@ -24,7 +26,7 @@ export function CreateAdmin() {
 		}
 		if (isSuccess) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
-			window.location.reload()
+			queryClient.invalidateQueries({ queryKey: ['admins get'] })
 		}
 		if (isError) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)

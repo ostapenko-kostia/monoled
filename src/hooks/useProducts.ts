@@ -1,6 +1,17 @@
 import { productsService } from '@/services/products.service'
 import { ProductWithInfo } from '@/typing/interfaces'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
+
+export const useGetProducts = () => {
+	return useQuery({
+		queryKey: ['products get'],
+		queryFn: async () => {
+			const res = await productsService.getAllProducts()
+			if (!res?.data) return Promise.reject()
+			return res.data
+		}
+	})
+}
 
 export const useDeleteProduct = () => {
 	return useMutation({

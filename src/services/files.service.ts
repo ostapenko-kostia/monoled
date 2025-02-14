@@ -10,6 +10,10 @@ class FileService {
 			headers: { 'Content-Type': 'multipart/form-data' }
 		})
 	}
+
+	async getAllFiles() {
+		return await api.get('/storage/all')
+	}
 }
 
 export const fileService = new FileService()

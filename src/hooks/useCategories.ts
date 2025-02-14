@@ -1,6 +1,16 @@
 import { categoriesService } from '@/services/categories.service'
-import { useMutation } from '@tanstack/react-query'
-import { number } from 'joi'
+import { useMutation, useQuery } from '@tanstack/react-query'
+
+export function useGetCategories() {
+	return useQuery({
+		queryKey: ['categories get'],
+		queryFn: async () => {
+			const res = await categoriesService.getAllCategories()
+			if (!res?.data) return Promise.reject()
+			return res.data
+		}
+	})
+}
 
 export function useCreateCategory() {
 	return useMutation({

@@ -1,5 +1,16 @@
 import { fileService } from '@/services/files.service'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
+
+export function useGetFiles() {
+	return useQuery({
+		queryKey: ['files get'],
+		queryFn: async () => {
+			const res = await fileService.getAllFiles()
+			if (!res?.data) return Promise.reject()
+			return res.data
+		}
+	})
+}
 
 export function useDeleteFile() {
 	return useMutation({

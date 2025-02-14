@@ -1,27 +1,28 @@
 'use client'
 
 import { useState } from 'react'
-import type { Admin as TAdmin, Category, Slide, TextField } from '@prisma/client'
 import dynamic from 'next/dynamic'
 import { AdminCategoriesTab } from './admin-categories/admin-categories'
 import { AdminSlidesTab } from './admin-slides/admin-slides'
 import { AdminsTab } from './admins-tab/admins-tab'
 import { AdminProductsTab } from './admin-products/admin-products'
 import { AdminTextFieldsTab } from './admin-texts/admin-texts'
-import { ProductWithInfo } from '@/typing/interfaces'
 import { AdminStorageControlTab } from './admin-storage/admin-storage-control-tab'
-import { IFile } from './admin-storage/admin-storage.typing'
+import { useGetProducts } from '@/hooks/useProducts'
+import { useGetCategories } from '@/hooks/useCategories'
+import { useGetSlides } from '@/hooks/useSlides'
+import { useGetAdmins } from '@/hooks/useAdmin'
+import { useGetFiles } from '@/hooks/useStorage'
+import { useGetTexts } from '@/hooks/useText'
 
-interface Props {
-	slides: Slide[] | undefined
-	texts: TextField[] | undefined
-	products: ProductWithInfo[] | undefined
-	categories: Category[] | undefined
-	admins: TAdmin[] | undefined
-	files: IFile[] | undefined
-}
+function AdminComponent() {
+	const { data: products } = useGetProducts()
+	const { data: categories } = useGetCategories()
+	const { data: slides } = useGetSlides()
+	const { data: texts } = useGetTexts()
+	const { data: admins } = useGetAdmins()
+	const { data: files } = useGetFiles()
 
-function AdminComponent({ slides, texts, products, categories, admins, files }: Props) {
 	const [currentTab, setCurrentTab] = useState(0)
 
 	const tabs = [

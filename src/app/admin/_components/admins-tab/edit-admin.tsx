@@ -3,6 +3,7 @@
 import { Dialog } from '@/components/ui/dialog'
 import { useAdminEdit } from '@/hooks/useAdmin'
 import { Admin } from '@prisma/client'
+import { useQueryClient } from '@tanstack/react-query'
 import { LockIcon, MailIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -20,6 +21,7 @@ interface Props {
 export function EditAdmin({ admin }: Props) {
 	const [loadingToastId, setLoadingToastId] = useState('')
 	const { register, handleSubmit } = useForm<Form>()
+	const queryClient = useQueryClient()
 	const { mutateAsync: editFunc, isPending, isSuccess, isError } = useAdminEdit()
 
 	useEffect(() => {
@@ -29,7 +31,7 @@ export function EditAdmin({ admin }: Props) {
 		}
 		if (isSuccess) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
-			window.location.reload()
+			queryClient.invalidateQueries({ queryKey: ['admins get'] })
 		}
 		if (isError) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)

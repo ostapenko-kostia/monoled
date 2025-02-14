@@ -21,6 +21,7 @@ import {
 	AdminProductEditQuantity
 } from '.'
 import dynamic from 'next/dynamic'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface Form {
 	name?: string
@@ -41,6 +42,7 @@ interface Props {
 export const AdminProductEdit = dynamic(() =>
 	Promise.resolve(({ categories, product }: Props) => {
 		const [loadingToastId, setLoadingToastId] = useState('')
+		const queryClient = useQueryClient()
 		const { register, handleSubmit, setValue, watch } = useForm<Form>()
 		const { mutateAsync: editFunc, isPending, isSuccess, isError } = useUpdateProduct()
 
@@ -63,7 +65,7 @@ export const AdminProductEdit = dynamic(() =>
 			}
 			if (isSuccess) {
 				loadingToastId && toast.dismiss(loadingToastId)
-				window.location.reload()
+				queryClient.invalidateQueries({ queryKey: ['products get'] })
 			}
 			if (isError) {
 				loadingToastId && toast.dismiss(loadingToastId)

@@ -20,6 +20,7 @@ import {
 	AdminProductCreateName,
 	AdminProductCreateQuantity
 } from '.'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface Form {
 	name: string
@@ -40,6 +41,7 @@ interface Props {
 export function AdminProductCreate({ categories }: Props) {
 	const [loadingToastId, setLoadingToastId] = useState('')
 	const { register, handleSubmit, setValue, watch } = useForm<Form>()
+	const queryClient = useQueryClient()
 	const { mutateAsync: createFunc, isPending, isSuccess, isError } = useCreateProduct()
 
 	const { info, addInfoField, moveUp, moveDown, deleteInfoField } = useInfoFields([])
@@ -51,7 +53,7 @@ export function AdminProductCreate({ categories }: Props) {
 		}
 		if (isSuccess) {
 			loadingToastId && toast.dismiss(loadingToastId)
-			window.location.reload()
+			queryClient.invalidateQueries({ queryKey: ['products get'] })
 		}
 		if (isError) {
 			loadingToastId && toast.dismiss(loadingToastId)

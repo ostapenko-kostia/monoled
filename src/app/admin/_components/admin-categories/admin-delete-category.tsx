@@ -3,6 +3,7 @@
 import { Dialog } from '@/components/ui/dialog'
 import { useDeleteCategory } from '@/hooks/useCategories'
 import { Category, Product } from '@prisma/client'
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -13,6 +14,7 @@ interface Props {
 
 export function AdminDeleteCategory({ category, products }: Props) {
 	const [loadingToastId, setLoadingToastId] = useState('')
+	const queryClient = useQueryClient()
 	const { mutateAsync: deleteFunc, isPending, isSuccess, isError } = useDeleteCategory()
 
 	useEffect(() => {
@@ -22,7 +24,7 @@ export function AdminDeleteCategory({ category, products }: Props) {
 		}
 		if (isSuccess) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
-			window.location.reload()
+			queryClient.invalidateQueries({ queryKey: ['categories get'] })
 		}
 		if (isError) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)

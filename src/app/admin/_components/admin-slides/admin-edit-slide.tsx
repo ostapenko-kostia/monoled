@@ -3,6 +3,7 @@
 import { Dialog } from '@/components/ui/dialog'
 import { useUpdateSlide } from '@/hooks/useSlides'
 import { Slide } from '@prisma/client'
+import { useQueryClient } from '@tanstack/react-query'
 import { EditIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -20,6 +21,7 @@ interface Props {
 
 export function AdminSlideEdit({ slide }: Props) {
 	const [loadingToastId, setLoadingToastId] = useState('')
+	const queryClient = useQueryClient()
 	const { register, handleSubmit } = useForm<Form>({
 		defaultValues: {
 			background: undefined,
@@ -47,7 +49,7 @@ export function AdminSlideEdit({ slide }: Props) {
 		}
 		if (isSuccess) {
 			loadingToastId && toast.dismiss(loadingToastId)
-			window.location.reload()
+			queryClient.invalidateQueries({ queryKey: ['slides get'] })
 		}
 		if (isError) {
 			loadingToastId && toast.dismiss(loadingToastId)

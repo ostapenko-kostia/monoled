@@ -3,6 +3,7 @@
 import { Dialog } from '@/components/ui/dialog'
 import { useEditText } from '@/hooks/useText'
 import { TextField } from '@prisma/client'
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -18,6 +19,7 @@ interface Form {
 export function AdminEditText({ text }: Props) {
 	const [loadingToastId, setLoadingToastId] = useState('')
 	const { register, handleSubmit } = useForm<Form>()
+	const queryClient = useQueryClient()
 	const { mutateAsync: editFunc, isPending, isSuccess, isError } = useEditText()
 
 	useEffect(() => {
@@ -27,7 +29,7 @@ export function AdminEditText({ text }: Props) {
 		}
 		if (isSuccess) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
-			window.location.reload()
+			queryClient.invalidateQueries({ queryKey: ['texts get'] })
 		}
 		if (isError) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)

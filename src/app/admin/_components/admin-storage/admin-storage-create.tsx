@@ -2,6 +2,7 @@
 
 import { Dialog } from '@/components/ui/dialog'
 import { useCreateFile } from '@/hooks/useStorage'
+import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -15,10 +16,9 @@ interface Form {
 
 export function CreateFile() {
 	const [loadingToastId, setLoadingToastId] = useState('')
+	const queryClient = useQueryClient()
 	const { register, handleSubmit, watch, formState } = useForm<Form>()
 	const { errors } = formState
-
-	console.log(errors)
 
 	const { mutateAsync: createFunc, isPending, isSuccess, isError } = useCreateFile()
 
@@ -29,7 +29,7 @@ export function CreateFile() {
 		}
 		if (isSuccess) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
-			toast.success('Успішно завантажено!')
+			queryClient.invalidateQueries({ queryKey: ['files get'] })
 		}
 		if (isError) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)

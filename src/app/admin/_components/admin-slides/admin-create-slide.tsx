@@ -2,6 +2,7 @@
 
 import { Dialog } from '@/components/ui/dialog'
 import { useCreateSlide } from '@/hooks/useSlides'
+import { useQueryClient } from '@tanstack/react-query'
 import { PlusCircleIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -19,6 +20,7 @@ interface Props {
 
 export function AdminSlideCreate({ view }: Props) {
 	const [loadingToastId, setLoadingToastId] = useState('')
+	const queryClient = useQueryClient()
 	const { register, handleSubmit } = useForm<Form>()
 	const { mutateAsync: createFunc, isPending, isSuccess, isError } = useCreateSlide()
 
@@ -29,7 +31,7 @@ export function AdminSlideCreate({ view }: Props) {
 		}
 		if (isSuccess) {
 			loadingToastId && toast.dismiss(loadingToastId)
-			window.location.reload()
+			queryClient.invalidateQueries({ queryKey: ['slides get'] })
 		}
 		if (isError) {
 			loadingToastId && toast.dismiss(loadingToastId)

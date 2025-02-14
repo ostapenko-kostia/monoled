@@ -3,6 +3,7 @@
 import { Dialog } from '@/components/ui/dialog'
 import { useEditCategory } from '@/hooks/useCategories'
 import { Category } from '@prisma/client'
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -17,6 +18,7 @@ interface Form {
 
 export function AdminEditCategory({ category }: Props) {
 	const [loadingToastId, setLoadingToastId] = useState('')
+	const queryClient = useQueryClient()
 	const { register, handleSubmit } = useForm<Form>()
 	const { mutateAsync: editFunc, isPending, isSuccess, isError } = useEditCategory()
 
@@ -27,7 +29,7 @@ export function AdminEditCategory({ category }: Props) {
 		}
 		if (isSuccess) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
-			window.location.reload()
+			queryClient.invalidateQueries({ queryKey: ['categories get'] })
 		}
 		if (isError) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)

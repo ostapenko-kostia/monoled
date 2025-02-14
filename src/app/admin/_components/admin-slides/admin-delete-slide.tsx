@@ -2,6 +2,7 @@
 
 import { Dialog } from '@/components/ui/dialog'
 import { useDeleteSlide } from '@/hooks/useSlides'
+import { useQueryClient } from '@tanstack/react-query'
 import { Trash2Icon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -12,6 +13,7 @@ interface Props {
 
 export function AdminDeleteSlide({ id }: Props) {
 	const [loadingToastId, setLoadingToastId] = useState('')
+	const queryClient = useQueryClient()
 	const { mutateAsync: deleteFunc, isPending, isSuccess, isError } = useDeleteSlide()
 
 	useEffect(() => {
@@ -21,7 +23,7 @@ export function AdminDeleteSlide({ id }: Props) {
 		}
 		if (isSuccess) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
-			window.location.reload()
+			queryClient.invalidateQueries({ queryKey: ['slides get'] })
 		}
 		if (isError) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)

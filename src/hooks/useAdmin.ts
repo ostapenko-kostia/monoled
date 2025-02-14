@@ -1,5 +1,16 @@
 import { adminService } from '@/services/admin.service'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
+
+export function useGetAdmins() {
+	return useQuery({
+		queryKey: ['admins get'],
+		queryFn: async () => {
+			const res = await adminService.getAllAdmins()
+			if (!res?.data) return Promise.reject()
+			return res.data
+		}
+	})
+}
 
 export function useAdminAuth() {
 	return useMutation({

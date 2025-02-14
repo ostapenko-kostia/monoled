@@ -1,5 +1,16 @@
 import { slideService } from '@/services/slides.service'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
+
+export function useGetSlides() {
+	return useQuery({
+		queryKey: ['slides get'],
+		queryFn: async () => {
+			const res = await slideService.getAllSlides()
+			if (!res?.data) return Promise.reject()
+			return res.data
+		}
+	})
+}
 
 export function useDeleteSlide() {
 	return useMutation({
@@ -17,7 +28,7 @@ export function useCreateSlide() {
 		background: FileList
 		text: string
 		url: string
-		device: "MOBILE" | "DESKTOP"
+		device: 'MOBILE' | 'DESKTOP'
 	}
 	return useMutation({
 		mutationKey: ['slide create'],

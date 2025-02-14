@@ -2,6 +2,7 @@
 
 import { Dialog } from '@/components/ui/dialog'
 import { useCreateCategory } from '@/hooks/useCategories'
+import { useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -14,6 +15,7 @@ interface Form {
 export function AdminCreateCategory() {
 	const [loadingToastId, setLoadingToastId] = useState('')
 	const { register, handleSubmit } = useForm<Form>()
+	const queryClient = useQueryClient()
 	const { mutateAsync: createFunc, isPending, isSuccess, isError } = useCreateCategory()
 
 	useEffect(() => {
@@ -23,7 +25,7 @@ export function AdminCreateCategory() {
 		}
 		if (isSuccess) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
-			window.location.reload()
+			queryClient.invalidateQueries({ queryKey: ['categories get'] })
 		}
 		if (isError) {
 			loadingToastId && loadingToastId && toast.dismiss(loadingToastId)
