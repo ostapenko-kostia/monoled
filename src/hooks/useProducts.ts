@@ -9,7 +9,8 @@ export const useGetProducts = () => {
 			const res = await productsService.getAllProducts()
 			if (!res?.data) return Promise.reject()
 			return res.data
-		}
+		},
+		refetchOnWindowFocus: false
 	})
 }
 

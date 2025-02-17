@@ -8,7 +8,8 @@ export function useGetSlides() {
 			const res = await slideService.getAllSlides()
 			if (!res?.data) return Promise.reject()
 			return res.data
-		}
+		},
+		refetchOnWindowFocus: false
 	})
 }
 

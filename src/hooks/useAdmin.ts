@@ -8,7 +8,8 @@ export function useGetAdmins() {
 			const res = await adminService.getAllAdmins()
 			if (!res?.data) return Promise.reject()
 			return res.data
-		}
+		},
+		refetchOnWindowFocus: false
 	})
 }
 

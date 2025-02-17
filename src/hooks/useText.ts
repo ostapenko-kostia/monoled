@@ -19,6 +19,7 @@ export function useGetTexts() {
 			const res = await textsService.getAllTexts()
 			if (!res) return Promise.reject()
 			return res
-		}
+		},
+		refetchOnWindowFocus: false
 	})
 }

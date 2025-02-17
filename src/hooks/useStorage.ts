@@ -8,7 +8,8 @@ export function useGetFiles() {
 			const res = await fileService.getAllFiles()
 			if (!res?.data) return Promise.reject()
 			return res.data
-		}
+		},
+		refetchOnWindowFocus: false
 	})
 }
 
