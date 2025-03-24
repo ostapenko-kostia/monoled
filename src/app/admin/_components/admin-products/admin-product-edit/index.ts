@@ -5,6 +5,5 @@ export { AdminProductEditCategory } from './admin-product-edit-category'
 export { AdminProductEditModel } from './admin-product-edit-model'
 export { AdminProductEditIsNew } from './admin-product-edit-isNew'
 export { AdminProductEditDescription } from './admin-product-edit-description'
-export { AdminProductEditImage } from './admin-product-edit-image'
 
 export { AdminProductEdit } from './admin-product-edit'
