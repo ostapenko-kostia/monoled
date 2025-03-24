@@ -4,12 +4,12 @@ import { prisma } from '@/prisma/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
 import { checkIsAdmin } from '../../../../admin/auth/utils/checkIsAdmin'
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
 	try {
 		const isAdmin = await checkIsAdmin(req)
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 
-		const id = parseInt(params.id)
+		const id = parseInt((await params).id)
 		if (isNaN(id)) throw new ApiError('Invalid product item ID', 400)
 
 		// Delete the product item

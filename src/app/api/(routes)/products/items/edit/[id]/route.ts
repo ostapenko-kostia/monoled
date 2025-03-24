@@ -23,7 +23,7 @@ const productItemSchema = Joi.object({
 	deleteImages: Joi.array().optional()
 })
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
 	try {
 		const formData = await req.formData()
 		const body = Object.fromEntries(formData)
@@ -41,7 +41,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 		const isAdmin = await checkIsAdmin(req)
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 
-		const id = parseInt(params.id)
+		const id = parseInt((await params).id)
 		if (isNaN(id)) throw new ApiError('Invalid product item ID', 400)
 
 		const existingProductItem = await prisma.productItem.findUnique({

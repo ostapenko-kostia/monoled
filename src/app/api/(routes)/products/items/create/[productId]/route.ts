@@ -36,7 +36,10 @@ async function generateUniqueSlug(productSlug: string, itemName: string): Promis
 	return uniqueSlug
 }
 
-export async function POST(req: NextRequest, { params }: { params: { productId: string } }) {
+export async function POST(
+	req: NextRequest,
+	{ params }: { params: Promise<{ productId: string }> }
+) {
 	try {
 		const formData = await req.formData()
 		const body = Object.fromEntries(formData)
@@ -54,7 +57,7 @@ export async function POST(req: NextRequest, { params }: { params: { productId: 
 		const isAdmin = await checkIsAdmin(req)
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 
-		const productId = parseInt(params.productId)
+		const productId = parseInt((await params).productId)
 		if (isNaN(productId)) throw new ApiError('Invalid product ID', 400)
 
 		const product = await prisma.product.findUnique({ where: { id: productId } })
