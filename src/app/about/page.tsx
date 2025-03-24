@@ -1,6 +1,7 @@
 import { textsService } from '@/services/texts.service'
 import { Metadata } from 'next'
 import Image from 'next/image'
+import { AboutText } from './about-text'
 
 export const metadata: Metadata = {
 	title: 'Lumineka - Про бренд'
@@ -36,7 +37,7 @@ export default async function AboutPage() {
 						<div className='w-full'>
 							<div>
 								<h1 className='font-semibold text-5xl uppercase'>{title}</h1>
-								<p className='mt-10 w-full text-center mx-auto font-light text-xl'>{about}</p>
+								<AboutText text={about} />
 							</div>
 						</div>
 					</div>

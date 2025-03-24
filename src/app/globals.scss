@@ -15,6 +15,10 @@
 	box-sizing: border-box;
 }
 
+ol {
+	list-style-type: decimal;
+}
+
 body {
 	color: var(--foreground);
 	background-color: var(--background);

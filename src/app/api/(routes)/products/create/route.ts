@@ -1,21 +1,15 @@
+import { ApiError } from '@/app/api/exceptions/apiError'
 import { handleApiError } from '@/app/api/exceptions/handleApiError'
 import { prisma } from '@/prisma/prisma-client'
-import { NextRequest, NextResponse } from 'next/server'
-import Joi from 'joi'
-import { ApiError } from '@/app/api/exceptions/apiError'
 import slugify from '@sindresorhus/slugify'
+import Joi from 'joi'
+import { NextRequest, NextResponse } from 'next/server'
 import { checkIsAdmin } from '../../admin/auth/utils/checkIsAdmin'
-import { saveFile } from '@/app/api/utils/saveFile'
 
 const productSchema = Joi.object({
 	name: Joi.string().min(1).required().messages({
 		'string.empty': 'Name is required',
 		'any.required': 'Name is required'
-	}),
-	price: Joi.number().positive().required().messages({
-		'number.base': 'Price must be a number',
-		'number.positive': 'Price must be greater than zero',
-		'any.required': 'Price is required'
 	}),
 	description: Joi.string().min(1).required().messages({
 		'string.empty': 'Description is required',
@@ -25,13 +19,17 @@ const productSchema = Joi.object({
 		'string.empty': 'Category slug is required',
 		'any.required': 'Category slug is required'
 	}),
-	info: Joi.array().optional(),
-	modelUrl: Joi.string().required(),
+	modelUrl: Joi.string().optional(),
 	isNew: Joi.boolean().optional(),
-	quantityLeft: Joi.number().required().messages({
-		'string.empty': 'Quantity is required',
-		'any.required': 'Quantity is required'
-	})
+	info: Joi.array()
+		.items(
+			Joi.object({
+				title: Joi.string().required(),
+				value: Joi.string().required(),
+				order: Joi.number().required()
+			})
+		)
+		.optional()
 })
 
 async function generateUniqueSlug(slug: string): Promise<string> {
@@ -51,10 +49,9 @@ export async function POST(req: NextRequest) {
 		const formData = await req.formData()
 		const body = Object.fromEntries(formData)
 
-		const productInfo = JSON.parse(body.productInfo as string)
-		const images = formData.getAll('images') as File[]
+		const productData = JSON.parse(body.productData as string)
 
-		const { error, value } = productSchema.validate(productInfo, { abortEarly: false })
+		const { error, value } = productSchema.validate(productData, { abortEarly: false })
 
 		if (error) {
 			const errorDetails = error.details.map(err => err.message).join(', ')
@@ -62,47 +59,45 @@ export async function POST(req: NextRequest) {
 		}
 
 		value.slug = slugify(value.name)
-
 		value.slug = await generateUniqueSlug(value.slug)
 
 		const isAdmin = await checkIsAdmin(req)
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 
-		const savedImages: string[] = []
-
-		for (const file of images) {
-			if (file && file.type?.startsWith('image/')) {
-				const savedPath = await saveFile(file, req)
-				savedImages.push(savedPath)
-			} else {
-				throw new ApiError('Each image must be of type image/*', 400)
-			}
-		}
-
+		// Create product without info
 		const product = await prisma.product.create({
 			data: {
 				name: value.name,
 				slug: value.slug,
-				price: value.price,
 				description: value.description,
 				categorySlug: value.categorySlug,
 				isNew: value.isNew,
-				quantityLeft: value.quantityLeft,
-				modelUrl: value.modelUrl,
-				images: savedImages
+				modelUrl: value.modelUrl
 			}
 		})
 
-		if (value.info && value.info.length) {
-			value.info.forEach(async (current: any) => {
+		// Create info records if provided
+		if (value.info && value.info.length > 0) {
+			for (const info of value.info) {
 				await prisma.productInfo.create({
-					data: { ...current, productId: Number(product.id) }
+					data: {
+						title: info.title,
+						value: info.value,
+						order: info.order,
+						productId: product.id
+					}
 				})
-			})
+			}
 		}
 
+		// Get updated product with info
+		const updatedProduct = await prisma.product.findUnique({
+			where: { id: product.id },
+			include: { info: true }
+		})
+
 		return NextResponse.json(
-			{ ok: true, product },
+			{ ok: true, product: updatedProduct },
 			{
 				status: 200,
 				headers: {

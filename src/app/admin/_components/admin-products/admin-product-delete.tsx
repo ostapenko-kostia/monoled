@@ -34,22 +34,23 @@ export function AdminProductDelete({ productName, productId }: Props) {
 	return (
 		<Dialog
 			title='Видалити'
-			className='flex items-center'
 			trigger={
 				<button>
 					<Trash2Icon />
 				</button>
 			}
 		>
-			<div className='flex items-start gap-4 flex-col'>
-				<span className='text-lg'>Ви впевнені, що хочете видалити {productName}?</span>
-				<div className='flex items-center gap-4 ml-auto'>
-					<button
-						onClick={() => deleteFunc({ id: productId })}
-						className='bg-foreground text-background rounded-md px-6 py-2'
-					>
-						Так
-					</button>
+			<div className='mx-auto bg-white rounded-md p-4 w-[400px] h-min flex flex-col gap-4 max-sm:w-[90%]'>
+				<div className='flex items-start gap-4 flex-col'>
+					<span className='text-lg'>Ви впевнені, що хочете видалити {productName}?</span>
+					<div className='flex items-center gap-4 ml-auto'>
+						<button
+							onClick={() => deleteFunc({ id: productId })}
+							className='bg-foreground text-background rounded-md px-6 py-2'
+						>
+							Так
+						</button>
+					</div>
 				</div>
 			</div>
 		</Dialog>

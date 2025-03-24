@@ -7,26 +7,56 @@ import bcrypt from 'bcrypt'
 import { TOKEN } from '@/typing/enums'
 import { tokenService } from './tokens'
 
+const MAX_ATTEMPTS = 5
+const LOCK_TIME = 30 * 60 * 1000
+
+const getIp = (req: Request) => {
+	const forwarded = req.headers.get('x-forwarded-for')
+	return forwarded
+		? forwarded.split(',')[0]
+		: req.headers.get('cf-connecting-ip') || req.headers.get('x-real-ip') || 'unknown'
+}
+
 export async function POST(req: Request) {
 	try {
-		if (req.headers.get('Content-Type') !== 'application/json') {
-			throw new ApiError('Invalid Content-Type. Expected application/json', 400)
+		const ip = getIp(req)
+		if (!ip) throw new ApiError('Не вдалося визначити IP', 400)
+
+		const failedAttempt = await prisma.failedLoginAttempt.findUnique({
+			where: { ip }
+		})
+
+		const isLocked = failedAttempt && failedAttempt.attempts + 1 >= MAX_ATTEMPTS
+		const newLockUntil = isLocked ? new Date(Date.now() + LOCK_TIME) : null
+
+		if (
+			failedAttempt &&
+			failedAttempt.attempts >= MAX_ATTEMPTS &&
+			failedAttempt.lockUntil &&
+			new Date() < failedAttempt.lockUntil
+		) {
+			throw new ApiError('Занадто багато спроб входу. Спробуйте пізніше', 429)
 		}
 
-		let body
+		let userData
 		try {
-			body = await req.json()
-		} catch {
-			throw new ApiError('Invalid JSON input', 400)
+			const body = await req.json()
+			const { email, password } = body
+			if (!email || !password) throw new ApiError('Пароль або пошта відсутня', 400)
+			userData = await loginFunc({ login: email, password })
+		} catch (error) {
+			await prisma.failedLoginAttempt.upsert({
+				where: { ip },
+				update: {
+					attempts: { increment: 1 },
+					lockUntil: newLockUntil
+				},
+				create: { ip, attempts: 1, lockUntil: null }
+			})
+			throw new ApiError('Логін або пароль не вірний', 400)
 		}
 
-		const { email, password } = body
-
-		if (!email || !password || !email.length || !password.length) {
-			throw new ApiError('Пароль або пошта відсутня', 400)
-		}
-
-		const userData = await loginFunc({ login: email, password })
+		await prisma.failedLoginAttempt.deleteMany({ where: { ip } })
 
 		const res = NextResponse.json(userData, { status: 200 })
 		res.cookies.set({
@@ -50,11 +80,11 @@ const loginFunc = async ({ login, password }: { login: string; password: string 
 	const admin = await prisma.admin.findUnique({
 		where: { login }
 	})
-	if (!admin) throw new ApiError('Такого адміністратора не існує', 400)
+	if (!admin) throw new ApiError('Логін або пароль не вірний', 400)
 
 	// check if password is correct
 	const isPasswordCorrect = await bcrypt.compare(password, admin.password)
-	if (!isPasswordCorrect) throw new ApiError('Пароль не вірний', 400)
+	if (!isPasswordCorrect) throw new ApiError('Логін або пароль не вірний', 400)
 
 	// create tokens
 	const adminDto = new AdminDto(admin)

@@ -1,15 +1,16 @@
-import { Category, Product, TextField } from '@prisma/client'
-import { ShopSidebar } from './shop-sidebar'
-import { ShopHeader } from './shop-header'
-import { ShopProduct } from './shop-product'
-import * as motion from 'framer-motion/client'
+import { ProductWithItems } from '@/typing/interfaces'
+import { Category, TextField } from '@prisma/client'
 import cn from 'clsx'
+import * as motion from 'framer-motion/client'
+import { ShopHeader } from './shop-header'
 import { ShopPagination } from './shop-pagination'
+import { ShopProduct } from './shop-product'
 import { ShopSearchView } from './shop-search-view'
+import { ShopSidebar } from './shop-sidebar'
 
 interface Props {
 	allCategories: Category[] | undefined
-	allProducts: Product[] | undefined
+	allProducts: ProductWithItems[] | undefined
 	texts: TextField[] | undefined
 	totalPages: number
 	searchQuery: string | null

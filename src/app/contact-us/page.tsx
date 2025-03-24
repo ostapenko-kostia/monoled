@@ -1,6 +1,7 @@
 import { ContactUsForm } from '@/components/layout/contact-us-form/contact-us-form'
 import { textsService } from '@/services/texts.service'
 import Image from 'next/image'
+import { ContactText } from './contact-text'
 
 export const metadata = {
 	title: 'Lumineka - Контакти'
@@ -32,7 +33,7 @@ export default async function ContactUsPage() {
 				</div>
 				<div className='my-20 container mx-auto max-sm:px-2'>
 					<h1 className='text-5xl mb-10 text-center uppercase font-semibold'>{title}</h1>
-					<p className='mb-10 text-center mx-auto w-[90%] text-xl'>{description}</p>
+					<ContactText text={description} />
 				</div>
 			</div>
 			<div className='py-20 bg-neutral-100'>

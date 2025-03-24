@@ -1,5 +1,4 @@
 import { productsService } from '@/services/products.service'
-import { ProductWithInfo } from '@/typing/interfaces'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 export const useGetProducts = () => {
@@ -28,29 +27,17 @@ export const useDeleteProduct = () => {
 export const useCreateProduct = () => {
 	interface Props {
 		name: string
-		price: number
-		images: FileList
 		description: string
 		categorySlug: string
 		modelUrl: string | null
-		quantityLeft: number
-		info?: ProductWithInfo['info']
 		isNew?: boolean | null
+		info?: { title: string; value: string; order: number }[]
 	}
 	return useMutation({
 		mutationKey: ['product create'],
 		mutationFn: async (data: Props) => {
 			const formData = new FormData()
-
-			Array.from(data.images).forEach(el => {
-				formData.append('images', el)
-			})
-			const dataWithoutImages = Object.entries(data).reduce((acc, [key, value]) => {
-				if (key !== 'images') acc[key] = value
-				return acc
-			}, {} as Record<string, string>)
-
-			formData.append('productInfo', JSON.stringify(dataWithoutImages))
+			formData.append('productData', JSON.stringify(data))
 
 			const res = await productsService.createProduct(formData)
 			if (!res?.data) return Promise.reject()
@@ -62,18 +49,80 @@ export const useCreateProduct = () => {
 export const useUpdateProduct = () => {
 	interface Props {
 		name?: string
-		price?: number
-		images?: FileList
 		description?: string
 		categorySlug?: string
-		info?: ProductWithInfo['info']
 		modelUrl?: string | null
 		isNew?: boolean | null
-		quantityLeft?: number
+		info?: { title: string; value: string; order: number }[]
 	}
 
 	return useMutation({
 		mutationKey: ['product edit'],
+		mutationFn: async ({ id, data }: { id: number; data: Props }) => {
+			const formData = new FormData()
+
+			const dataForForm = Object.entries(data).reduce((acc, [key, value]) => {
+				acc[key] = value
+				if (!value && key !== 'isNew') delete acc[key]
+				return acc
+			}, {} as Record<string, any>)
+
+			formData.append('productData', JSON.stringify(dataForForm))
+
+			const res = await productsService.updateProduct(id, formData)
+			if (!res?.data) return Promise.reject()
+			return res
+		}
+	})
+}
+
+export const useCreateProductItem = () => {
+	interface Props {
+		price: number
+		images: FileList
+		colorTemperature?: string
+		color?: string
+		dimmable?: string
+		scatteringAngle?: string
+		quantityLeft: number
+	}
+	return useMutation({
+		mutationKey: ['product item create'],
+		mutationFn: async ({ productId, data }: { productId: number; data: Props }) => {
+			const formData = new FormData()
+
+			Array.from(data.images).forEach(el => {
+				formData.append('images', el)
+			})
+
+			const dataWithoutImages = Object.entries(data).reduce((acc, [key, value]) => {
+				if (key !== 'images') acc[key] = value
+				return acc
+			}, {} as Record<string, any>)
+
+			formData.append('productItemData', JSON.stringify(dataWithoutImages))
+
+			const res = await productsService.createProductItem(productId, formData)
+			if (!res?.data) return Promise.reject()
+			return res
+		}
+	})
+}
+
+export const useUpdateProductItem = () => {
+	interface Props {
+		price?: number
+		images?: FileList
+		colorTemperature?: string
+		color?: string
+		dimmable?: string
+		scatteringAngle?: string
+		quantityLeft?: number
+		deleteImages?: string[]
+	}
+
+	return useMutation({
+		mutationKey: ['product item edit'],
 		mutationFn: async ({ id, data }: { id: number; data: Props }) => {
 			const formData = new FormData()
 
@@ -82,15 +131,27 @@ export const useUpdateProduct = () => {
 					formData.append('images', el)
 				})
 			}
+
 			const dataForForm = Object.entries(data).reduce((acc, [key, value]) => {
 				if (key !== 'images') acc[key] = value
-				if (!value && key !== 'isNew') delete acc[key]
+				if (!value && key !== 'deleteImages') delete acc[key]
 				return acc
-			}, {} as Record<string, string>)
+			}, {} as Record<string, any>)
 
-			formData.append('productInfo', JSON.stringify(dataForForm))
+			formData.append('productItemData', JSON.stringify(dataForForm))
 
-			const res = await productsService.updateProduct(id, formData)
+			const res = await productsService.updateProductItem(id, formData)
+			if (!res?.data) return Promise.reject()
+			return res
+		}
+	})
+}
+
+export const useDeleteProductItem = () => {
+	return useMutation({
+		mutationKey: ['product item delete'],
+		mutationFn: async ({ id }: { id: number }) => {
+			const res = await productsService.deleteProductItem(id)
 			if (!res?.data) return Promise.reject()
 			return res
 		}

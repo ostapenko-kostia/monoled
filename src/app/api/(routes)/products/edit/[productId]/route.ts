@@ -1,22 +1,26 @@
+import { ApiError } from '@/app/api/exceptions/apiError'
 import { handleApiError } from '@/app/api/exceptions/handleApiError'
 import { prisma } from '@/prisma/prisma-client'
-import { NextRequest, NextResponse } from 'next/server'
 import slugify from '@sindresorhus/slugify'
-import { ApiError } from '@/app/api/exceptions/apiError'
-import { checkIsAdmin } from '../../../admin/auth/utils/checkIsAdmin'
 import Joi from 'joi'
-import { saveFile } from '@/app/api/utils/saveFile'
-import { deleteFile } from '@/app/api/utils/deleteFile'
+import { NextRequest, NextResponse } from 'next/server'
+import { checkIsAdmin } from '../../../admin/auth/utils/checkIsAdmin'
 
 const productSchema = Joi.object({
 	name: Joi.string().optional(),
-	price: Joi.number().positive().optional(),
 	description: Joi.string().optional(),
 	categorySlug: Joi.string().optional(),
-	info: Joi.array().optional().default([]),
 	modelUrl: Joi.string().optional(),
 	isNew: Joi.boolean().optional(),
-	quantityLeft: Joi.number().optional()
+	info: Joi.array()
+		.items(
+			Joi.object({
+				title: Joi.string().required(),
+				value: Joi.string().required(),
+				order: Joi.number().required()
+			})
+		)
+		.optional()
 })
 
 async function generateUniqueSlug(slug: string): Promise<string> {
@@ -37,13 +41,12 @@ export async function PUT(
 		const { productId } = await params
 		const formData = await req.formData()
 		const body = Object.fromEntries(formData)
-		const productInfo = JSON.parse(body.productInfo as string)
-		const newImages = formData.getAll('images') as File[]
+		const productData = JSON.parse(body.productData as string)
 
 		const isAdmin = await checkIsAdmin(req)
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 
-		const { error, value } = productSchema.validate(productInfo, { abortEarly: false })
+		const { error, value } = productSchema.validate(productData, { abortEarly: false })
 
 		if (error) {
 			const errorDetails = error.details.map(err => err.message).join(', ')
@@ -55,56 +58,44 @@ export async function PUT(
 			value.slug = await generateUniqueSlug(value.slug)
 		}
 
-		if (newImages.length) {
-			const product = await prisma.product.findUnique({
-				where: { id: Number(productId) }
-			})
+		// Extract info data
+		const infoData = value.info
+		delete value.info
 
-			if (product?.images && Array.isArray(product.images)) {
-				for (const image of product.images) {
-					if (image) {
-						try {
-							await deleteFile(image, req)
-						} catch (error) {
-							console.warn(`Failed to delete file: ${image}`, error)
-						}
-					}
-				}
-			}
-
-			const savedImages: string[] = []
-			for (const file of newImages) {
-				if (file && file.type?.startsWith('image/')) {
-					const savedPath = await saveFile(file, req)
-					savedImages.push(savedPath)
-				} else {
-					throw new ApiError('Each image must be of type image/*', 400)
-				}
-			}
-
-			value.images = savedImages
-		}
-
-		const { info: _, ...valueWithoutInfo } = value
-
-		if (valueWithoutInfo) {
-			await prisma.product.update({
-				where: { id: Number(productId) },
-				data: valueWithoutInfo
-			})
-		}
-
-		await prisma.productInfo.deleteMany({
-			where: { productId: Number(productId) }
+		// Update product
+		await prisma.product.update({
+			where: { id: Number(productId) },
+			data: value
 		})
-		value.info.forEach(async (current: any) => {
-			await prisma.productInfo.create({
-				data: { ...current, productId: Number(productId) }
+
+		// Update info if provided
+		if (infoData && infoData.length > 0) {
+			// Delete existing info
+			await prisma.productInfo.deleteMany({
+				where: { productId: Number(productId) }
 			})
+
+			// Create new info
+			for (const info of infoData) {
+				await prisma.productInfo.create({
+					data: {
+						title: info.title,
+						value: info.value,
+						order: info.order,
+						productId: Number(productId)
+					}
+				})
+			}
+		}
+
+		// Get updated product with info
+		const updatedProduct = await prisma.product.findUnique({
+			where: { id: Number(productId) },
+			include: { info: true }
 		})
 
 		return NextResponse.json(
-			{ ok: true },
+			{ ok: true, product: updatedProduct },
 			{ status: 200, headers: { 'Content-Type': 'application/json' } }
 		)
 	} catch (error) {

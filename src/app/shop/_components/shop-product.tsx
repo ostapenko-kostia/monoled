@@ -1,17 +1,20 @@
-import { Product } from '@prisma/client'
-import Image from 'next/image'
+import { ProductWithItems } from '@/typing/interfaces'
 import cn from 'clsx'
-import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
+import Link from 'next/link'
 
 interface Props {
-	product: Product
+	product: ProductWithItems
 	index: number
 	showMode: 'grid' | 'list'
 }
 
 export const ShopProduct = dynamic(() =>
 	Promise.resolve(({ product, showMode, index }: Props) => {
+		// Get the default product item (first one) to display
+		const defaultItem = product.items && product.items.length > 0 ? product.items[0] : null
+
 		return (
 			<Link
 				href={`/product/${product.slug}`}
@@ -31,8 +34,8 @@ export const ShopProduct = dynamic(() =>
 					)}
 					<Image
 						src={
-							product.images[0] && product.images[0].length
-								? product.images[0]
+							defaultItem?.images[0] && defaultItem.images[0].length
+								? defaultItem.images[0]
 								: '/placeholder-image.jpg'
 						}
 						alt={product.name}
@@ -42,12 +45,12 @@ export const ShopProduct = dynamic(() =>
 						loading={index <= 6 ? 'eager' : 'lazy'}
 						className={cn('object-cover rounded-lg h-full w-full', {
 							'group-hover:opacity-0 transition-opacity duration-[400ms] absolute z-10':
-								product.images[1]
+								defaultItem?.images[1]
 						})}
 					/>
-					{product.images[1] && (
+					{defaultItem?.images[1] && (
 						<Image
-							src={product.images[1]}
+							src={defaultItem.images[1]}
 							alt={product.name}
 							width={360}
 							height={360}
@@ -60,9 +63,11 @@ export const ShopProduct = dynamic(() =>
 					<p className='mt-5 text-lg group-hover:underline underline-offset-4 transition-colors duration-200 max-[500px]:text-base'>
 						{product.name}
 					</p>
-					<p className='line-clamp-6 text-sm text-neutral-500 my-3 max-[500px]:text-xs'>
-						{product.description}
-					</p>
+					<div
+						className='line-clamp-6 text-sm text-neutral-500 my-3 max-[500px]:text-xs'
+						dangerouslySetInnerHTML={{ __html: product.description }}
+					/>
+					{defaultItem && <p className='font-semibold text-lg'>{defaultItem.price} грн.</p>}
 				</div>
 			</Link>
 		)

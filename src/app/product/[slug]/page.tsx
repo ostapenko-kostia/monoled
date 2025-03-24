@@ -1,11 +1,11 @@
-import type { Metadata } from 'next'
-import { Product } from './_components/product'
-import { productsService } from '@/services/products.service'
-import { notFound } from 'next/navigation'
-import { RecommendedProducts } from './_components/recommended-products'
 import { ContactUsForm } from '@/components/layout/contact-us-form/contact-us-form'
+import { productsService } from '@/services/products.service'
 import { textsService } from '@/services/texts.service'
-import { ProductWithInfo } from '@/typing/interfaces'
+import { ProductWithItems } from '@/typing/interfaces'
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { Product } from './_components/product'
+import { RecommendedProducts } from './_components/recommended-products'
 
 export const metadata: Metadata = {
 	title: 'Lumineka - Товар'
@@ -16,19 +16,20 @@ export const revalidate = 180
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
 	const { slug } = await params
 
-	const products: ProductWithInfo[] | undefined = (
-		await productsService.getAllProducts()
-	)?.data
+	const products: ProductWithItems[] | undefined = (await productsService.getAllProducts())?.data
 	const product = products?.find(product => product.slug === slug)
 
-	if (!product || !slug) notFound()
+	if (!product || !slug || product.items.length === 0) notFound()
 
 	const texts = await textsService.getAllTexts()
 	const interestedInProductText = texts?.find(text => text.slug === 'interested-in-product')?.text
 
 	return (
 		<>
-			<Product product={product} texts={texts} />
+			<Product
+				product={product}
+				texts={texts}
+			/>
 			<RecommendedProducts
 				products={products}
 				slug={slug}

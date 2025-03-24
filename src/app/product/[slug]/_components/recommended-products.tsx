@@ -1,33 +1,36 @@
 import { ShopProduct } from '@/app/shop/_components/shop-product'
 import { textsService } from '@/services/texts.service'
-import { Product } from '@prisma/client'
+import { ProductWithItems } from '@/typing/interfaces'
 
 interface Props {
-	products: Product[] | undefined
+	products: ProductWithItems[] | undefined
 	slug: string
 }
 
 export async function RecommendedProducts({ products, slug }: Props) {
-	const texts = (await textsService.getAllTexts())
+	const texts = await textsService.getAllTexts()
 	const recommendedProductsText = texts?.find(text => text.slug === 'recommended-products')?.text
 
+	// Filter current product and products without items
+	const recommendedProducts = products
+		?.filter(product => product.slug !== slug && product.items.length > 0)
+		?.slice(0, 3)
+
+	if (!recommendedProducts || recommendedProducts.length === 0) return null
+
 	return (
-		<div className='container mx-auto max-sm:px-2 mb-10 animate-opacity-1'>
-			<h3 className='text-3xl max-[500px]:text-center max-[500px]:text-2xl'>
-				{recommendedProductsText}
-			</h3>
-			<div className='grid grid-cols-5 mt-8 max-lg:grid-cols-3 max-sm:grid-cols-2 gap-8'>
-				{products
-					?.filter(product => product.slug !== slug)
-					?.slice(0, 5)
-					.map((product, index) => (
+		<div className='container mx-auto max-sm:px-2 pb-20 animate-opacity-1'>
+			<h3 className='text-2xl font-medium mb-10'>{recommendedProductsText}</h3>
+			<div className='grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 w-full gap-5'>
+				{recommendedProducts.map((product, index) => (
+					<div key={product.id}>
 						<ShopProduct
-							key={product.id}
 							index={index}
-							product={product}
 							showMode='grid'
+							product={product}
 						/>
-					))}
+					</div>
+				))}
 			</div>
 		</div>
 	)

@@ -1,5 +1,6 @@
 import { ISortingMethod } from '@/app/shop/shop.types'
-import { Category, Product } from '@prisma/client'
+import { ProductWithItems } from '@/typing/interfaces'
+import { Category } from '@prisma/client'
 
 interface Filters {
 	category: Category['slug']
@@ -10,10 +11,11 @@ interface Filters {
 }
 
 export const filterProducts = (
-	products: Product[] | undefined,
+	products: ProductWithItems[] | undefined,
 	{ category, sortingMethodId, searchQuery, page = 1, limit = 25 }: Filters
-): { filteredProducts: Product[] | undefined; totalPages: number } => {
+): { filteredProducts: ProductWithItems[] | undefined; totalPages: number } => {
 	const filteredProducts = products
+		?.filter(product => product.items.length > 0)
 		?.filter(product => (category.length ? product.categorySlug === category : product))
 		.filter(product =>
 			product.name.toLowerCase().includes(searchQuery ? searchQuery.toLowerCase() : '')
@@ -25,10 +27,14 @@ export const filterProducts = (
 			sortedProducts = filteredProducts?.sort((a, b) => a.order - b.order)
 			break
 		case 2:
-			sortedProducts = filteredProducts?.sort((a, b) => a.price - b.price)
+			sortedProducts = filteredProducts?.sort(
+				(a, b) => (a.items[0]?.price || 0) - (b.items[0]?.price || 0)
+			)
 			break
 		case 3:
-			sortedProducts = filteredProducts?.sort((a, b) => b.price - a.price)
+			sortedProducts = filteredProducts?.sort(
+				(a, b) => (b.items[0]?.price || 0) - (a.items[0]?.price || 0)
+			)
 			break
 	}
 

@@ -1,11 +1,12 @@
+import { categoriesService } from '@/services/categories.service'
+import { productsService } from '@/services/products.service'
+import { textsService } from '@/services/texts.service'
+import { ProductWithItems } from '@/typing/interfaces'
+import { filterProducts } from '@/utils/filterProducts'
+import { Category, TextField } from '@prisma/client'
 import { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Shop } from './_components/shop'
-import { Category, Product, TextField } from '@prisma/client'
-import { categoriesService } from '@/services/categories.service'
-import { productsService } from '@/services/products.service'
-import { filterProducts } from '@/utils/filterProducts'
-import { textsService } from '@/services/texts.service'
 
 export const metadata: Metadata = {
 	title: 'Lumineka - Каталог товарів'
@@ -26,7 +27,7 @@ async function ShopPage({
 	}>
 }) {
 	const categories: Category[] | undefined = (await categoriesService.getAllCategories())?.data
-	const products: Product[] | undefined = (await productsService.getAllProducts())?.data
+	const products: ProductWithItems[] | undefined = (await productsService.getAllProducts())?.data
 	const texts: TextField[] | undefined = await textsService.getAllTexts()
 
 	const searchParameters = await searchParams

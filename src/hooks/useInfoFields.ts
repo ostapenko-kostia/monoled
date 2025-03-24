@@ -1,15 +1,24 @@
+import type { ProductInfo } from '@prisma/client'
 import { useState } from 'react'
-import { ProductWithInfo } from '@/typing/interfaces'
 
-export const useInfoFields = (initialInfo: ProductWithInfo['info']) => {
-	const [info, setInfo] = useState<ProductWithInfo['info']>(initialInfo)
+interface InfoField {
+	title: string
+	value: string
+	order: number
+}
+
+export const useInfoFields = (initialInfo: ProductInfo[] = []) => {
+	const [info, setInfo] = useState<InfoField[]>(
+		initialInfo.map(item => ({
+			title: item.title,
+			value: item.value,
+			order: item.order
+		}))
+	)
 
 	const addInfoField = (key: string, value: string) => {
 		if (key.trim() && value.trim()) {
-			setInfo(prev => [
-				...prev,
-				{ title: key, value: value, order: prev.length + 1 } as ProductWithInfo['info'][0]
-			])
+			setInfo(prev => [...prev, { title: key, value: value, order: prev.length + 1 }])
 		}
 	}
 

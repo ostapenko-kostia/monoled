@@ -1,12 +1,12 @@
 'use client'
 
 import { useTexts } from '@/context/textContext'
-import { Product } from '@prisma/client'
+import { ProductWithItems } from '@/typing/interfaces'
 import cn from 'clsx'
 import { useState } from 'react'
 
 interface Props {
-	product: Product
+	product: ProductWithItems
 }
 
 export function ProductInfo({ product }: Props) {
@@ -16,6 +16,8 @@ export function ProductInfo({ product }: Props) {
 	const descriptionTitle = texts?.find(text => text.slug === 'description-title')?.text
 	const infoTitle = texts?.find(text => text.slug === 'info-title')?.text
 	const mainInfoText = texts?.find(text => text.slug === 'main-info')?.text
+	const characteristicsTitle =
+		texts?.find(text => text.slug === 'characteristics-title')?.text || 'Характеристики'
 
 	return (
 		<div
@@ -44,14 +46,36 @@ export function ProductInfo({ product }: Props) {
 				{currentInfoBlock === 'description' && (
 					<div className='p-5 bg-white'>
 						<h3 className='mb-5 text-xl'>{descriptionTitle}:</h3>
-						<p className='w-2/3 max-xl:w-3/4 max-lg:w-full text-lg text-neutral-500 pl-5 font-light'>
-							{product.description}
-						</p>
+						<div
+							className='w-2/3 max-xl:w-3/4 max-lg:w-full text-lg text-neutral-500 pl-5 font-light'
+							dangerouslySetInnerHTML={{ __html: product.description || '' }}
+						/>
 					</div>
 				)}
 				{currentInfoBlock === 'info' && (
 					<div className='p-5 bg-white'>
-						<div className='font-light text-xl'>{mainInfoText}</div>
+						<div className='font-light text-xl mb-6'>
+							<div dangerouslySetInnerHTML={{ __html: mainInfoText || '' }} />
+						</div>
+
+						{product.info && product.info.length > 0 && (
+							<div className='mt-6'>
+								<h3 className='mb-5 text-xl'>{characteristicsTitle}:</h3>
+								<div className='grid grid-cols-2 gap-4'>
+									{product.info
+										.sort((a, b) => a.order - b.order)
+										.map((info, index) => (
+											<div
+												key={index}
+												className='flex'
+											>
+												<div className='font-medium mr-2'>{info.title}:</div>
+												<div>{info.value}</div>
+											</div>
+										))}
+								</div>
+							</div>
+						)}
 					</div>
 				)}
 			</main>

@@ -52,24 +52,36 @@ export function AdminTextFieldsTab({ texts }: Props) {
 						</tr>
 					</thead>
 					<tbody className='bg-white divide-y divide-gray-200'>
-						{texts?.map(text => (
-							<tr key={text.id}>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{text.id}</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>{text.slug}</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
-									{text.text.length > 40 ? text.text.slice(0, 40) + '...' : text.text}
-								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-									{new Date(text.createdAt).toLocaleDateString()}
-								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-									{new Date(text.updatedAt).toLocaleDateString()}
-								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-									<AdminEditText text={text} />
-								</td>
-							</tr>
-						))}
+						{texts
+							?.sort((a, b) => a.id - b.id)
+							?.map(text => {
+								const clippedText =
+									text.text.length > 40 ? text.text.slice(0, 40) + '...' : text.text
+								return (
+									<tr key={text.id}>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{text.id}</td>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
+											{text.slug}
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'>
+											{text.richText ? (
+												<p className='max-w-72 line-clamp-1' dangerouslySetInnerHTML={{ __html: text.text }} />
+											) : (
+												clippedText
+											)}
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+											{new Date(text.createdAt).toLocaleDateString()}
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+											{new Date(text.updatedAt).toLocaleDateString()}
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+											<AdminEditText text={text} />
+										</td>
+									</tr>
+								)
+							})}
 					</tbody>
 				</table>
 			</div>

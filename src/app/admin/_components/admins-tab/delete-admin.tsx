@@ -46,7 +46,7 @@ export function DeleteAdmin({ admin, admins }: Props) {
 				<span className='text-lg'>Ви впевнені, що хочете видалити {admin.login}?</span>
 				<button
 					className='bg-foreground text-background rounded-md px-6 py-2 ml-auto'
-					onClick={() => deleteFunc({id: admin.id})}
+					onClick={() => deleteFunc({ id: admin.id })}
 				>
 					Так
 				</button>

@@ -12,19 +12,37 @@ model Product {
   slug String @unique
 
   name        String
-  images      String[]
-  price       Int
   description String
-  info        ProductInfo[]
   modelUrl    String?
   isNew       Boolean?
 
   order Int @default(autoincrement())
 
-  quantityLeft Int @default(0)
-
   category     Category @relation(fields: [categorySlug], references: [slug])
   categorySlug String
+
+  items ProductItem[]
+  info  ProductInfo[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProductItem {
+  id   Int    @id @unique @default(autoincrement())
+  slug String @unique
+
+  images       String[]
+  price        Int
+  quantityLeft Int      @default(0)
+
+  colorTemperature String?
+  color            String?
+  dimmable         String?
+  scatteringAngle  String?
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -85,7 +103,20 @@ model TextField {
   slug String
   text String
 
+  richText Boolean @default(false)
+
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FailedLoginAttempt {
+  id Int @id @unique @default(autoincrement())
+
+  ip       String @unique
+  attempts Int    @default(0)
+
+  lockUntil DateTime?
+
   updatedAt DateTime @updatedAt
 }
 

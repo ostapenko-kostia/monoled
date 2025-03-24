@@ -1,12 +1,17 @@
 'use client'
 
-import { UseFormRegister } from 'react-hook-form'
+import { UseFormSetValue, UseFormWatch } from 'react-hook-form'
+import 'react-quill-new/dist/quill.snow.css'
+import dynamic from 'next/dynamic'
+
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false })
 
 interface Props {
-	register: UseFormRegister<any>
+	watch: UseFormWatch<any>
+	setValue: UseFormSetValue<any>
 }
 
-export function AdminProductCreateDescription({ register }: Props) {
+export function AdminProductCreateDescription({ watch, setValue }: Props) {
 	return (
 		<div className='flex items-start flex-col gap-2'>
 			<label
@@ -15,12 +20,11 @@ export function AdminProductCreateDescription({ register }: Props) {
 			>
 				Опис <span className='text-red-400'>*</span>
 			</label>
-			<textarea
-				className='w-full rounded-md border border-[#ccc] bg-white min-h-20 max-h-36 resize-y text-[#333] placeholder:text-[#808080] px-3 py-3 text-sm focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500;'
-				required
-				placeholder='1500'
-				id='description'
-				{...register('description', { required: true })}
+			<ReactQuill
+				className='w-full'
+				theme='snow'
+				value={watch('description')}
+				onChange={text => setValue('description', text)}
 			/>
 		</div>
 	)
