@@ -3,6 +3,7 @@
 import { useCreateProductItem } from '@/hooks/useProducts'
 import { useQueryClient } from '@tanstack/react-query'
 import { FormEvent, useState } from 'react'
+import toast from 'react-hot-toast'
 
 interface Props {
 	productId: number
@@ -24,8 +25,8 @@ export function AdminProductItemCreate({ productId, onComplete }: Props) {
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault()
-		if (!price || !quantityLeft || !images || images.length === 0) {
-			alert("Заповніть всі обов'язкові поля")
+		if (!price.length || !quantityLeft.length || !images || images.length === 0) {
+			toast.error("Заповніть всі обов'язкові поля")
 			return
 		}
 
@@ -51,7 +52,7 @@ export function AdminProductItemCreate({ productId, onComplete }: Props) {
 				},
 				onError: () => {
 					setIsSubmitting(false)
-					alert('Помилка при створенні варіанту товару')
+					toast.error('Помилка при створенні варіанту товару')
 				}
 			}
 		)
