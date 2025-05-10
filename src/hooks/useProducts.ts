@@ -31,13 +31,19 @@ export const useCreateProduct = () => {
 		categorySlug: string
 		modelUrl: string | null
 		isNew?: boolean | null
+		mainImage: File
+		hoverImage: File
 		info?: { title: string; value: string; order: number }[]
 	}
 	return useMutation({
 		mutationKey: ['product create'],
 		mutationFn: async (data: Props) => {
 			const formData = new FormData()
-			formData.append('productData', JSON.stringify(data))
+			const { mainImage, hoverImage, ...productData } = data
+
+			formData.append('mainImage', mainImage)
+			formData.append('hoverImage', hoverImage)
+			formData.append('productData', JSON.stringify(productData))
 
 			const res = await productsService.createProduct(formData)
 			if (!res?.data) return Promise.reject()
@@ -53,6 +59,8 @@ export const useUpdateProduct = () => {
 		categorySlug?: string
 		modelUrl?: string | null
 		isNew?: boolean | null
+		mainImage?: File
+		hoverImage?: File
 		info?: { title: string; value: string; order: number }[]
 	}
 
@@ -60,8 +68,19 @@ export const useUpdateProduct = () => {
 		mutationKey: ['product edit'],
 		mutationFn: async ({ id, data }: { id: number; data: Props }) => {
 			const formData = new FormData()
+			const { mainImage, hoverImage, ...productData } = data
 
-			const dataForForm = Object.entries(data).reduce((acc, [key, value]) => {
+			console.log(mainImage, hoverImage)
+			console.log(typeof mainImage, typeof hoverImage)
+
+			if (mainImage) {
+				formData.append('mainImage', mainImage)
+			}
+			if (hoverImage) {
+				formData.append('hoverImage', hoverImage)
+			}
+
+			const dataForForm = Object.entries(productData).reduce((acc, [key, value]) => {
 				acc[key] = value
 				if (!value && key !== 'isNew') delete acc[key]
 				return acc

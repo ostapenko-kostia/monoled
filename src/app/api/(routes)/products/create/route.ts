@@ -1,5 +1,6 @@
 import { ApiError } from '@/app/api/exceptions/apiError'
 import { handleApiError } from '@/app/api/exceptions/handleApiError'
+import { saveFile } from '@/app/api/utils/saveFile'
 import { prisma } from '@/prisma/prisma-client'
 import slugify from '@sindresorhus/slugify'
 import Joi from 'joi'
@@ -21,6 +22,14 @@ const productSchema = Joi.object({
 	}),
 	modelUrl: Joi.string().optional(),
 	isNew: Joi.boolean().optional(),
+	mainImage: Joi.string().required().messages({
+		'string.empty': 'Main image is required',
+		'any.required': 'Main image is required'
+	}),
+	hoverImage: Joi.string().required().messages({
+		'string.empty': 'Hover image is required',
+		'any.required': 'Hover image is required'
+	}),
 	info: Joi.array()
 		.items(
 			Joi.object({
@@ -50,6 +59,8 @@ export async function POST(req: NextRequest) {
 		const body = Object.fromEntries(formData)
 
 		const productData = JSON.parse(body.productData as string)
+		const mainImage = formData.get('mainImage') as File
+		const hoverImage = formData.get('hoverImage') as File
 
 		const { error, value } = productSchema.validate(productData, { abortEarly: false })
 
@@ -64,6 +75,14 @@ export async function POST(req: NextRequest) {
 		const isAdmin = await checkIsAdmin(req)
 		if (!isAdmin) throw new ApiError('You are not admin', 403)
 
+		// Save images
+		if (!mainImage || !hoverImage) {
+			throw new ApiError('Both main and hover images are required', 400)
+		}
+
+		const savedMainImage = await saveFile(mainImage, req)
+		const savedHoverImage = await saveFile(hoverImage, req)
+
 		// Create product without info
 		const product = await prisma.product.create({
 			data: {
@@ -72,7 +91,9 @@ export async function POST(req: NextRequest) {
 				description: value.description,
 				categorySlug: value.categorySlug,
 				isNew: value.isNew,
-				modelUrl: value.modelUrl
+				modelUrl: value.modelUrl,
+				mainImage: savedMainImage,
+				hoverImage: savedHoverImage
 			}
 		})
 

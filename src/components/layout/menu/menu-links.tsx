@@ -13,7 +13,7 @@ export function MenuLinks() {
 	const contactsTitle = texts?.find(text => text.slug === 'contacts-title')?.text
 	const instagramTitle = texts?.find(text => text.slug === 'instagram-title')?.text
 	const instagramLink = texts?.find(text => text.slug === 'instagram-link')?.text
-	const partnersTitle = texts?.find(text => text.slug === 'partners-title')?.text
+	// const partnersTitle = texts?.find(text => text.slug === 'partners-title')?.text
 
 	return (
 		<ul className='flex flex-col gap-8'>
@@ -35,14 +35,14 @@ export function MenuLinks() {
 				</Link>
 			</li>
 
-			<li className='text-4xl max-sm:text-2xl hover:text-blue-500 transition-colors duration-300'>
+			{/* <li className='text-4xl max-sm:text-2xl hover:text-blue-500 transition-colors duration-300'>
 				<Link
 					href='/partners'
 					onClick={() => sheetContext?.closeSheet()}
 				>
 					{partnersTitle}
 				</Link>
-			</li>
+			</li> */}
 
 			<li className='text-4xl max-sm:text-2xl hover:text-blue-500 transition-colors duration-300'>
 				<Link

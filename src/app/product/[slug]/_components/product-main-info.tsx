@@ -9,12 +9,12 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 interface Props {
 	product: ProductWithItems
 	texts: TextField[] | undefined
-	onItemChange: Dispatch<SetStateAction<ProductItem>>
+	selectedItem: ProductItem
+	setSelectedItem: Dispatch<SetStateAction<ProductItem>>
 }
 
-export function ProductMainInfo({ product, texts, onItemChange }: Props) {
-	const [selectedItem, setSelectedItem] = useState<ProductItem>(product.items[0])
-	const [productInfo, setProductInfo] = useState<ProductInfo[]>(product.info || [])
+export function ProductMainInfo({ product, texts, setSelectedItem, selectedItem }: Props) {
+	const [productInfo] = useState<ProductInfo[]>(product.info || [])
 	const [itemProperties, setItemProperties] = useState<{
 		[key: string]: string[]
 	}>({})
@@ -128,25 +128,6 @@ export function ProductMainInfo({ product, texts, onItemChange }: Props) {
 		setSelectedVariants(initialVariants)
 	}, [product])
 
-	// Update selected item when variants change
-	useEffect(() => {
-		const matchingItem = product.items.find(item => {
-			return Object.entries(selectedVariants).every(([title, value]) => {
-				if (!value) return true
-				if (title === 'Колір') return String(item.color) === value
-				if (title === 'Температура кольору') return String(item.colorTemperature) === value
-				if (title === 'Дімування') return String(item.dimmable) === value
-				if (title === 'Кут розсіювання') return String(item.scatteringAngle) === value
-				return true
-			})
-		})
-
-		if (matchingItem) {
-			setSelectedItem(matchingItem)
-			onItemChange(matchingItem)
-		}
-	}, [selectedVariants, product.items, onItemChange])
-
 	const handleVariantChange = (title: string, value: string) => {
 		// When one value changes, we need to update the selection
 		// and potentially reset incompatible selections
@@ -178,8 +159,11 @@ export function ProductMainInfo({ product, texts, onItemChange }: Props) {
 		}
 
 		if (isValidCombination) {
-			// The combination is valid, update variants
+			// The combination is valid, update variants and selected item
 			setSelectedVariants(newVariants)
+			if (matchingItems.length > 0) {
+				setSelectedItem(matchingItems[0])
+			}
 		} else {
 			// The combination is not valid, find a valid combination
 			// that respects the selected value for the changed property
@@ -204,6 +188,7 @@ export function ProductMainInfo({ product, texts, onItemChange }: Props) {
 				})
 
 				setSelectedVariants(completeVariants)
+				setSelectedItem(validItem)
 			}
 		}
 	}
@@ -301,7 +286,9 @@ export function ProductMainInfo({ product, texts, onItemChange }: Props) {
 												<button
 													key={i}
 													type='button'
-													onClick={() => isAvailable && handleVariantChange(title, value)}
+													onClick={() => {
+														isAvailable && handleVariantChange(title, value)
+													}}
 													className={`py-2 px-4 border rounded ${
 														selectedVariants[title] === value
 															? 'bg-[#000000ca] text-background'

@@ -33,11 +33,7 @@ export const ShopProduct = dynamic(() =>
 						</div>
 					)}
 					<Image
-						src={
-							defaultItem?.images[0] && defaultItem.images[0].length
-								? defaultItem.images[0]
-								: '/placeholder-image.jpg'
-						}
+						src={product.mainImage || '/placeholder-image.jpg'}
 						alt={product.name}
 						width={360}
 						height={360}
@@ -45,12 +41,12 @@ export const ShopProduct = dynamic(() =>
 						loading={index <= 6 ? 'eager' : 'lazy'}
 						className={cn('object-cover rounded-lg h-full w-full', {
 							'group-hover:opacity-0 transition-opacity duration-[400ms] absolute z-10':
-								defaultItem?.images[1]
+								product.hoverImage
 						})}
 					/>
-					{defaultItem?.images[1] && (
+					{product.hoverImage && (
 						<Image
-							src={defaultItem.images[1]}
+							src={product.hoverImage}
 							alt={product.name}
 							width={360}
 							height={360}
@@ -59,7 +55,8 @@ export const ShopProduct = dynamic(() =>
 						/>
 					)}
 				</div>
-				<div>
+
+				<div className='flex flex-col'>
 					<p className='mt-5 text-lg group-hover:underline underline-offset-4 transition-colors duration-200 max-[500px]:text-base'>
 						{product.name}
 					</p>
